@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 import './App.css'
 
+import NotFoundPage from './pages/NotFound/404'
+
 function App() {
   useEffect(() => {
     const fetchServerData = async () => {
@@ -12,7 +14,8 @@ function App() {
 
     fetchServerData()
   }, [])
-  return <div className="App">Вот тут будет жить ваше приложение :)</div>
+  return <NotFoundPage />
+  //return <div className="App">Вот тут будет жить ваше приложение :)</div>
 }
 
 export default App
