@@ -1,4 +1,36 @@
+@import '../../styles/typography';
+@import '../../styles/vars';
+
 .wrapper {
   margin: 0 auto;
+  background-color: $primary500;
+  height: 100vh;
 
+  .backgroundWrapper {
+    background-image: url("./background/pixel-clouds.jpg");
+    height: 100%;
+    width: 45%;
+    margin: 0 auto;
+  }
+
+  .button {
+    width: 110px;
+    padding: 10px;
+    background-color: rgba(0,0,0,0.0);
+    border: 2px solid white;
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
+    margin: 40px 60px;
+  }
+
+  .header {
+    color: $white;
+    border: 2px solid white;
+    border-radius: 20px;
+    width: 270px;
+    padding: 5px 20px;
+    margin: 0 auto;
+    text-align: center;
+  }
 }

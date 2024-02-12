@@ -1,0 +1,17 @@
+@import '../../../styles/vars';
+
+.wrapper {
+  background-color: $gray300;
+  height: 50px;
+  width: 80%;
+  margin: 60px auto;
+  border-radius: 10px;
+  list-style: none;
+
+  .iconArea {
+    width: 70px;
+    border: 1px solid black;
+    height: 100%;
+  }
+
+}
