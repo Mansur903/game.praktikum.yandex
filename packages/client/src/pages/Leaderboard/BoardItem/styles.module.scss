@@ -4,14 +4,21 @@
   background-color: $gray300;
   height: 50px;
   width: 80%;
-  margin: 60px auto;
+  margin: 35px auto;
   border-radius: 10px;
   list-style: none;
+  display: flex;
 
   .iconArea {
-    width: 70px;
-    border: 1px solid black;
+    width: 10%;
     height: 100%;
   }
 
+  .personalArea {
+    width: 80%;
+  }
+
+  .scoreArea {
+    width: 10%;
+  }
 }
