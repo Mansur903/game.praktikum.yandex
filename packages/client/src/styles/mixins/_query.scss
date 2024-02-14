@@ -1,0 +1,27 @@
+$breakpoints: (
+  mobile: 768px,
+  tablet: 1200px,
+  desktop: 1600px,
+);
+
+@mixin query($minmax, $media) {
+  @if ($minmax == 'min') {
+    @each $size, $resolution in $breakpoints {
+      @if $media == $size {
+        @media (min-width: $resolution) {
+          @content;
+        }
+      }
+    }
+  }
+
+  @if ($minmax == 'max') {
+    @each $size, $resolution in $breakpoints {
+      @if $media == $size {
+        @media (max-width: ($resolution - 1)) {
+          @content;
+        }
+      }
+    }
+  }
+}

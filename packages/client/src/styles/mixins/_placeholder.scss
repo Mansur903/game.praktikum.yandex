@@ -1,0 +1,8 @@
+@mixin placeholder-style($color, $font-size, $padding) {
+  &::placeholder {
+    padding: $padding;
+    font-size: $font-size;
+    color: $color;
+    opacity: 1;
+  }
+}

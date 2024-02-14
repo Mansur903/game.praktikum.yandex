@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import './App.css'
+import Profile from './pages/Profile/Profile'
 
 function App() {
   useEffect(() => {
@@ -12,7 +13,16 @@ function App() {
 
     fetchServerData()
   }, [])
-  return <div className="App">Вот тут будет жить ваше приложение :)</div>
+  return (
+    <div className="App">
+      <Profile
+        avatarImage="src/pages/Profile/images/avatar.png"
+        record={48}
+        name="john"
+        email="john29@gmail.com"
+      />
+    </div>
+  )
 }
 
 export default App

@@ -1,6 +1,9 @@
 @import './typography';
 @import './vars';
 @import './fonts';
+@import './mixins/flexbox';
+@import './mixins/placeholder';
+@import './mixins/query';
 
 * {
   font-family: $fontFamily;
