@@ -4,13 +4,19 @@
 .wrapper {
   margin: 0 auto;
   background-color: $primary500;
-  height: 100vh;
+  min-height: 100vh;
+  overflow: auto;
+  padding: 0;
 
   .backgroundWrapper {
-    background-image: url("./background/pixel-clouds.jpg");
-    height: 100%;
+    background-image: url("./background/pixel-clouds.png");
+    min-height: 100vh;
     width: 45%;
     margin: 0 auto;
+
+    .boardContainer {
+      overflow: auto;
+    }
   }
 
   .button {

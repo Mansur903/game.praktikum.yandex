@@ -24,6 +24,26 @@ const leaders = [
     name: 'Dima',
     score: 5,
   },
+  {
+    position: 5,
+    name: 'Oleg',
+    score: 4,
+  },
+  {
+    position: 6,
+    name: 'Oleg2',
+    score: 3,
+  },
+  {
+    position: 7,
+    name: 'Oleg3',
+    score: 2,
+  },
+  {
+    position: 8,
+    name: 'Oleg4',
+    score: 1,
+  },
 ]
 const server = {
   getLeaders() {
@@ -56,7 +76,7 @@ const Leaderboard = () => {
       case 3:
         return '../../src/assets/trophy3.png'
       default:
-        return ''
+        return '../../src/assets/round.png'
     }
   }
 
@@ -67,15 +87,17 @@ const Leaderboard = () => {
         <h1 className={styles.header}>Рейтинг игроков</h1>
 
         <ul className={styles.boardContainer}>
-          {list.map(item => (
-            <BoardItem
-              position={item.position}
-              name={item.name}
-              photo={item.photo ? item.photo : ''}
-              icon={setIconPath(item.position)}
-              score={item.score}
-            />
-          ))}
+          {list.map((item, index) =>
+            index < 8 ? (
+              <BoardItem
+                position={item.position}
+                name={item.name}
+                photo={item.photo ? item.photo : ''}
+                icon={setIconPath(item.position)}
+                score={item.score}
+              />
+            ) : null
+          )}
         </ul>
       </div>
     </div>

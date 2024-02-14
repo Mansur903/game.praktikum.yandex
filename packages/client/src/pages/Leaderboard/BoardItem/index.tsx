@@ -15,11 +15,20 @@ const BoardItem = (props: Props) => {
   return (
     <li className={styles.wrapper}>
       <div className={styles.iconArea}>
-        <img src={props.icon} className={styles.icon}></img>
+        <img alt="icon" src={props.icon} className={styles.icon}></img>
+        <div
+          className={
+            props.position < 4 ? styles.hidden : styles.positionNumber
+          }>
+          {props.position}
+        </div>
       </div>
 
       <div className={styles.personalArea}>
-        <img src={getPhoto(props.photo)} className={styles.photo}></img>
+        <img
+          alt="photo"
+          src={getPhoto(props.photo)}
+          className={styles.photo}></img>
         <span className={styles.name}>{props.name}</span>
       </div>
 
