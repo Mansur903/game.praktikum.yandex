@@ -1,7 +1,6 @@
 import styles from './styles.module.scss'
 import BoardItem from './BoardItem/index'
 import { useEffect, useState } from 'react'
-import { logDOM } from '@testing-library/react'
 
 // моковые данные
 const leaders = [
@@ -48,8 +47,17 @@ const Leaderboard = () => {
     server.getLeaders().then(response => setList(response as ILeader[]))
   }, [])
 
-  const setIcon = () => {
-    return ''
+  const setIconPath = (position: number) => {
+    switch (position) {
+      case 1:
+        return '../../src/assets/trophy1.png'
+      case 2:
+        return '../../src/assets/trophy2.png'
+      case 3:
+        return '../../src/assets/trophy3.png'
+      default:
+        return ''
+    }
   }
 
   return (
@@ -64,7 +72,7 @@ const Leaderboard = () => {
               position={item.position}
               name={item.name}
               photo={item.photo ? item.photo : ''}
-              icon={setIcon()}
+              icon={setIconPath(item.position)}
               score={item.score}
             />
           ))}

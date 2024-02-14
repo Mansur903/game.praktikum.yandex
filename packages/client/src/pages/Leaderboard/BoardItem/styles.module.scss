@@ -10,12 +10,31 @@
   display: flex;
 
   .iconArea {
-    width: 10%;
+    width: 9%;
     height: 100%;
+    border-right: 2px solid rgba(128, 128, 128, 0.2);
+
+    .icon {
+      width: 30px;
+      padding: 12px 0 12px 12px;
+    }
   }
 
   .personalArea {
     width: 80%;
+    display: flex;
+    align-items: center;
+
+    .photo {
+      width: 40px;
+      border-radius: 50%;
+      border: 1px solid grey;
+      margin-left: 10px;
+    }
+
+    .name {
+      margin-left: 15px;
+    }
   }
 
   .scoreArea {

@@ -9,6 +9,9 @@ type Props = {
 }
 
 const BoardItem = (props: Props) => {
+  const getPhoto = (path: string) =>
+    path ? path : '../../../src/assets/default-avatar.png'
+
   return (
     <li className={styles.wrapper}>
       <div className={styles.iconArea}>
@@ -16,7 +19,7 @@ const BoardItem = (props: Props) => {
       </div>
 
       <div className={styles.personalArea}>
-        <img src={props.photo} className={styles.icon}></img>
+        <img src={getPhoto(props.photo)} className={styles.photo}></img>
         <span className={styles.name}>{props.name}</span>
       </div>
 
