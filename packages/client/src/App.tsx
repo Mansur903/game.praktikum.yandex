@@ -1,7 +1,7 @@
 import {useEffect} from 'react'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import './App.css'
-import FirstComponent from './components/firstComponent'
+import FirstComponent from './components/FirstComponent'
 
 const App = () => {
 	useEffect(() => {
