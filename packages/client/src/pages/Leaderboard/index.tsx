@@ -82,11 +82,11 @@ const Leaderboard = () => {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.backgroundWrapper}>
-        <button className={styles.button}>На главную</button>
-        <h1 className={styles.header}>Рейтинг игроков</h1>
+      <div className={styles.page}>
+        <button className={styles.page__button}>На главную</button>
+        <h1 className={styles.page__header}>Рейтинг игроков</h1>
 
-        <ul className={styles.boardContainer}>
+        <ul className={styles.page__board}>
           {list.map((item, index) =>
             index < 8 ? (
               <BoardItem

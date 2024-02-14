@@ -1,6 +1,6 @@
 @import '../../../styles/vars';
 
-.wrapper {
+.leader {
   background-color: $gray100;
   height: 50px;
   width: 80%;
@@ -9,18 +9,18 @@
   list-style: none;
   display: flex;
 
-  .iconArea {
+  .leader__iconArea {
     width: 9%;
     height: 100%;
     border-right: 2px solid rgba(128, 128, 128, 0.2);
     position: relative;
 
-    .icon {
+    .leader__icon {
       width: 30px;
       padding: 11px 0 11px 12px;
     }
 
-    .positionNumber {
+    .leader__positionNumber {
       position: absolute;
       top: 18px;
       left: 23px;
@@ -29,24 +29,24 @@
     }
   }
 
-  .personalArea {
+  .leader__personalArea {
     width: 80%;
     display: flex;
     align-items: center;
 
-    .photo {
+    .leader__photo {
       width: 40px;
       border-radius: 50%;
       border: 1px solid grey;
       margin-left: 10px;
     }
 
-    .name {
+    .leader__name {
       margin-left: 15px;
     }
   }
 
-  .scoreArea {
+  .leader__scoreArea {
     width: 10%;
     border-left: 2px solid rgba(128, 128, 128, 0.2);
     text-align: center;
@@ -54,7 +54,7 @@
     line-height: 50px;
   }
 
-  .hidden {
+  .leader__hidden {
     display: none;
   }
 }
