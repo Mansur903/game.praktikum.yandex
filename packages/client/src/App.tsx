@@ -13,16 +13,7 @@ function App() {
 
     fetchServerData()
   }, [])
-  return (
-    <div className="App">
-      <Profile
-        avatarImage="src/pages/Profile/images/avatar.png"
-        record={48}
-        name="john"
-        email="john29@gmail.com"
-      />
-    </div>
-  )
+  return <div className="App">Вот тут будет жить ваше приложение :)</div>
 }
 
 export default App
