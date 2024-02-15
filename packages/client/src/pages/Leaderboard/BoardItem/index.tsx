@@ -8,33 +8,31 @@ type Props = {
   score: number
 }
 
-const BoardItem = (props: Props) => {
+const BoardItem = ({ icon, position, photo, name, score }: Props) => {
   const getPhoto = (path: string) =>
     path ? path : '../../../src/assets/default-avatar.png'
 
   return (
     <li className={styles.leader}>
       <div className={styles.leader__iconArea}>
-        <img alt="icon" src={props.icon} className={styles.leader__icon}></img>
+        <img alt="icon" src={icon} className={styles.leader__icon}></img>
         <div
           className={
-            props.position < 4
-              ? styles.leader__hidden
-              : styles.leader__positionNumber
+            position < 4 ? styles.leader__hidden : styles.leader__positionNumber
           }>
-          {props.position}
+          {position}
         </div>
       </div>
 
       <div className={styles.leader__personalArea}>
         <img
           alt="photo"
-          src={getPhoto(props.photo)}
+          src={getPhoto(photo)}
           className={styles.leader__photo}></img>
-        <span className={styles.leader__name}>{props.name}</span>
+        <span className={styles.leader__name}>{name}</span>
       </div>
 
-      <div className={styles.leader__scoreArea}>{props.score}</div>
+      <div className={styles.leader__scoreArea}>{score}</div>
     </li>
   )
 }

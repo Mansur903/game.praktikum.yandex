@@ -64,19 +64,23 @@ const Leaderboard = () => {
   const [list, setList] = useState<ILeader[]>([])
 
   useEffect(() => {
-    server.getLeaders().then(response => setList(response as ILeader[]))
+    const getLeaders = async () => {
+      const response = await server.getLeaders()
+      setList(response as ILeader[])
+    }
+    getLeaders()
   }, [])
 
   const setIconPath = (position: number) => {
     switch (position) {
       case 1:
-        return '../../src/assets/trophy1.png'
+        return 'trophy1.png'
       case 2:
-        return '../../src/assets/trophy2.png'
+        return 'trophy2.png'
       case 3:
-        return '../../src/assets/trophy3.png'
+        return 'trophy3.png'
       default:
-        return '../../src/assets/round.png'
+        return 'round.png'
     }
   }
 
@@ -90,10 +94,11 @@ const Leaderboard = () => {
           {list.map((item, index) =>
             index < 8 ? (
               <BoardItem
+                key={index}
                 position={item.position}
                 name={item.name}
                 photo={item.photo ? item.photo : ''}
-                icon={setIconPath(item.position)}
+                icon={`../../src/assets/${setIconPath(item.position)}`}
                 score={item.score}
               />
             ) : null

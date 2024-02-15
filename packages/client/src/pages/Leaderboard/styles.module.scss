@@ -14,11 +14,11 @@
     width: 45%;
     margin: 0 auto;
 
-    .page__board {
+    &__board {
       overflow: auto;
     }
 
-    .page__button {
+    &__button {
       width: 110px;
       padding: 10px;
       background-color: rgba(0,0,0,0.0);
@@ -29,7 +29,7 @@
       margin: 40px 60px;
     }
 
-    .page__header {
+    &__header {
       color: $white;
       border: 2px solid white;
       border-radius: 20px;
