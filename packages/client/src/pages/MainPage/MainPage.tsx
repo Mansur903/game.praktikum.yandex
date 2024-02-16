@@ -1,23 +1,16 @@
-import {useMemo} from 'react'
 import styles from './MainPage.module.scss'
 import logo from './../../assets/logo.png'
 const MainPage = () => {
-	const navigationLeft = useMemo(
-		() => [
-			{title: 'Игра', path: '/game'},
-			{title: 'Форум', path: '/forum'},
-			{title: 'Рейтинг', path: '/leader-board'}
-		],
-		[]
-	)
+	const navigationLeft = [
+		{title: 'Игра', path: '/game'},
+		{title: 'Форум', path: '/forum'},
+		{title: 'Рейтинг', path: '/leader-board'}
+	]
 
-	const navigationRight = useMemo(
-		() => [
-			{title: 'Профиль', path: '/profile'},
-			{title: 'Выйти', path: '/'}
-		],
-		[]
-	)
+	const navigationRight = [
+		{title: 'Профиль', path: '/profile'},
+		{title: 'Выйти', path: '/'}
+	]
 
 	return (
 		<div className={styles['main-page']}>
