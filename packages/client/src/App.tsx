@@ -2,6 +2,7 @@ import {useEffect} from 'react'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import './App.css'
 import FirstComponent from './components/FirstComponent'
+import Game from './pages/Game'
 
 const App = () => {
 	useEffect(() => {
@@ -25,6 +26,10 @@ const App = () => {
 					<Route
 						path={'*'}
 						element={<div>error404</div>}
+					/>
+					<Route
+						path={'/game'}
+						element={<Game />}
 					/>
 				</Routes>
 			</BrowserRouter>
