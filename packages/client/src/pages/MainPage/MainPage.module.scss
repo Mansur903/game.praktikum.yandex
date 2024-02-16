@@ -1,16 +1,16 @@
 .main-page {
   background-image: url(./../../assets/backgroundMain.png);
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-size: contain;
-  background-position: center;
-  background-attachment: fixed;
   &__content {
     padding: 10px;
     overflow: auto;
-    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     &-logo {
       width: 50%;
     }

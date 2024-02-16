@@ -1,7 +1,8 @@
 import {useEffect} from 'react'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import './App.css'
-import FirstComponent from './components/FirstComponent'
+import MainPage from './pages/MainPage/MainPage'
+import NotFoundPage from './pages/NotFound/404'
 
 const App = () => {
 	useEffect(() => {
@@ -20,11 +21,11 @@ const App = () => {
 				<Routes>
 					<Route
 						path={'/'}
-						element={<FirstComponent />}
+						element={<MainPage />}
 					/>
 					<Route
 						path={'*'}
-						element={<div>error404</div>}
+						element={<NotFoundPage />}
 					/>
 				</Routes>
 			</BrowserRouter>
