@@ -41,7 +41,7 @@ const ForumMain = () => {
 					component={Paper}
 					sx={{
 						borderRadius: '20px',
-						marginTop: '40px'
+						marginTop: '20px'
 					}}>
 					<Table
 						sx={{minWidth: 650}}

@@ -10,6 +10,32 @@
   justify-content: center;
   align-items: center;
 
+  .page {
+    width: 800px;
 
+    &__headerWrapper {
+      display: flex;
+      align-items: center;
+      margin: 0 0 10px 20px;
+    }
+
+    &__headerIcon {
+      width: 31px;
+      height: 31px;
+    }
+
+    &__header {
+      font-size: 18px;
+      color: $whiteSoft;
+      margin-left: 8px
+    }
+
+    &__form {
+      max-width: 800px;
+      height: 440px;
+      border: 1px solid $whiteSoft;
+      border-radius: 20px
+    }
+  }
 
 }
