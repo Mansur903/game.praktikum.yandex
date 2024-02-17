@@ -1,5 +1,4 @@
 import styles from './styles.module.scss'
-import {useEffect, useState} from 'react'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
@@ -10,66 +9,26 @@ import Paper from '@mui/material/Paper'
 import {styled} from '@mui/material/styles'
 import topicIcon from '../../../assets/topic-icon.png'
 
-function createData(
-	name: string,
-	calories: number,
-	fat: number,
-	carbs: number,
-	protein: number
-) {
-	return {name, calories, fat, carbs, protein}
+function createData(topic: string, comments: number) {
+	return {topic, comments}
 }
 
 const rows = [
-	createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-	createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-	createData('Eclair', 262, 16.0, 24, 6.0),
-	createData('Cupcake', 305, 3.7, 67, 4.3),
-	createData('Gingerbread', 356, 16.0, 49, 3.9)
+	createData('Frozen yoghurt', 12),
+	createData('Ice cream sandwich', 16),
+	createData('Eclair', 12),
+	createData('Cupcake', 11),
+	createData('Gingerbread', 9)
 ]
-
-// моковые данные
-// const topiks = [
-//   {
-//     name: 'Первый топик',
-//     commentsCount: 12,
-//     lastCommentDate: '16.02.2024',
-//     username: 'Vivian Suarez',
-//     photo: 'path/to/photo'
-//   }
-// ]
-// const server = {
-//   getLeaders() {
-//     return new Promise(resolve => {
-//       setTimeout(() => resolve(topiks), 150)
-//     })
-//   },
-// }
-
-// interface ITopik {
-//   name: string
-//   commentsCount: number
-//   lastCommentDate: string
-//   username: string
-//   photo: string
-// }
 
 const StyledTableHead = styled(TableHead)(() => ({
 	backgroundColor: 'rgb(107 136 254 / 50%)'
-	// [`&.${tableCellClasses.body}`]: {
-	//   fontSize: 14,
-	// },
 }))
 
 const StyledTableRowCell = styled(TableCell)(() => ({
 	color: '#f0f0f0',
 	fontWeight: 'bold',
 	fontSize: '24px'
-}))
-
-const StyledTableCell = styled(TableCell)(() => ({
-	display: 'flex',
-	alignItems: 'center'
 }))
 
 const ForumMain = () => {
@@ -81,33 +40,43 @@ const ForumMain = () => {
 				<TableContainer
 					component={Paper}
 					sx={{
-						borderRadius: '20px'
+						borderRadius: '20px',
+						marginTop: '40px'
 					}}>
 					<Table
 						sx={{minWidth: 650}}
 						aria-label='simple table'>
 						<StyledTableHead>
 							<TableRow>
-								<StyledTableRowCell>Топики</StyledTableRowCell>
-								<StyledTableRowCell align='right'>Комментарии</StyledTableRowCell>
-								<StyledTableRowCell align='right'>
-									Последний комментарий
-								</StyledTableRowCell>
+								<StyledTableRowCell align='center'>Топики</StyledTableRowCell>
+								<StyledTableRowCell align='center'>Комментарии</StyledTableRowCell>
 							</TableRow>
 						</StyledTableHead>
 						<TableBody>
 							{rows.map((row) => (
 								<TableRow
-									key={row.name}
+									key={row.topic}
 									sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-									<StyledTableCell
+									<TableCell
 										component='th'
-										scope='row'>
-										<img src={topicIcon}></img>
-										{row.name}
-									</StyledTableCell>
-									<TableCell align='right'>{row.calories}</TableCell>
-									<TableCell align='right'>{row.fat}</TableCell>
+										scope='row'
+										align='center'
+										sx={{padding: '25px'}}>
+										<div className={styles.page__topicTitleWrapper}>
+											<img
+												alt='иконка'
+												className={styles.page__topicIcon}
+												src={topicIcon}></img>
+											<div className={styles.page__topicTitle}>{row.topic}</div>
+										</div>
+									</TableCell>
+									<TableCell
+										align='center'
+										sx={{
+											position: 'relative'
+										}}>
+										<div className={styles.page__comments}>{row.comments}</div>
+									</TableCell>
 								</TableRow>
 							))}
 						</TableBody>

@@ -1,8 +1,8 @@
-import {useEffect} from 'react'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import './App.css'
 import FirstComponent from './components/FirstComponent'
 import Forum from './pages/Forum/Main/index'
+import CreateTopicPage from './pages/Forum/CreateTopic/index'
 
 const App = () => {
 	// useEffect(() => {
@@ -26,6 +26,10 @@ const App = () => {
 					<Route
 						path={'/forum'}
 						element={<Forum />}
+					/>
+					<Route
+						path={'/create-topic'}
+						element={<CreateTopicPage />}
 					/>
 					<Route
 						path={'*'}

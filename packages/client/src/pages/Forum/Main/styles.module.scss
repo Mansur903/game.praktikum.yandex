@@ -6,6 +6,9 @@
   min-height: 100vh;
   overflow: auto;
   padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   .page {
     min-height: 100vh;
@@ -13,8 +16,40 @@
     margin: 0 auto;
 
     &__header {
-      color: $whiteSoft
+      color: $whiteSoft;
+      margin-top: 40px
     }
+
+    &__topicIcon {
+      width: 25px;
+      height: 25px;
+    }
+
+    &__topicTitle {
+      padding-left: 10px;
+      white-space: nowrap;
+      width: 130px;
+    }
+
+    &__topicTitleWrapper {
+      display: flex;
+      justify-content: center;
+    }
+
+    &__comments {
+      font-size: 18px;
+      color: $primary500;
+      font-weight: 200;
+      width: 45px;
+      height: 45px;
+      line-height: 45px;
+      border: 2px dotted $primary500;
+      border-radius: 50%;
+      position:absolute;
+      left: 45%;
+      top: 15px;
+    }
+
   }
 
 }
