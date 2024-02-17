@@ -2,6 +2,7 @@ import {useEffect} from 'react'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import './App.css'
 import FirstComponent from './components/FirstComponent'
+import Register from './pages/Register/Register'
 
 const App = () => {
 	useEffect(() => {
@@ -21,6 +22,10 @@ const App = () => {
 					<Route
 						path={'/'}
 						element={<FirstComponent />}
+					/>
+					<Route
+						path={'/signup'}
+						element={<Register />}
 					/>
 					<Route
 						path={'*'}
