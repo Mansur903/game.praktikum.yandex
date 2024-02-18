@@ -32,9 +32,24 @@
 
     &__form {
       max-width: 800px;
-      height: 440px;
+      height: 410px;
       border: 1px solid $whiteSoft;
       border-radius: 20px
+    }
+
+    &__textFieldWrapper {
+      width: 95%;
+      margin: 40px 0 0 20px;
+
+      .header {
+        font-size: 14px;
+        color: $whiteSoft;
+        font-weight: 300;
+      }
+    }
+
+    &__buttonWrapper {
+      float: right;
     }
   }
 
