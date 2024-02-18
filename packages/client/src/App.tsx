@@ -3,6 +3,7 @@ import './App.css'
 import FirstComponent from './components/FirstComponent'
 import Forum from './pages/Forum/Main/index'
 import CreateTopicPage from './pages/Forum/CreateTopic/index'
+import Topic from './pages/Forum/Topic/index'
 
 const App = () => {
 	// useEffect(() => {
@@ -30,6 +31,10 @@ const App = () => {
 					<Route
 						path={'/create-topic'}
 						element={<CreateTopicPage />}
+					/>
+					<Route
+						path={'/topic'}
+						element={<Topic />}
 					/>
 					<Route
 						path={'*'}
