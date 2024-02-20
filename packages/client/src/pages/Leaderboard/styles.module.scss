@@ -1,0 +1,42 @@
+@import '../../styles/typography';
+@import '../../styles/vars';
+
+.wrapper {
+  margin: 0 auto;
+  background-color: $primary500;
+  min-height: 100vh;
+  overflow: auto;
+  padding: 0;
+
+  .page {
+    background-image: url("../../assets/pixel-clouds.png");
+    min-height: 100vh;
+    width: 45%;
+    margin: 0 auto;
+
+    &__board {
+      overflow: auto;
+    }
+
+    &__button {
+      width: 110px;
+      padding: 10px;
+      background-color: rgba(0,0,0,0.0);
+      border: 2px solid white;
+      color: white;
+      border-radius: 15px;
+      cursor: pointer;
+      margin: 40px 60px;
+    }
+
+    &__header {
+      color: $white;
+      border: 2px solid white;
+      border-radius: 20px;
+      width: 270px;
+      padding: 5px 20px;
+      margin: 0 auto;
+      text-align: center;
+    }
+  }
+}

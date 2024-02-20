@@ -4,6 +4,7 @@ import './App.css'
 import MainPage from './pages/MainPage/MainPage'
 import NotFoundPage from './pages/NotFound/404'
 import Game from './pages/Game'
+import Leaderboard from './pages/Leaderboard'
 
 const App = () => {
 	useEffect(() => {
@@ -25,16 +26,16 @@ const App = () => {
 						element={<MainPage />}
 					/>
 					<Route
+						path={'/game'}
+						element={<Game />}
+					/>
+					<Route
+						path={'/leaderboard'}
+						element={<Leaderboard />}
+					/>
+					<Route
 						path={'*'}
 						element={<NotFoundPage />}
-					/>
-					<Route
-						path={'/game'}
-						element={<Game />}
-					/>
-					<Route
-						path={'/game'}
-						element={<Game />}
 					/>
 				</Routes>
 			</BrowserRouter>

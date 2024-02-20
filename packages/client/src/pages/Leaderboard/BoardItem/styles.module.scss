@@ -1,0 +1,61 @@
+@import '../../../styles/vars';
+
+.leader {
+  $self: &;
+  background-color: $gray100;
+  height: 50px;
+  width: 80%;
+  margin: 35px auto;
+  border-radius: 10px;
+  list-style: none;
+  display: flex;
+
+  &__iconArea {
+    width: 9%;
+    height: 100%;
+    border-right: 2px solid rgba(128, 128, 128, 0.2);
+    position: relative;
+
+    #{ $self }__icon {
+      width: 30px;
+      padding: 11px 0 11px 12px;
+    }
+
+    #{ $self }__positionNumber {
+      position: absolute;
+      top: 18px;
+      left: 23px;
+      color: $gray500;
+      font-size: 12px
+    }
+  }
+
+  &__personalArea {
+    width: 80%;
+    display: flex;
+    align-items: center;
+
+    #{ $self }__photo {
+      width: 40px;
+      border-radius: 50%;
+      border: 1px solid grey;
+      margin-left: 10px;
+    }
+
+    #{ $self }__name {
+      margin-left: 15px;
+    }
+  }
+
+  &__scoreArea {
+    width: 10%;
+    border-left: 2px solid rgba(128, 128, 128, 0.2);
+    text-align: center;
+    vertical-align: middle;
+    line-height: 50px;
+  }
+
+  &__hidden {
+    display: none;
+  }
+}
