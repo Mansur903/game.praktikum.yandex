@@ -1,6 +1,6 @@
-import {useEffect, useRef} from 'react'
+import {FC, useEffect, useRef} from 'react'
 import GameEngine from '../engine/GameEngine'
-const Game = () => {
+const Game: FC = () => {
 	const ref = useRef<HTMLCanvasElement>(null)
 
 	useEffect(() => {
@@ -8,7 +8,7 @@ const Game = () => {
 			const game = new GameEngine(ref.current)
 			game.start()
 		}
-	}, [ref])
+	}, [])
 
 	return (
 		<>
