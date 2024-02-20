@@ -32,6 +32,10 @@ const App = () => {
 						path={'/game'}
 						element={<Game />}
 					/>
+					<Route
+						path={'/game'}
+						element={<Game />}
+					/>
 				</Routes>
 			</BrowserRouter>
 		</div>
