@@ -1,9 +1,9 @@
 import {useEffect} from 'react'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import './App.css'
+import Game from './pages/Game/Game'
 import MainPage from './pages/MainPage/MainPage'
 import NotFoundPage from './pages/NotFound/404'
-import Game from './pages/Game'
 
 const App = () => {
 	useEffect(() => {
@@ -27,10 +27,6 @@ const App = () => {
 					<Route
 						path={'*'}
 						element={<NotFoundPage />}
-					/>
-					<Route
-						path={'/game'}
-						element={<Game />}
 					/>
 					<Route
 						path={'/game'}
