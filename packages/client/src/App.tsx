@@ -1,9 +1,9 @@
 import {useEffect} from 'react'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import './App.css'
+import Game from './pages/Game/Game'
 import MainPage from './pages/MainPage/MainPage'
 import NotFoundPage from './pages/NotFound/404'
-import Game from './pages/Game'
 import Leaderboard from './pages/Leaderboard'
 import Profile from './pages/Profile/Profile'
 
@@ -42,6 +42,13 @@ const App = () => {
 						path={'*'}
 						element={<NotFoundPage />}
 					/>
+<<<<<<< HEAD
+=======
+					<Route
+						path={'/game'}
+						element={<Game />}
+					/>
+>>>>>>> 9a2a628 (feat: ad game end state)
 				</Routes>
 			</BrowserRouter>
 		</div>
