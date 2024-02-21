@@ -5,6 +5,7 @@ import MainPage from './pages/MainPage/MainPage'
 import NotFoundPage from './pages/NotFound/404'
 import Game from './pages/Game'
 import Leaderboard from './pages/Leaderboard'
+import Profile from './pages/Profile/Profile'
 
 const App = () => {
 	useEffect(() => {
@@ -28,6 +29,10 @@ const App = () => {
 					<Route
 						path={'/game'}
 						element={<Game />}
+					/>
+					<Route
+						path={'/profile'}
+						element={<Profile />}
 					/>
 					<Route
 						path={'/leaderboard'}
