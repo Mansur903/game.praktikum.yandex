@@ -21,7 +21,6 @@ export default class GameEngine {
 	}
 
 	stateChange() {
-		console.log('test', this.state)
 		switch (this.state) {
 			case GameState.START:
 				this.state = GameState.END
