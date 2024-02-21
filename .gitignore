@@ -4,3 +4,6 @@ node_modules/
 .vscode
 dist
 tmp
+yarn.lock
+yarn-*
+learna-*

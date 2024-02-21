@@ -1,0 +1,50 @@
+.main-page {
+  background-image: url(./../../assets/backgroundMain.png);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &__content {
+    padding: 10px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    &-logo {
+      width: 50%;
+    }
+  }
+  &__container {
+    background-color: $background;
+    width: 50%;
+    height: 100vh;
+  }
+  &__navigation {
+    padding: 10px 20px;
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0 8px 15px $shadow;
+    line-height: 45px;
+    display: flex;
+    justify-content: space-between;
+    &-item {
+      display: flex;
+      gap: 10px;
+
+      & a {
+        text-decoration: none;
+        color: $link;
+        text-transform: uppercase;
+        font-weight: 600;
+        transition: 0.5s;
+        &:hover {
+          color: $hoverLink;
+        }
+      }
+    }
+  }
+}
+
+.logo {
+  width: 100%;
+}
