@@ -1,8 +1,26 @@
-import React, {useState} from 'react'
+import React, {useCallback, useState} from 'react'
 import {Button, Box, TextField, Typography, Link} from '@mui/material'
 import axios from 'axios'
 import {FormValues} from './model'
 import bg from './bg.svg'
+import {fieldValidation} from '../../helpers/fieldValidation'
+
+const textFieldSXProps = {
+	fieldset: {
+		borderColor: 'white',
+		color: 'white',
+		'& .MuiOutlinedInputNotchedOutline': {
+			borderColor: 'white'
+		}
+	}
+}
+const textFieldInputLabelProps = {
+	style: {
+		color: 'white'
+	}
+}
+
+export type FormErrors = Partial<Record<keyof FormValues, string>>
 
 const SignUpPage: React.FC = () => {
 	const [formValues, setFormValues] = useState<FormValues>({
@@ -14,85 +32,56 @@ const SignUpPage: React.FC = () => {
 		phone: ''
 	})
 
-	const [errors, setErrors] = useState<Partial<FormValues>>({})
+	const [errors, setErrors] = useState<FormErrors>({})
 
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const {name, value} = e.target
-		setFormValues((prevValues) => ({
-			...prevValues,
-			[name]: value
-		}))
+	const handleChange = useCallback(
+		(e: React.ChangeEvent<HTMLInputElement>) => {
+			const {name, value} = e.target
+			setFormValues((prevValues) => ({
+				...prevValues,
+				[name]: value
+			}))
+			const {newErrors} = fieldValidation({
+				fieldName: name as keyof FormValues,
+				value,
+				errors
+			})
+			setErrors(newErrors)
+		},
+		[errors]
+	)
 
-		validateField(name, value)
-	}
+	const handleSubmit = useCallback(
+		async (e: React.FormEvent<HTMLFormElement>) => {
+			e.preventDefault()
 
-	const validateField = (fieldName: keyof FormValues, value: string) => {
-		let isValid = true
-		const newErrors = {...errors}
-		newErrors[fieldName] = ''
-
-		const nameRegex = /^[A-ZА-Я][a-zA-Zа-яА-Я-]*$/
-		if (
-			(fieldName === 'first_name' || fieldName === 'second_name') &&
-			!nameRegex.test(value)
-		) {
-			newErrors[fieldName] = 'Должно начинаться с большой буквы'
-			isValid = false
-		}
-
-		const loginRegex = /^(?!\\d+$)[a-zA-Z\\d_-]{3,20}$/
-		if (fieldName === 'login' && !loginRegex.test(value)) {
-			newErrors[fieldName] =
-				'Допустимы только буквы, цифры, дефис и нижнее подчёркивание. Длина должна быть от 3 до 20 символов'
-			isValid = false
-		}
-
-		const emailRegex =
-			/^[A-Za-z0-9]+([._+-][A-Za-z0-9]+)*@[A-Za-z0-9]+([.-][A-Za-z0-9]+)*\.[A-Za-z]{2,}$/
-		if (fieldName === 'email' && !emailRegex.test(value)) {
-			newErrors[fieldName] = 'Некорректный email'
-			isValid = false
-		}
-
-		const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,40}$/
-		if (fieldName === 'password' && !passwordRegex.test(value)) {
-			newErrors[fieldName] =
-				'Пароль должен содержать не менее 8 символов, включая заглавные и строчные буквы и цифры'
-			isValid = false
-		}
-
-		const phoneRegex = /^[+]?[0-9]{10,15}$/
-		if (fieldName === 'phone' && !phoneRegex.test(value)) {
-			newErrors[fieldName] = 'Некорректный номер телефона'
-			isValid = false
-		}
-
-		setErrors(newErrors)
-		return isValid
-	}
-
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault()
-
-		let isValid = true
-		Object.keys(formValues).forEach((field) => {
-			isValid =
-				validateField(field as keyof FormValues, formValues[field as keyof FormValues]) &&
-				isValid
-		})
-
-		if (isValid) {
-			try {
-				const response = axios.post(
-					'https://ya-praktikum.tech/api/v2/api/signup',
-					formValues
-				)
-				console.log(response)
-			} catch (error) {
-				console.log(error)
+			let isValid = true
+			let validationErrors = {...errors}
+			for (const [name, value] of Object.entries(formValues)) {
+				const {isValid: isFieldValid, newErrors} = fieldValidation({
+					fieldName: name as keyof FormValues,
+					value,
+					errors
+				})
+				isValid = isFieldValid
+				validationErrors = {...validationErrors, ...newErrors}
 			}
-		}
-	}
+			setErrors(validationErrors)
+
+			if (isValid) {
+				try {
+					const response = axios.post(
+						'https://ya-praktikum.tech/api/v2/api/signup',
+						formValues
+					)
+					console.log(response)
+				} catch (error) {
+					console.log(error)
+				}
+			}
+		},
+		[formValues, errors]
+	)
 
 	return (
 		<Box
@@ -106,15 +95,8 @@ const SignUpPage: React.FC = () => {
 			}}>
 			<Box
 				sx={{
-					minWidth: 500,
-					padding: 4,
-					borderRadius: 4,
-					boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-					position: 'absolute',
-					top: '50%',
-					left: '50%',
-					transform: 'translate(-50%, -50%)',
-					background: 'white'
+					minWidth: 400,
+					padding: 4
 				}}>
 				<Typography
 					variant='h4'
@@ -135,62 +117,75 @@ const SignUpPage: React.FC = () => {
 						}}>
 						<Typography
 							variant='h6'
-							sx={{textAlign: 'center'}}>
+							sx={{textAlign: 'center', color: 'white'}}>
 							Регистрация
 						</Typography>
 						<TextField
 							label='Имя'
-							name='first_name'
+							name={'first_name' as keyof FormValues}
 							value={formValues.first_name}
 							onChange={handleChange}
 							error={!!errors.first_name}
 							helperText={errors.first_name}
+							sx={textFieldSXProps}
+							InputLabelProps={textFieldInputLabelProps}
 						/>
 						<TextField
 							label='Фамилия'
-							name='second_name'
+							name={'second_name' as keyof FormValues}
 							value={formValues.second_name}
 							onChange={handleChange}
 							error={!!errors.second_name}
 							helperText={errors.second_name}
+							sx={textFieldSXProps}
+							InputLabelProps={textFieldInputLabelProps}
 						/>
 						<TextField
 							label='Логин'
-							name='login'
+							name={'login' as keyof FormValues}
 							value={formValues.login}
 							onChange={handleChange}
 							error={!!errors.login}
 							helperText={errors.login}
+							sx={textFieldSXProps}
+							InputLabelProps={textFieldInputLabelProps}
 						/>
 						<TextField
 							label='Email'
-							name='email'
+							name={'email' as keyof FormValues}
 							value={formValues.email}
 							onChange={handleChange}
 							error={!!errors.email}
 							helperText={errors.email}
+							sx={textFieldSXProps}
+							InputLabelProps={textFieldInputLabelProps}
 						/>
 						<TextField
 							label='Пароль'
-							name='password'
+							name={'password' as keyof FormValues}
 							type='password'
 							value={formValues.password}
 							onChange={handleChange}
 							error={!!errors.password}
 							helperText={errors.password}
+							sx={textFieldSXProps}
+							InputLabelProps={textFieldInputLabelProps}
 						/>
 						<TextField
 							label='Телефон'
-							name='phone'
+							name={'phone' as keyof FormValues}
 							value={formValues.phone}
 							onChange={handleChange}
 							error={!!errors.phone}
 							helperText={errors.phone}
+							sx={textFieldSXProps}
+							InputLabelProps={textFieldInputLabelProps}
 						/>
 						<Button
 							type='submit'
 							sx={{
 								color: '#36981D',
+								fontWeight: 'bold',
 								padding: 2,
 								width: '100%',
 								border: 'solid 1px #36981D'
