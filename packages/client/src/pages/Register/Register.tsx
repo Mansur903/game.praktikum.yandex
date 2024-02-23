@@ -196,7 +196,7 @@ const SignUpPage: React.FC = () => {
 				</form>
 				<Typography
 					variant='body2'
-					sx={{textAlign: 'center', marginTop: 2}}>
+					sx={{textAlign: 'center', marginTop: 2, color: 'white'}}>
 					Уже зарегистрированы?{' '}
 					<Link
 						href='/login'
