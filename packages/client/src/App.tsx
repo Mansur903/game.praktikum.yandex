@@ -1,6 +1,7 @@
 import {useEffect} from 'react'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import './App.css'
+import Register from './pages/Register/Register'
 import Game from './pages/Game/Game'
 import MainPage from './pages/MainPage/MainPage'
 import NotFoundPage from './pages/NotFound/404'
@@ -37,6 +38,10 @@ const App = () => {
 					<Route
 						path={'/leaderboard'}
 						element={<Leaderboard />}
+					/>
+					<Route
+						path={'/signup'}
+						element={<Register />}
 					/>
 					<Route
 						path={'*'}
