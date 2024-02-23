@@ -124,7 +124,7 @@ const SignUpPage: React.FC = () => {
 						</Typography>
 						<TextField
 							label='Имя'
-							name={'first_name' as keyof FormValues}
+							name='first_name'
 							value={formValues.first_name}
 							onChange={handleChange}
 							error={!!errors.first_name}
@@ -134,7 +134,7 @@ const SignUpPage: React.FC = () => {
 						/>
 						<TextField
 							label='Фамилия'
-							name={'second_name' as keyof FormValues}
+							name='second_name'
 							value={formValues.second_name}
 							onChange={handleChange}
 							error={!!errors.second_name}
@@ -144,7 +144,7 @@ const SignUpPage: React.FC = () => {
 						/>
 						<TextField
 							label='Логин'
-							name={'login' as keyof FormValues}
+							name='login'
 							value={formValues.login}
 							onChange={handleChange}
 							error={!!errors.login}
@@ -154,7 +154,7 @@ const SignUpPage: React.FC = () => {
 						/>
 						<TextField
 							label='Email'
-							name={'email' as keyof FormValues}
+							name='email'
 							value={formValues.email}
 							onChange={handleChange}
 							error={!!errors.email}
@@ -164,7 +164,7 @@ const SignUpPage: React.FC = () => {
 						/>
 						<TextField
 							label='Пароль'
-							name={'password' as keyof FormValues}
+							name='password'
 							type='password'
 							value={formValues.password}
 							onChange={handleChange}
@@ -175,7 +175,7 @@ const SignUpPage: React.FC = () => {
 						/>
 						<TextField
 							label='Телефон'
-							name={'phone' as keyof FormValues}
+							name='phone'
 							value={formValues.phone}
 							onChange={handleChange}
 							error={!!errors.phone}
