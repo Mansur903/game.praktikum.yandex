@@ -20,6 +20,26 @@ const textFieldInputLabelProps = {
 	}
 }
 
+const boxRootSXProps = {
+	backgroundImage: `url(${bg})`,
+	backgroundSize: 'cover',
+	backgroundRepeat: 'no-repeat',
+	backgroundPosition: 'center',
+	width: '100vw',
+	height: '100vh'
+}
+
+const boxFormSXProps = {
+	display: 'flex',
+	flexDirection: 'column',
+	gap: 2,
+	width: '100%',
+	maxWidth: 400,
+	borderRadius: 2,
+	padding: 2,
+	margin: '0 auto'
+}
+
 export type FormErrors = Partial<Record<keyof FormValues, string>>
 
 const SignUpPage: React.FC = () => {
@@ -84,15 +104,7 @@ const SignUpPage: React.FC = () => {
 	)
 
 	return (
-		<Box
-			sx={{
-				backgroundImage: `url(${bg})`,
-				backgroundSize: 'cover',
-				backgroundRepeat: 'no-repeat',
-				backgroundPosition: 'center',
-				width: '100vw',
-				height: '100vh'
-			}}>
+		<Box sx={boxRootSXProps}>
 			<Box
 				sx={{
 					minWidth: 400,
@@ -104,17 +116,7 @@ const SignUpPage: React.FC = () => {
 					Flappy Progger
 				</Typography>
 				<form onSubmit={handleSubmit}>
-					<Box
-						sx={{
-							display: 'flex',
-							flexDirection: 'column',
-							gap: 2,
-							width: '100%',
-							maxWidth: 400,
-							borderRadius: 2,
-							padding: 2,
-							margin: '0 auto'
-						}}>
+					<Box sx={boxFormSXProps}>
 						<Typography
 							variant='h6'
 							sx={{textAlign: 'center', color: 'white'}}>
