@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "bootstrap": "yarn && node init.js && lerna clean && yarn && lerna bootstrap",
+    "bootstrap": "yarn && node init.mjs && lerna clean && yarn && lerna bootstrap",
     "build": "lerna run build",
     "dev:client": "lerna run dev  --scope=client",
     "dev:server": "lerna run dev --scope=server",
@@ -23,5 +23,19 @@
   "devDependencies": {
     "@evilmartians/lefthook": "^1.3.9",
     "lerna": "^5.4.3"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.2",
+    "eslint-config-prettier": "^8.5.0",
+    "normalize.css": "^8.0.1",
+    "prettier": "^2.7.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "jest-environment-jsdom": "^29.0.1",
+    "lefthook": "^1.3.9",
+    "sass": "^1.70.0",
+    "ts-jest": "^28.0.8",
+    "typescript": "^4.8.2",
+    "vite": "^3.0.7"
   }
 }

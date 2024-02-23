@@ -5,3 +5,5 @@ node_modules/
 dist
 tmp
 yarn.lock
+yarn-*
+learna-*

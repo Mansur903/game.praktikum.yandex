@@ -1,0 +1,17 @@
+@mixin flexbox($justify-content, $align-items, $flex-direction, $gap) {
+    display: flex;
+    gap: $gap;
+  
+    @if $justify-content != initial {
+      justify-content: $justify-content;
+    }
+  
+    @if $align-items != initial {
+      align-items: $align-items;
+    }
+  
+    @if $flex-direction != row {
+      flex-direction: $flex-direction;
+    }
+  }
+

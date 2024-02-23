@@ -1,8 +1,12 @@
 import {useEffect} from 'react'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import './App.css'
-import FirstComponent from './components/FirstComponent'
 import Register from './pages/Register/Register'
+import Game from './pages/Game/Game'
+import MainPage from './pages/MainPage/MainPage'
+import NotFoundPage from './pages/NotFound/404'
+import Leaderboard from './pages/Leaderboard'
+import Profile from './pages/Profile/Profile'
 
 const App = () => {
 	useEffect(() => {
@@ -21,7 +25,19 @@ const App = () => {
 				<Routes>
 					<Route
 						path={'/'}
-						element={<FirstComponent />}
+						element={<MainPage />}
+					/>
+					<Route
+						path={'/game'}
+						element={<Game />}
+					/>
+					<Route
+						path={'/profile'}
+						element={<Profile />}
+					/>
+					<Route
+						path={'/leaderboard'}
+						element={<Leaderboard />}
 					/>
 					<Route
 						path={'/signup'}
@@ -29,7 +45,11 @@ const App = () => {
 					/>
 					<Route
 						path={'*'}
-						element={<div>error404</div>}
+						element={<NotFoundPage />}
+					/>
+					<Route
+						path={'/game'}
+						element={<Game />}
 					/>
 				</Routes>
 			</BrowserRouter>
