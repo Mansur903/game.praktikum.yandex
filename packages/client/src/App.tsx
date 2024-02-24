@@ -42,13 +42,10 @@ const App = () => {
 						path={'*'}
 						element={<NotFoundPage />}
 					/>
-<<<<<<< HEAD
-=======
 					<Route
 						path={'/game'}
 						element={<Game />}
 					/>
->>>>>>> 9a2a628 (feat: ad game end state)
 				</Routes>
 			</BrowserRouter>
 		</div>

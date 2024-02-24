@@ -13,4 +13,12 @@ export default class GameElement {
 		this.y = this.screen.height - this.sprite.height
 		this.context.drawImage(this.sprite, this.x, this.y)
 	}
+
+	drawFullWidth() {
+		const repeatX = Math.ceil(this.screen.width / this.sprite.width)
+		this.y = this.screen.height - this.sprite.height
+		for (let i = 0; i < repeatX; i++) {
+			this.context.drawImage(this.sprite, i * this.sprite.width, this.y)
+		}
+	}
 }
