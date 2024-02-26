@@ -1,10 +1,10 @@
 import styles from './styles.module.scss'
 
 interface ProfileProps {
-	avatarImage: string | undefined
-	name: string | undefined
-	email: string | undefined
-	record: number | undefined
+	avatarImage?: string | undefined
+	name?: string | undefined
+	email?: string | undefined
+	record?: number | undefined
 }
 
 const Profile = ({avatarImage, record, name, email}: ProfileProps) => {
