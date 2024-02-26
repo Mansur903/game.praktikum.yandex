@@ -44,10 +44,17 @@ export default class GameEngine extends EventTarget {
 		this.bird = new Bird(this.canvas, this.context, this.state, this.mainInstance)
 		this.ground = new Ground(this.canvas, this.context)
 		this.ui = new UI(this.canvas, this.context)
+		/** Есть ощущение что вычисление и отрисовку нужно разнести по разным циклам.
+		 * Если я правильно понял, то requestAnimationFrame привязан к герцовке.
+		 * И если привязаться к ней, то скорость на разных компах в зависимости от этого будет различаться.
+		 * В этом случае, по идее, вычисления делаем в отдельном цикле, с собственной скоростью,
+		 * а отрисовку в requestAnimationFrame.
+		 * Что думаете? Важно мнение всех читающих.
+		 */
 		setInterval(() => {
 			this.update()
 			this.frames++
-		}, 50)
+		}, 25)
 	}
 
 	/**
