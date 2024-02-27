@@ -15,10 +15,13 @@ export default class GameElement {
 	}
 
 	drawFullWidth() {
-		const repeatX = Math.ceil(this.screen.width / this.sprite.width)
 		this.y = this.screen.height - this.sprite.height
-		for (let i = 0; i < repeatX; i++) {
-			this.context.drawImage(this.sprite, i * this.sprite.width, this.y)
+		const pattern = this.context.createPattern(this.sprite, 'repeat')
+		if (pattern) {
+			this.context.setTransform(1, 0, 0, 1, this.x, this.y)
+			this.context.fillStyle = pattern
+			this.context.fillRect(0, 0, this.screen.width, this.sprite.height)
+			this.context.setTransform(1, 0, 0, 1, 0, 0)
 		}
 	}
 }
