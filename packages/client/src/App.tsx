@@ -33,7 +33,14 @@ const App = () => {
 					/>
 					<Route
 						path={'/profile'}
-						element={<Profile />}
+						element={
+							<Profile
+								name='f'
+								email='f'
+								record={2}
+								avatarImage='./'
+							/>
+						}
 					/>
 					<Route
 						path={'/leaderboard'}
