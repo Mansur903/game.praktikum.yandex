@@ -1,5 +1,6 @@
 import React, {useCallback, useState} from 'react'
 import {Button, Box, TextField, Typography, Link} from '@mui/material'
+import {useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import {LoginValues} from './model'
 import bg from '../../assets/backgroundMain.png'
@@ -40,6 +41,7 @@ const boxFormSXProps = {
 }
 
 export const Login: React.FC = () => {
+	const navigate = useNavigate()
 	const [formValues, setFormValues] = useState<LoginValues>({
 		login: '',
 		password: ''
@@ -56,17 +58,17 @@ export const Login: React.FC = () => {
 	const handleSubmit = useCallback(
 		async (e: React.FormEvent<HTMLFormElement>) => {
 			e.preventDefault()
-			try {
-				await axios.post('https://ya-praktikum.tech/api/v2/auth/signin', formValues, {
+			await axios
+				.post('https://ya-praktikum.tech/api/v2/auth/signin', formValues, {
 					headers: {
 						'Content-Type': 'application/json'
 					},
 					withCredentials: true
 				})
-				window.location.href = '/'
-			} catch (error) {
-				console.log(error)
-			}
+				.then(() => {
+					navigate('/')
+				})
+				.catch((error) => console.log(error))
 		},
 		[formValues]
 	)

@@ -4,6 +4,7 @@ import axios from 'axios'
 import {FormValues} from './model'
 import bg from '../../assets/backgroundMain.png'
 import {fieldValidation} from '../../helpers/fieldValidation'
+import {useNavigate} from 'react-router-dom'
 
 const textFieldSXProps = {
 	fieldset: {
@@ -43,6 +44,7 @@ const boxFormSXProps = {
 export type FormErrors = Partial<Record<keyof FormValues, string>>
 
 const SignUpPage: React.FC = () => {
+	const navigate = useNavigate()
 	const [formValues, setFormValues] = useState<FormValues>({
 		first_name: '',
 		second_name: '',
@@ -90,8 +92,11 @@ const SignUpPage: React.FC = () => {
 
 			if (isValid) {
 				try {
-					await axios.post('https://ya-praktikum.tech/api/v2/auth/signup', formValues)
-					window.location.href = '/signin'
+					await axios
+						.post('https://ya-praktikum.tech/api/v2/auth/signup', formValues)
+						.then(() => {
+							navigate('/signin')
+						})
 				} catch (error) {
 					console.log(error)
 				}
