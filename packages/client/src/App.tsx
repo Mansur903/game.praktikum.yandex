@@ -1,6 +1,7 @@
 import {useEffect} from 'react'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import './App.css'
+import Register from './pages/Register/Register'
 import Game from './pages/Game/Game'
 import MainPage from './pages/MainPage/MainPage'
 import NotFoundPage from './pages/NotFound/404'
@@ -39,16 +40,17 @@ const App = () => {
 						element={<Leaderboard />}
 					/>
 					<Route
+						path={'/signup'}
+						element={<Register />}
+					/>
+					<Route
 						path={'*'}
 						element={<NotFoundPage />}
 					/>
-<<<<<<< HEAD
-=======
 					<Route
 						path={'/game'}
 						element={<Game />}
 					/>
->>>>>>> 9a2a628 (feat: ad game end state)
 				</Routes>
 			</BrowserRouter>
 		</div>

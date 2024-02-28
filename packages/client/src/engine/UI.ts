@@ -1,10 +1,10 @@
-import GameOver from '../assets/game/go.png'
 import GetReady from '../assets/game/getready.png'
+import GameOver from '../assets/game/go.png'
 import Tap1 from '../assets/game/tap/t0.png'
-import Tap2 from '../assets/game//tap/t1.png'
+import Tap2 from '../assets/game/tap/t1.png'
+import {GameState} from '../types/enum/Game.enum'
 import GameElement from './GameElement'
 import constants from './constants'
-import {GameState} from '../types/enum/Game.enum'
 export default class UI extends GameElement {
 	getReady = {sprite: new Image()}
 	gameOver = {sprite: new Image()}
