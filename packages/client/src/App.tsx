@@ -7,6 +7,8 @@ import MainPage from './pages/MainPage/MainPage'
 import NotFoundPage from './pages/NotFound/404'
 import Leaderboard from './pages/Leaderboard'
 import Profile from './pages/Profile/Profile'
+import {Login} from './pages/Login/Login'
+import ProtectedRoute from './routing/ProtectedRoute'
 
 const App = () => {
 	useEffect(() => {
@@ -19,37 +21,40 @@ const App = () => {
 
 		fetchServerData()
 	}, [])
+
 	return (
 		<div className='App'>
 			<BrowserRouter>
 				<Routes>
-					<Route
-						path={'/'}
-						element={<MainPage />}
-					/>
-					<Route
-						path={'/game'}
-						element={<Game />}
-					/>
-					<Route
-						path={'/profile'}
-						element={<Profile />}
-					/>
-					<Route
-						path={'/leaderboard'}
-						element={<Leaderboard />}
-					/>
+					<Route element={<ProtectedRoute />}>
+						<Route
+							path={'/'}
+							element={<MainPage />}
+						/>
+						<Route
+							path={'/game'}
+							element={<Game />}
+						/>
+						<Route
+							path={'/profile'}
+							element={<Profile />}
+						/>
+						<Route
+							path={'/leaderboard'}
+							element={<Leaderboard />}
+						/>
+					</Route>
 					<Route
 						path={'/signup'}
 						element={<Register />}
 					/>
 					<Route
-						path={'*'}
-						element={<NotFoundPage />}
+						path={'/signin'}
+						element={<Login />}
 					/>
 					<Route
-						path={'/game'}
-						element={<Game />}
+						path={'*'}
+						element={<NotFoundPage />}
 					/>
 				</Routes>
 			</BrowserRouter>
