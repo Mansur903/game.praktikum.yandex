@@ -21,6 +21,11 @@
     "composite": true
   },
   "exclude": ["nodeModules", "public"],
-  "include": ["src", "jest.config.js", "vite.config.ts"],
+  "include": [
+    "src",
+    "jest.config.js",
+    "vite.config.ts",
+    "setupTests.ts"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
