@@ -2,8 +2,11 @@ import React, {useCallback, useState} from 'react'
 import {Button, Box, TextField, Typography, Link} from '@mui/material'
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios'
+
 import {LoginValues} from './model'
 import bg from '../../assets/backgroundMain.png'
+import {setUser} from '../../entities/user'
+import {useAppDispatch} from '../../hooks'
 
 const textFieldSXProps = {
 	fieldset: {
@@ -42,6 +45,7 @@ const boxFormSXProps = {
 
 export const Login: React.FC = () => {
 	const navigate = useNavigate()
+	const dispatch = useAppDispatch()
 	const [formValues, setFormValues] = useState<LoginValues>({
 		login: '',
 		password: ''
@@ -64,6 +68,10 @@ export const Login: React.FC = () => {
 						'Content-Type': 'application/json'
 					},
 					withCredentials: true
+				})
+				.then((response) => {
+					const userData = JSON.parse(response.config.data)
+					dispatch(setUser(userData))
 				})
 				.then(() => {
 					navigate('/')
