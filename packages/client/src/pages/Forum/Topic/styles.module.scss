@@ -1,0 +1,82 @@
+@import "../../../styles/vars.scss";
+
+.wrapper {
+  margin: 0 auto;
+  background-color: $primary500;
+  min-height: 100vh;
+  overflow: auto;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .page {
+    min-height: 100vh;
+    width: 45%;
+    margin: 0 auto;
+
+    .topic {
+      height: 144px;
+      display: flex;
+      border-bottom: 2px solid $gray100;
+
+      &__topicName {
+        display: flex;
+        margin: 10px 0 0 10px;
+
+        .topicName {
+          margin: 5px 0 0 5px;
+          font-size: 14px;
+          color: $primary500;
+        }
+      }
+
+      &__authorBlock {
+        padding-right: 10px;
+        border-right: 2px solid $gray100;
+        width: 30%;
+
+        .topic__author {
+          display: flex;
+          margin: 20px 0 0 10px;
+
+          .topic__authorName {
+            font-size: 12px;
+            margin: 20px 0 0 10px;
+          }
+
+          .topic__photo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+          }
+        }
+      }
+
+      &__descriptionBlock {
+        width: 62%;
+        .topic__description {
+          font-size: 12px;
+          margin: 10px 0 0 10px;
+        }
+      }
+    }
+
+    &__commentsDivider {
+      background-color: rgb(107 136 254 / 50%);
+
+      .dividerText {
+        color: $whiteSoft;
+        font-size: 24px;
+        font-weight: bold;
+        padding: 16px;
+      }
+    }
+
+    &__buttonWrapper {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+}
