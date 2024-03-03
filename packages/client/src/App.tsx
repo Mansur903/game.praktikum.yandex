@@ -1,5 +1,6 @@
-import {useEffect} from 'react'
+import React, {useEffect, useCallback} from 'react'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
+import {FullScreen, useFullScreenHandle} from 'react-full-screen'
 import './App.css'
 import Register from './pages/Register/Register'
 import Game from './pages/Game/Game'
@@ -14,6 +15,15 @@ import CreateTopicPage from './pages/Forum/CreateTopic/index'
 import Topic from './pages/Forum/Topic/index'
 
 const App = () => {
+	const handle = useFullScreenHandle()
+
+	const toggleFullScreen = useCallback(
+		(e: React.KeyboardEvent) => {
+			if (e.key === 'f') handle.active ? handle.exit() : handle.enter()
+		},
+		[handle.active]
+	)
+
 	useEffect(() => {
 		const fetchServerData = async () => {
 			const url = `http://localhost:${__SERVER_PORT__}`
@@ -26,54 +36,59 @@ const App = () => {
 	}, [])
 
 	return (
-		<div className='App'>
-			<BrowserRouter>
-				<Routes>
-					<Route element={<ProtectedRoute />}>
+		<FullScreen handle={handle}>
+			<div
+				className='App'
+				tabIndex={0}
+				onKeyDown={toggleFullScreen}>
+				<BrowserRouter>
+					<Routes>
+						<Route element={<ProtectedRoute />}>
+							<Route
+								path={'/'}
+								element={<MainPage />}
+							/>
+							<Route
+								path={'/game'}
+								element={<Game />}
+							/>
+							<Route
+								path={'/profile'}
+								element={<Profile />}
+							/>
+							<Route
+								path={'/leaderboard'}
+								element={<Leaderboard />}
+							/>
+						</Route>
 						<Route
-							path={'/'}
-							element={<MainPage />}
+							path={'/signup'}
+							element={<Register />}
 						/>
 						<Route
-							path={'/game'}
-							element={<Game />}
+							path={'/signin'}
+							element={<Login />}
 						/>
 						<Route
-							path={'/profile'}
-							element={<Profile />}
+							path={'/forum'}
+							element={<Forum />}
 						/>
 						<Route
-							path={'/leaderboard'}
-							element={<Leaderboard />}
+							path={'/create-topic'}
+							element={<CreateTopicPage />}
 						/>
-					</Route>
-					<Route
-						path={'/signup'}
-						element={<Register />}
-					/>
-					<Route
-						path={'/signin'}
-						element={<Login />}
-					/>
-					<Route
-						path={'/forum'}
-						element={<Forum />}
-					/>
-					<Route
-						path={'/create-topic'}
-						element={<CreateTopicPage />}
-					/>
-					<Route
-						path={'/topic'}
-						element={<Topic />}
-					/>
-					<Route
-						path={'*'}
-						element={<NotFoundPage />}
-					/>
-				</Routes>
-			</BrowserRouter>
-		</div>
+						<Route
+							path={'/topic'}
+							element={<Topic />}
+						/>
+						<Route
+							path={'*'}
+							element={<NotFoundPage />}
+						/>
+					</Routes>
+				</BrowserRouter>
+			</div>
+		</FullScreen>
 	)
 }
 
