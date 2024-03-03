@@ -7,7 +7,8 @@ import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import topicIcon from '../../../assets/topic-icon.png'
-import {StyledTableRowCell, StyledTableHead} from '../BasicComponents'
+import {StyledTableRowCell, StyledTableHead, StyledButton} from '../BasicComponents'
+import {useNavigate} from 'react-router-dom'
 
 function createData(topic: string, comments: number) {
 	return {topic, comments}
@@ -22,7 +23,8 @@ const rows = [
 ]
 
 const ForumMain = () => {
-	console.log(topicIcon)
+	const navigate = useNavigate()
+
 	return (
 		<div className={styles.wrapper}>
 			<div className={styles.page}>
@@ -32,6 +34,7 @@ const ForumMain = () => {
 					component='h1'>
 					Форум
 				</Typography>
+
 				<TableContainer
 					component={Paper}
 					sx={{
@@ -77,6 +80,28 @@ const ForumMain = () => {
 						</TableBody>
 					</Table>
 				</TableContainer>
+				<div>
+					<StyledButton
+						variant='outlined'
+						sx={{margin: '20px 20px 0 0'}}
+						onClick={() => navigate('/')}>
+						На главную
+					</StyledButton>
+
+					<StyledButton
+						variant='outlined'
+						sx={{margin: '20px 20px 0 0'}}
+						onClick={() => navigate('/create-topic')}>
+						Создать топик
+					</StyledButton>
+
+					<StyledButton
+						variant='outlined'
+						sx={{margin: '20px 20px 0 0'}}
+						onClick={() => navigate('/topic')}>
+						Страница топика
+					</StyledButton>
+				</div>
 			</div>
 		</div>
 	)

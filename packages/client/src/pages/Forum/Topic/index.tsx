@@ -7,6 +7,7 @@ import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import topicIcon from '../../../assets/topic-icon.png'
 import defaultAvatar from '../../../assets/default-avatar.png'
+import {useNavigate} from 'react-router-dom'
 import {
 	StyledButton,
 	StyledTextField,
@@ -36,6 +37,8 @@ const rows = [
 ]
 
 const Topic = () => {
+	const navigate = useNavigate()
+
 	return (
 		<div className={styles.wrapper}>
 			<div className={styles.page}>
@@ -137,7 +140,8 @@ const Topic = () => {
 				<div className={styles.page__buttonWrapper}>
 					<StyledButton
 						variant='outlined'
-						sx={{margin: '20px 20px 0 0'}}>
+						sx={{margin: '20px 20px 0 0'}}
+						onClick={() => navigate('/forum')}>
 						Назад
 					</StyledButton>
 
