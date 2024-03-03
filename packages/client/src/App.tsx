@@ -8,6 +8,11 @@ import MainPage from './pages/MainPage/MainPage'
 import NotFoundPage from './pages/NotFound/404'
 import Leaderboard from './pages/Leaderboard'
 import Profile from './pages/Profile/Profile'
+import {Login} from './pages/Login/Login'
+import ProtectedRoute from './routing/ProtectedRoute'
+import Forum from './pages/Forum/Main/index'
+import CreateTopicPage from './pages/Forum/CreateTopic/index'
+import Topic from './pages/Forum/Topic/index'
 
 const App = () => {
 	const handle = useFullScreenHandle()
@@ -29,6 +34,7 @@ const App = () => {
 
 		fetchServerData()
 	}, [])
+
 	return (
 		<FullScreen handle={handle}>
 			<div
@@ -37,33 +43,47 @@ const App = () => {
 				onKeyDown={toggleFullScreen}>
 				<BrowserRouter>
 					<Routes>
-						<Route
-							path={'/'}
-							element={<MainPage />}
-						/>
-						<Route
-							path={'/game'}
-							element={<Game />}
-						/>
-						<Route
-							path={'/profile'}
-							element={<Profile />}
-						/>
-						<Route
-							path={'/leaderboard'}
-							element={<Leaderboard />}
-						/>
+						<Route element={<ProtectedRoute />}>
+							<Route
+								path={'/'}
+								element={<MainPage />}
+							/>
+							<Route
+								path={'/game'}
+								element={<Game />}
+							/>
+							<Route
+								path={'/profile'}
+								element={<Profile />}
+							/>
+							<Route
+								path={'/leaderboard'}
+								element={<Leaderboard />}
+							/>
+						</Route>
 						<Route
 							path={'/signup'}
 							element={<Register />}
 						/>
 						<Route
-							path={'*'}
-							element={<NotFoundPage />}
+							path={'/signin'}
+							element={<Login />}
 						/>
 						<Route
-							path={'/game'}
-							element={<Game />}
+							path={'/forum'}
+							element={<Forum />}
+						/>
+						<Route
+							path={'/create-topic'}
+							element={<CreateTopicPage />}
+						/>
+						<Route
+							path={'/topic'}
+							element={<Topic />}
+						/>
+						<Route
+							path={'*'}
+							element={<NotFoundPage />}
 						/>
 					</Routes>
 				</BrowserRouter>
