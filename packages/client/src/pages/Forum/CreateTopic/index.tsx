@@ -1,34 +1,10 @@
 import styles from './styles.module.scss'
 import createTopicIcon from '../../../assets/create-topic-icon.png'
-import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
-import {styled} from '@mui/material/styles'
+import '../../../styles/vars.scss'
+import {StyledButton, StyledTextField} from '../BasicComponents'
+import Typography from '@mui/material/Typography'
 
 const CreateTopicPage = () => {
-	const StyledTextField = styled(TextField)(() => ({
-		'.MuiInputBase-root': {
-			borderRadius: '20px',
-			backgroundColor: '#f0f0f0',
-			marginTop: '10px'
-		},
-		'.MuiOutlinedInput-notchedOutline': {
-			borderColor: '#f0f0f0'
-		},
-		'.MuiInputBase-root:hover .MuiOutlinedInput-notchedOutline': {
-			borderColor: 'white'
-		}
-	}))
-
-	const StyledButton = styled(Button)(() => ({
-		color: '#f0f0f0',
-		borderRadius: '10px',
-		borderColor: '#f0f0f0',
-		'&:hover': {
-			borderColor: '#fff'
-		},
-		margin: '40px 20px 0 0'
-	}))
-
 	return (
 		<div className={styles.wrapper}>
 			<div className={styles.page}>
@@ -42,7 +18,13 @@ const CreateTopicPage = () => {
 
 				<form className={styles.page__form}>
 					<div className={styles.page__textFieldWrapper}>
-						<h2 className={styles.header}>Название топика (Максимальная длина: 80)</h2>
+						<h2 className={styles.header}></h2>
+						<Typography
+							className={styles.header}
+							variant='h2'
+							component='h2'>
+							Название топика (Максимальная длина: 80)
+						</Typography>
 						<StyledTextField
 							id='outlined-basic'
 							variant='outlined'
@@ -56,7 +38,12 @@ const CreateTopicPage = () => {
 					</div>
 
 					<div className={styles.page__textFieldWrapper}>
-						<h2 className={styles.header}>Комментарий</h2>
+						<Typography
+							className={styles.header}
+							variant='h2'
+							component='h2'>
+							Комментарий
+						</Typography>
 						<StyledTextField
 							id='outlined-multiline-static'
 							multiline
@@ -68,7 +55,11 @@ const CreateTopicPage = () => {
 					</div>
 
 					<div className={styles.page__buttonWrapper}>
-						<StyledButton variant='outlined'>Создать</StyledButton>
+						<StyledButton
+							variant='outlined'
+							sx={{margin: '40px 20px 0 0'}}>
+							Создать
+						</StyledButton>
 					</div>
 				</form>
 			</div>

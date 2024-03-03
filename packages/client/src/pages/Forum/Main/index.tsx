@@ -3,11 +3,11 @@ import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
-import {styled} from '@mui/material/styles'
+import Typography from '@mui/material/Typography'
 import topicIcon from '../../../assets/topic-icon.png'
+import {StyledTableRowCell, StyledTableHead} from '../BasicComponents'
 
 function createData(topic: string, comments: number) {
 	return {topic, comments}
@@ -21,22 +21,17 @@ const rows = [
 	createData('Gingerbread', 9)
 ]
 
-const StyledTableHead = styled(TableHead)(() => ({
-	backgroundColor: 'rgb(107 136 254 / 50%)'
-}))
-
-const StyledTableRowCell = styled(TableCell)(() => ({
-	color: '#f0f0f0',
-	fontWeight: 'bold',
-	fontSize: '24px'
-}))
-
 const ForumMain = () => {
 	console.log(topicIcon)
 	return (
 		<div className={styles.wrapper}>
 			<div className={styles.page}>
-				<h1 className={styles.page__header}>Форум</h1>
+				<Typography
+					className={styles.page__header}
+					variant='h1'
+					component='h1'>
+					Форум
+				</Typography>
 				<TableContainer
 					component={Paper}
 					sx={{

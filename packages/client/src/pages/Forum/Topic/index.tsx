@@ -3,14 +3,16 @@ import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
-import {styled} from '@mui/material/styles'
 import topicIcon from '../../../assets/topic-icon.png'
 import defaultAvatar from '../../../assets/default-avatar.png'
-import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
+import {
+	StyledButton,
+	StyledTextField,
+	StyledTableRowCell,
+	StyledTableHead
+} from '../BasicComponents'
 
 const rows = [
 	{
@@ -33,40 +35,6 @@ const rows = [
 	}
 ]
 
-const StyledTableHead = styled(TableHead)(() => ({
-	backgroundColor: 'rgb(107 136 254 / 50%)'
-}))
-
-const StyledTableRowCell = styled(TableCell)(() => ({
-	color: '#f0f0f0',
-	fontWeight: 'bold',
-	fontSize: '24px'
-}))
-
-const StyledTextField = styled(TextField)(() => ({
-	'.MuiInputBase-root': {
-		borderRadius: '20px',
-		backgroundColor: '#f0f0f0',
-		marginTop: '10px'
-	},
-	'.MuiOutlinedInput-notchedOutline': {
-		borderColor: '#f0f0f0'
-	},
-	'.MuiInputBase-root:hover .MuiOutlinedInput-notchedOutline': {
-		borderColor: 'white'
-	}
-}))
-
-const StyledButton = styled(Button)(() => ({
-	color: '#f0f0f0',
-	borderRadius: '10px',
-	borderColor: '#f0f0f0',
-	'&:hover': {
-		borderColor: '#fff'
-	},
-	margin: '20px 20px 0 0'
-}))
-
 const Topic = () => {
 	return (
 		<div className={styles.wrapper}>
@@ -87,33 +55,43 @@ const Topic = () => {
 						</StyledTableHead>
 
 						<TableBody>
-							<section className={styles.topic}>
-								<div className={styles.topic__authorBlock}>
-									<article className={styles.topic__topicName}>
-										<img
-											alt='иконка'
-											className={styles.page__topicIcon}
-											src={topicIcon}></img>
-										<div className={styles.topicName}>Название топика</div>
-									</article>
+							<TableRow>
+								<TableCell sx={{padding: 0}}>
+									<section className={styles.topic}>
+										<div className={styles.topic__authorBlock}>
+											<article className={styles.topic__topicName}>
+												<img
+													alt='иконка'
+													className={styles.page__topicIcon}
+													src={topicIcon}></img>
+												<div className={styles.topicName}>Название топика</div>
+											</article>
 
-									<div className={styles.topic__author}>
-										<img
-											src={defaultAvatar}
-											className={styles.topic__photo}
-										/>
-										<div className={styles.topic__authorName}>Автор: Иван Иванов</div>
+											<div className={styles.topic__author}>
+												<img
+													src={defaultAvatar}
+													className={styles.topic__photo}
+													alt='аватар'
+												/>
+												<div className={styles.topic__authorName}>Автор: Иван Иванов</div>
+											</div>
+										</div>
+
+										<div className={styles.topic__descriptionBlock}>
+											<article className={styles.topic__description}>
+												Описание топика
+											</article>
+										</div>
+									</section>
+								</TableCell>
+							</TableRow>
+							<TableRow>
+								<TableCell sx={{padding: 0}}>
+									<div className={styles.page__commentsDivider}>
+										<div className={styles.dividerText}>Комментарии</div>
 									</div>
-								</div>
-
-								<div className={styles.topic__descriptionBlock}>
-									<article className={styles.topic__description}>Описание топика</article>
-								</div>
-							</section>
-
-							<div className={styles.page__commentsDivider}>
-								<div className={styles.dividerText}>Комментарии</div>
-							</div>
+								</TableCell>
+							</TableRow>
 
 							{rows.map((row) => (
 								<TableRow key={row.id}>
@@ -127,6 +105,7 @@ const Topic = () => {
 													<img
 														src={defaultAvatar}
 														className={styles.topic__photo}
+														alt='аватар'
 													/>
 													<div className={styles.topic__authorName}>{row.name}</div>
 												</div>
@@ -156,7 +135,12 @@ const Topic = () => {
 				/>
 
 				<div className={styles.page__buttonWrapper}>
-					<StyledButton variant='outlined'>Назад</StyledButton>
+					<StyledButton
+						variant='outlined'
+						sx={{margin: '20px 20px 0 0'}}>
+						Назад
+					</StyledButton>
+
 					<StyledButton
 						variant='outlined'
 						sx={{margin: '20px 0 0 0'}}>
