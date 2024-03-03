@@ -3,8 +3,10 @@ import createTopicIcon from '../../../assets/create-topic-icon.png'
 import '../../../styles/vars.scss'
 import {StyledButton, StyledTextField} from '../BasicComponents'
 import Typography from '@mui/material/Typography'
+import {useNavigate} from 'react-router-dom'
 
 const CreateTopicPage = () => {
+	const navigate = useNavigate()
 	return (
 		<div className={styles.wrapper}>
 			<div className={styles.page}>
@@ -61,6 +63,12 @@ const CreateTopicPage = () => {
 							Создать
 						</StyledButton>
 					</div>
+					<StyledButton
+						variant='outlined'
+						sx={{margin: '40px 20px 0 20px'}}
+						onClick={() => navigate('/forum')}>
+						Назад
+					</StyledButton>
 				</form>
 			</div>
 		</div>
