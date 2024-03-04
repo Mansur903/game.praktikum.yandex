@@ -1,0 +1,56 @@
+@import "../../../styles/vars.scss";
+
+.wrapper {
+  margin: 0 auto;
+  background-color: $primary500;
+  min-height: 100vh;
+  overflow: auto;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .page {
+    width: 800px;
+
+    &__headerWrapper {
+      display: flex;
+      align-items: center;
+      margin: 0 0 10px 20px;
+    }
+
+    &__headerIcon {
+      width: 31px;
+      height: 31px;
+    }
+
+    &__header {
+      font-size: 18px;
+      color: $whiteSoft;
+      margin-left: 8px
+    }
+
+    &__form {
+      max-width: 800px;
+      height: 410px;
+      border: 1px solid $whiteSoft;
+      border-radius: 20px
+    }
+
+    &__textFieldWrapper {
+      width: 95%;
+      margin: 40px 0 0 20px;
+
+      .header {
+        font-size: 14px;
+        color: $whiteSoft;
+        font-weight: 300;
+      }
+    }
+
+    &__buttonWrapper {
+      float: right;
+    }
+  }
+
+}

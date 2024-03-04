@@ -1,4 +1,5 @@
 import styles from './styles.module.scss'
+import {useNavigate} from 'react-router-dom'
 
 interface ProfileProps {
 	avatarImage?: string | undefined
@@ -8,12 +9,15 @@ interface ProfileProps {
 }
 
 const Profile = ({avatarImage, record, name, email}: ProfileProps) => {
+	const navigate = useNavigate()
+
 	return (
 		<div className={styles.wrapper}>
 			<div className={styles.back}>
 				<img
 					src='src/pages/Profile/images/back-btn.svg'
 					alt='back'
+					onClick={() => navigate('/')}
 				/>
 			</div>
 

@@ -4,7 +4,7 @@ const MainPage = () => {
 	const navigationLeft = [
 		{title: 'Игра', path: '/game'},
 		{title: 'Форум', path: '/forum'},
-		{title: 'Рейтинг', path: '/leader-board'}
+		{title: 'Рейтинг', path: '/leaderboard'}
 	]
 
 	const navigationRight = [

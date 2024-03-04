@@ -11,14 +11,14 @@ export default defineConfig({
 	define: {
 		__SERVER_PORT__: process.env.SERVER_PORT
 	},
-	plugins: [react()],
-	css: {
-		preprocessorOptions: {
-			scss: {
-				additionalData: `
-          @import "./src/styles/vars.scss";
-        `
-			}
-		}
-	}
+	plugins: [react()]
+	// css: {
+	// 	preprocessorOptions: {
+	// 		scss: {
+	// 			additionalData: `
+	//         @import "./src/styles/vars.scss";
+	//       `
+	// 		}
+	// 	}
+	// }
 })

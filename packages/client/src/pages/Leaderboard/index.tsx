@@ -1,6 +1,7 @@
 import styles from './styles.module.scss'
 import BoardItem from './BoardItem/index'
 import {useEffect, useState} from 'react'
+import {useNavigate} from 'react-router-dom'
 
 // моковые данные
 const leaders = [
@@ -62,6 +63,7 @@ interface ILeader {
 
 const Leaderboard = () => {
 	const [list, setList] = useState<ILeader[]>([])
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		const getLeaders = async () => {
@@ -87,7 +89,11 @@ const Leaderboard = () => {
 	return (
 		<div className={styles.wrapper}>
 			<div className={styles.page}>
-				<button className={styles.page__button}>На главную</button>
+				<button
+					className={styles.page__button}
+					onClick={() => navigate('/')}>
+					На главную
+				</button>
 				<h1 className={styles.page__header}>Рейтинг игроков</h1>
 
 				<ul className={styles.page__board}>

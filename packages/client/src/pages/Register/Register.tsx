@@ -2,8 +2,9 @@ import React, {useCallback, useState} from 'react'
 import {Button, Box, TextField, Typography, Link} from '@mui/material'
 import axios from 'axios'
 import {FormValues} from './model'
-import bg from './bg.svg'
+import bg from '../../assets/backgroundMain.png'
 import {fieldValidation} from '../../helpers/fieldValidation'
+import {useNavigate} from 'react-router-dom'
 
 const textFieldSXProps = {
 	fieldset: {
@@ -43,6 +44,7 @@ const boxFormSXProps = {
 export type FormErrors = Partial<Record<keyof FormValues, string>>
 
 const SignUpPage: React.FC = () => {
+	const navigate = useNavigate()
 	const [formValues, setFormValues] = useState<FormValues>({
 		first_name: '',
 		second_name: '',
@@ -90,11 +92,11 @@ const SignUpPage: React.FC = () => {
 
 			if (isValid) {
 				try {
-					const response = axios.post(
-						'https://ya-praktikum.tech/api/v2/api/signup',
-						formValues
-					)
-					console.log(response)
+					await axios
+						.post('https://ya-praktikum.tech/api/v2/auth/signup', formValues)
+						.then(() => {
+							navigate('/signin')
+						})
 				} catch (error) {
 					console.log(error)
 				}
@@ -201,7 +203,7 @@ const SignUpPage: React.FC = () => {
 					sx={{textAlign: 'center', marginTop: 2, color: 'white'}}>
 					Уже зарегистрированы?{' '}
 					<Link
-						href='/login'
+						href='/signin'
 						underline='none'>
 						Войти
 					</Link>
