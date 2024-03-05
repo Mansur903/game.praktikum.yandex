@@ -109,8 +109,8 @@
 
 [figma]: https://www.figma.com/file/CR1HhQykOHp11nVHLWqOJc/Flappy-progger
 [figma-logo]: https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=black
-[video]: https://www.youtube.com/watch?v=dQw4w9WgXcQ
-[video_logo]: https://img.shields.io/badge/YouTube-red?style=for-the-badge&logo=youtube&logoColor=white
+[video]: https://www.loom.com/share/72d54a2364fd4af48d536367ffe5825d?sid=c82ce063-db9b-43be-89f1-e5608ea5f45f
+[video_logo]: https://img.shields.io/badge/Loom-625DF5?logo=loom&logoColor=fff&style=for-the-badge
 [ts_logo]: https://shields.io/badge/TypeScript-3178C6?logo=TypeScript&logoColor=FFF&style=flat-square
 [ts]: https://www.typescriptlang.org/
 [redux_logo]: https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white
