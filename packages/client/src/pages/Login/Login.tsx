@@ -5,7 +5,7 @@ import axios from 'axios'
 
 import {LoginValues} from './model'
 import bg from '../../assets/backgroundMain.png'
-import {setUser} from '../../entities/user'
+import {setUser} from '../../store/slices/user'
 import {useAppDispatch} from '../../hooks'
 
 const textFieldSXProps = {
