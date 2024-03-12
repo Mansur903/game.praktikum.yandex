@@ -39,7 +39,6 @@ const Game: FC = () => {
 
 	return (
 		<div className={styles.wrapper}>
-			<Typography variant='body1'>Текущий счет: {somePoint}</Typography>
 			<canvas
 				ref={ref}
 				width={windowSize.innerWidth}
