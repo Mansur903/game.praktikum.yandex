@@ -25,6 +25,7 @@ export default class Bird {
 	gravity = 0.125
 	thrust = 4.5
 	RAD = Math.PI / 180
+	isFallen = false
 	constructor(
 		scrn: HTMLCanvasElement,
 		sctx: CanvasRenderingContext2D,
@@ -58,17 +59,25 @@ export default class Bird {
 		switch (state) {
 			case GameState.START:
 				this.rotatation = 0
-				this.y += frame % 10 == 0 ? Math.sin(frame * this.RAD) : 0
+				this.y = 100
+				this.isFallen = false
 				this.frame += frame % 10 == 0 ? 1 : 0
 				break
 			case GameState.PLAY:
 				this.frame += frame % 5 == 0 ? 1 : 0
 				this.y += this.speed
-				this.setRotation()
 				this.speed += this.gravity
+				this.setRotation()
 				if (this.collisioned()) {
-					this.mainInstance.state = GameState.END
-					this.state = GameState.END
+					if (!this.mainInstance.isMultiplayer) {
+						this.mainInstance.state = GameState.END
+						this.state = GameState.END
+					} else {
+						// Если игра идет в мультиплеере, помечаем птичку как столкнувшуюся и останавливаем ее
+						this.isFallen = true
+						this.speed = 0
+						this.y = -r * 2
+					}
 				}
 
 				break
@@ -103,9 +112,9 @@ export default class Bird {
 	}
 
 	collisioned = () => {
-		const r = this.animations[0].sprite.height / 4 + this.animations[0].sprite.width / 4
-		if (this.y - r >= this.scrn.height - this.gnd.sprite.height || this.y + r <= 0) {
-			return true
-		}
+		const r = this.animations[0].sprite.height / 4 // Радиус птички
+		const maxY = this.scrn.height - this.gnd.sprite.height - r // Максимальное значение y для птички
+		const minY = r // Минимальное значение y для птички
+		return this.y - r <= minY || this.y + r >= maxY
 	}
 }

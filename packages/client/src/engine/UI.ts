@@ -1,3 +1,4 @@
+import Multiplayer from '../assets/game/bird/b1.png'
 import GetReady from '../assets/game/getready.png'
 import GameOver from '../assets/game/go.png'
 import Tap1 from '../assets/game/tap/t0.png'
@@ -8,14 +9,23 @@ import constants from './constants'
 export default class UI extends GameElement {
 	getReady = {sprite: new Image()}
 	gameOver = {sprite: new Image()}
+	multiplayer = {sprite: new Image()}
 	tap = [{sprite: new Image()}, {sprite: new Image()}]
 	tx = 0
 	ty = 0
 	frame = 0
+	multiplayerX = 0
+	multiplayerY = 0
+	multiplayerDX = 0
+	multiplayerDY = 0
+	isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+		navigator.userAgent
+	)
 	constructor(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
 		super(canvas, context)
 		this.gameOver.sprite.src = GameOver
 		this.getReady.sprite.src = GetReady
+		this.multiplayer.sprite.src = Multiplayer
 		this.tap[0].sprite.src = Tap1
 		this.tap[1].sprite.src = Tap2
 	}
@@ -29,6 +39,13 @@ export default class UI extends GameElement {
 				this.ty = this.y + this.getReady.sprite.height - this.tap[0].sprite.height
 				this.context.drawImage(this.getReady.sprite, this.x, this.y)
 				this.context.drawImage(this.tap[this.frame].sprite, this.tx, this.ty)
+				if (!this.isMobile) {
+					this.context.drawImage(this.multiplayer.sprite, this.x, this.ty)
+					this.multiplayerX = this.x
+					this.multiplayerY = this.ty
+					this.multiplayerDX = this.x + this.multiplayer.sprite.width
+					this.multiplayerDY = this.ty + this.multiplayer.sprite.height
+				}
 				this.drawScore()
 				break
 			case GameState.END:
