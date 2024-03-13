@@ -56,7 +56,7 @@ export default class GameEngine {
 	}
 
 	draw() {
-		this.context.fillStyle = constants.color.black
+		this.context.fillStyle = constants.color.sky
 		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
 		this.background.drawFullWidth()
 		this.ui.draw(this.state)
