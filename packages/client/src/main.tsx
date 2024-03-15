@@ -5,7 +5,8 @@ import './index.scss'
 import store from './store'
 import {Provider} from 'react-redux'
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.hydrateRoot(
+	document.getElementById('root') as HTMLElement,
 	<React.StrictMode>
 		<Provider store={store}>
 			<App />
