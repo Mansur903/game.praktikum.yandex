@@ -26,7 +26,7 @@ const App = () => {
 
 	useEffect(() => {
 		const fetchServerData = async () => {
-			const url = `http://localhost:${__SERVER_PORT__}`
+			const url = `http://localhost:${__SERVER_PORT__}/api`
 			const response = await fetch(url)
 			const data = await response.json()
 			console.log(data)
@@ -36,59 +36,60 @@ const App = () => {
 	}, [])
 
 	return (
-		<FullScreen handle={handle}>
-			<div
-				className='App'
-				tabIndex={0}
-				onKeyDown={toggleFullScreen}>
-				<BrowserRouter>
-					<Routes>
-						<Route element={<ProtectedRoute />}>
-							<Route
-								path={'/'}
-								element={<MainPage />}
-							/>
-							<Route
-								path={'/game'}
-								element={<Game />}
-							/>
-							<Route
-								path={'/profile'}
-								element={<Profile />}
-							/>
-							<Route
-								path={'/leaderboard'}
-								element={<Leaderboard />}
-							/>
-						</Route>
-						<Route
-							path={'/signup'}
-							element={<Register />}
-						/>
-						<Route
-							path={'/signin'}
-							element={<Login />}
-						/>
-						<Route
-							path={'/forum'}
-							element={<Forum />}
-						/>
-						<Route
-							path={'/create-topic'}
-							element={<CreateTopicPage />}
-						/>
-						<Route
-							path={'/topic'}
-							element={<Topic />}
-						/>
-						<Route
-							path={'*'}
-							element={<NotFoundPage />}
-						/>
-					</Routes>
-				</BrowserRouter>
-			</div>
-		</FullScreen>
+		<div className="App">Hello world :)</div>
+		// <FullScreen handle={handle}>
+		// 	<div
+		// 		className='App'
+		// 		tabIndex={0}
+		// 		onKeyDown={toggleFullScreen}>
+		// 		<BrowserRouter>
+		// 			<Routes>
+		// 				<Route element={<ProtectedRoute />}>
+		// 					<Route
+		// 						path={'/'}
+		// 						element={<MainPage />}
+		// 					/>
+		// 					<Route
+		// 						path={'/game'}
+		// 						element={<Game />}
+		// 					/>
+		// 					<Route
+		// 						path={'/profile'}
+		// 						element={<Profile />}
+		// 					/>
+		// 					<Route
+		// 						path={'/leaderboard'}
+		// 						element={<Leaderboard />}
+		// 					/>
+		// 				</Route>
+		// 				<Route
+		// 					path={'/signup'}
+		// 					element={<Register />}
+		// 				/>
+		// 				<Route
+		// 					path={'/signin'}
+		// 					element={<Login />}
+		// 				/>
+		// 				<Route
+		// 					path={'/forum'}
+		// 					element={<Forum />}
+		// 				/>
+		// 				<Route
+		// 					path={'/create-topic'}
+		// 					element={<CreateTopicPage />}
+		// 				/>
+		// 				<Route
+		// 					path={'/topic'}
+		// 					element={<Topic />}
+		// 				/>
+		// 				<Route
+		// 					path={'*'}
+		// 					element={<NotFoundPage />}
+		// 				/>
+		// 			</Routes>
+		// 		</BrowserRouter>
+		// 	</div>
+		// </FullScreen>
 	)
 }
 

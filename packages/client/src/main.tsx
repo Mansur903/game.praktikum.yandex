@@ -8,8 +8,6 @@ import {Provider} from 'react-redux'
 ReactDOM.hydrateRoot(
 	document.getElementById('root') as HTMLElement,
 	<React.StrictMode>
-		<Provider store={store}>
 			<App />
-		</Provider>
 	</React.StrictMode>
 )
