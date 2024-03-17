@@ -7,7 +7,6 @@ import {LoginValues} from './model'
 import bg from '../../assets/backgroundMain.png'
 import {setUser} from '../../entities/user'
 import {useAppDispatch} from '../../hooks'
-import {ErrorBoundary} from '../../components/ErrorBoundary/ErrorBoundary'
 
 const textFieldSXProps = {
 	fieldset: {
