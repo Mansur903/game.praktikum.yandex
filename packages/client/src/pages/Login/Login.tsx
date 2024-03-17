@@ -7,6 +7,7 @@ import {LoginValues} from './model'
 import bg from '../../assets/backgroundMain.png'
 import {setUser} from '../../store/slices/user'
 import {useAppDispatch} from '../../hooks'
+import {ErrorBoundary} from '../../components/ErrorBoundary/ErrorBoundary'
 
 const textFieldSXProps = {
 	fieldset: {
@@ -80,7 +81,6 @@ export const Login: React.FC = () => {
 		},
 		[formValues]
 	)
-
 	return (
 		<Box sx={boxRootSXProps}>
 			<Box
