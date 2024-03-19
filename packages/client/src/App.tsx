@@ -36,7 +36,9 @@ const App = () => {
 	}, [])
 
 	return (
-		<div className="App">Hello world :)</div>
+		<div className='App'>Hello world :)</div>
+		// Роутер и стор будут добавлены в ssr в другой задаче. После добавления список и названия роутов не изменятся.
+		// По этой причине код ниже закомментирован
 		// <FullScreen handle={handle}>
 		// 	<div
 		// 		className='App'
