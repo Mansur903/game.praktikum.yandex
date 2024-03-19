@@ -1,15 +1,35 @@
 import styles from './styles.module.scss'
 import {useNavigate} from 'react-router-dom'
+import axios from 'axios'
+import {useCallback, useEffect, useState} from 'react'
+import {IUserData} from '../../entities/user'
+import Avatar from '../../components/Avatar/Avatar'
 
 interface ProfileProps {
-	avatarImage?: string | undefined
-	name?: string | undefined
-	email?: string | undefined
 	record?: number | undefined
 }
 
-const Profile = ({avatarImage, record, name, email}: ProfileProps) => {
+const Profile = ({record}: ProfileProps) => {
 	const navigate = useNavigate()
+	const [userData, setUserData] = useState<IUserData | null>(null)
+
+	const getUserData = useCallback(async () => {
+		return axios
+			.get('https://ya-praktikum.tech/api/v2/auth/user', {
+				withCredentials: true
+			})
+			.then((res) => {
+				return res.data
+			})
+	}, [])
+
+	useEffect(() => {
+		getUserData().then((data) => {
+			setUserData(data)
+
+			console.log(data)
+		})
+	}, [])
 
 	return (
 		<div className={styles.wrapper}>
@@ -22,11 +42,7 @@ const Profile = ({avatarImage, record, name, email}: ProfileProps) => {
 			</div>
 
 			<div className={styles.avatarContainer}>
-				<img
-					src={avatarImage}
-					className={styles.avatar}
-					alt='avatar'
-				/>
+				<Avatar avatar={userData?.avatar} />
 
 				<div className={styles.rating}>
 					<img
@@ -38,12 +54,21 @@ const Profile = ({avatarImage, record, name, email}: ProfileProps) => {
 			</div>
 
 			<div className={styles.contentBlock}>
-				<p className={styles.paragraph}>{name}</p>
-				<p className={styles.paragraph}>{email}</p>
+				{userData ? (
+					<>
+						<p className={styles.paragraph}>{userData.login}</p>
+						<p className={styles.paragraph}>{userData.email}</p>
+					</>
+				) : (
+					<p>Данные загружаются...</p>
+				)}
 
 				<div className={styles.settingsBtns}>
-					<button className={styles.button}>Изменить данные</button>
-					<button className={styles.button}>Изменить пароль</button>
+					<button
+						className={styles.button}
+						onClick={() => navigate('/profile-settings')}>
+						Изменить данные
+					</button>
 				</div>
 			</div>
 		</div>

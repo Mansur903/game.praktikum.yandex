@@ -1,0 +1,73 @@
+@import '../../styles/mixins/_flexbox';
+@import '../../styles/mixins/_query';
+
+body {
+  margin: 0;
+  font-family: 'PT Sans';
+}
+
+.wrapper {
+  position: relative;
+  @include flexbox(center, center, column, 80px);
+
+  background-image: url(../Profile/images/bg.png);
+  height: 100vh;
+  display: flex;
+
+  @include query(max, tablet) {
+    gap: 30px;
+  }
+
+  .avatarImageContainer {
+    @include flexbox(initial, start, column, 10px);
+  }
+
+  .back {
+    position: absolute;
+    top: 20vh;
+    left: 10vw;
+
+    @include query(max, tablet) {
+      position: static;
+    }
+
+    img {
+      width: 110px;
+
+      &:hover {
+        opacity: 0.6;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .contentBlock {
+    label {
+      color: #fff;
+    }
+
+    .input {
+      color: #f0f0f0;
+      font-size: 32px;
+      margin: 0 0 20px 0;
+      width: 100%;
+
+      padding-bottom: 27px;
+      border: none;
+      background-color: transparent;
+      border-bottom: 1px solid #fff;
+    }
+  }
+
+  button {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}

@@ -5,6 +5,17 @@ export type User = {
 	login: string
 }
 
+export interface IUserData {
+	id?: number
+	avatar?: string
+	display_name?: string
+	email?: string
+	first_name?: string
+	second_name?: string
+	login?: string
+	phone?: string
+}
+
 type InitialStateProps = User & {
 	isAuthenticated: boolean
 }

@@ -13,6 +13,7 @@ import ProtectedRoute from './routing/ProtectedRoute'
 import Forum from './pages/Forum/Main/index'
 import CreateTopicPage from './pages/Forum/CreateTopic/index'
 import Topic from './pages/Forum/Topic/index'
+import ProfileSettings from './pages/ProfileSettings/ProfileSettings'
 
 const App = () => {
 	const handle = useFullScreenHandle()
@@ -54,7 +55,7 @@ const App = () => {
 							/>
 							<Route
 								path={'/profile'}
-								element={<Profile />}
+								element={<Profile record={123} />}
 							/>
 							<Route
 								path={'/leaderboard'}
@@ -80,6 +81,10 @@ const App = () => {
 						<Route
 							path={'/topic'}
 							element={<Topic />}
+						/>
+						<Route
+							path={'/profile-settings'}
+							element={<ProfileSettings />}
 						/>
 						<Route
 							path={'*'}
