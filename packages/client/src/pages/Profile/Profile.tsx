@@ -6,13 +6,10 @@ import {IUserData} from '../../entities/user'
 import Avatar from '../../components/Avatar/Avatar'
 
 interface ProfileProps {
-	avatarImage?: string | undefined
-	name?: string | undefined
-	email?: string | undefined
 	record?: number | undefined
 }
 
-const Profile = ({avatarImage, record}: ProfileProps) => {
+const Profile = ({record}: ProfileProps) => {
 	const navigate = useNavigate()
 	const [userData, setUserData] = useState<IUserData | null>(null)
 

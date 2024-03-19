@@ -55,14 +55,7 @@ const App = () => {
 							/>
 							<Route
 								path={'/profile'}
-								element={
-									<Profile
-										avatarImage='../src/pages/Profile/images/avatar.png'
-										record={123}
-										name='John'
-										email='john@j.com'
-									/>
-								}
+								element={<Profile record={123} />}
 							/>
 							<Route
 								path={'/leaderboard'}
