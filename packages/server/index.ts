@@ -20,6 +20,14 @@ const startServer = async () => {
 
 	app.use(cors())
 
+	app.get('/api', (_, res) => {
+		res.json('👋 Howdy from the server :)')
+	})
+
+	// if (!isDev()) {
+	app.use('/assets', express.static(resolve(distPath, 'assets')))
+	// }
+
 	if (isDev()) {
 		vite = await createServer({
 			server: {middlewareMode: true},
@@ -28,14 +36,6 @@ const startServer = async () => {
 		})
 
 		app.use(vite.middlewares)
-	}
-
-	app.get('/api', (_, res) => {
-		res.json('👋 Howdy from the server :)')
-	})
-
-	if (!isDev()) {
-		app.use('/assets', express.static(resolve(distPath, 'assets')))
 	}
 
 	app.use('*', allPath)

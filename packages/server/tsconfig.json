@@ -15,6 +15,7 @@
     "noImplicitOverride": true,
     "noFallthroughCasesInSwitch": true,
     "noUnusedParameters": true,
+    "skipLibCheck": true,
     "noUnusedLocals": true,
     "forceConsistentCasingInFileNames": true,
     "lib": ["DOM", "es2019", "esnext.asynciterable"],

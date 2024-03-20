@@ -13,6 +13,7 @@ import ProtectedRoute from './routing/ProtectedRoute'
 import Forum from './pages/Forum/Main/index'
 import CreateTopicPage from './pages/Forum/CreateTopic/index'
 import Topic from './pages/Forum/Topic/index'
+import {StaticRouter} from 'react-router-dom/server'
 
 const App = () => {
 	const handle = useFullScreenHandle()
@@ -36,59 +37,62 @@ const App = () => {
 	}, [])
 
 	return (
-		<div className="App">Hello world :)</div>
+		// <div className='App'>Hello world :)</div>
 		// <FullScreen handle={handle}>
-		// 	<div
-		// 		className='App'
-		// 		tabIndex={0}
-		// 		onKeyDown={toggleFullScreen}>
-		// 		<BrowserRouter>
-		// 			<Routes>
-		// 				<Route element={<ProtectedRoute />}>
-		// 					<Route
-		// 						path={'/'}
-		// 						element={<MainPage />}
-		// 					/>
-		// 					<Route
-		// 						path={'/game'}
-		// 						element={<Game />}
-		// 					/>
-		// 					<Route
-		// 						path={'/profile'}
-		// 						element={<Profile />}
-		// 					/>
-		// 					<Route
-		// 						path={'/leaderboard'}
-		// 						element={<Leaderboard />}
-		// 					/>
-		// 				</Route>
-		// 				<Route
-		// 					path={'/signup'}
-		// 					element={<Register />}
+		<div
+			className='App'
+			tabIndex={0}
+			onKeyDown={toggleFullScreen}>
+			//{' '}
+			{/* <StaticRouter>
+				//{' '} */}
+			<Routes>
+				{/* // 			 <Route element={<ProtectedRoute />}>
+		// 				<Route 
+		// 					path={'/'}
+		// 					element={<MainPage />}
 		// 				/>
 		// 				<Route
-		// 					path={'/signin'}
-		// 					element={<Login />}
+		// 					path={'/game'}
+		// 					element={<Game />}
 		// 				/>
 		// 				<Route
-		// 					path={'/forum'}
-		// 					element={<Forum />}
+		// 					path={'/profile'}
+		// 					element={<Profile />}
 		// 				/>
 		// 				<Route
-		// 					path={'/create-topic'}
-		// 					element={<CreateTopicPage />}
+		// 					path={'/leaderboard'}
+		// 					element={<Leaderboard />}
 		// 				/>
-		// 				<Route
-		// 					path={'/topic'}
-		// 					element={<Topic />}
-		// 				/>
-		// 				<Route
-		// 					path={'*'}
-		// 					element={<NotFoundPage />}
-		// 				/>
-		// 			</Routes>
-		// 		</BrowserRouter>
-		// 	</div>
+		// 			</Route>
+		// 			<Route
+		// 				path={'/signup'}
+		// 				element={<Register />}
+		// 			/>*/}
+				<Route
+					path={'/signin'}
+					element={<Login />}
+				/>
+				{/*
+		// 			 <Route
+		// 				path={'/forum'}
+		// 				element={<Forum />}
+		// 			/>
+		// 			<Route
+		// 				path={'/create-topic'}
+		// 				element={<CreateTopicPage />}
+		// 			/>
+		// 			<Route
+		// 				path={'/topic'}
+		// 				element={<Topic />}
+		// 			/>*/}
+				<Route
+					path={'*'}
+					element={<NotFoundPage />}
+				/>
+			</Routes>
+			{/* </StaticRouter> */}
+		</div>
 		// </FullScreen>
 	)
 }
