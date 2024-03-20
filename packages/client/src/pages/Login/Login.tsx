@@ -1,12 +1,16 @@
 import React, {useCallback, useState} from 'react'
-import {Button, Box, TextField, Typography, Link} from '@mui/material'
+import {Button, Box, TextField, Typography, Link, Icon} from '@mui/material'
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios'
 
 import {LoginValues} from './model'
 import bg from '../../assets/backgroundMain.png'
+import icon from '../../assets/yandexLogo.svg'
 import {setUser} from '../../entities/user'
 import {useAppDispatch} from '../../hooks'
+import {AppErrorCode} from '../../lib/error'
+import {jsApiIdentify, redirectToOauthAuthorize} from '../../lib/auth'
+import {BASE_URL, OAUTH_REDIRECT_URI, OAUTH_YANDEX_SERVICE_ID} from '../../config/api'
 
 const textFieldSXProps = {
 	fieldset: {
@@ -59,11 +63,36 @@ export const Login: React.FC = () => {
 		}))
 	}, [])
 
+	const onLoginClick = async () => {
+		const {data: clientID} = await axios.get(`${BASE_URL}${OAUTH_YANDEX_SERVICE_ID}`, {
+			params: {
+				OAUTH_REDIRECT_URI
+			}
+		})
+
+		try {
+			await jsApiIdentify(clientID.service_id)
+		} catch (err) {
+			// @ts-ignore
+			const {code} = err
+
+			switch (code) {
+				case AppErrorCode.JsApiCancelled:
+					return console.warn(err)
+				case AppErrorCode.JsApiMethodNotAvailable:
+					return redirectToOauthAuthorize(clientID.service_id)
+			}
+
+			console.error(err)
+			alert('Не удалось войти. Попробуйте ещё раз')
+		}
+	}
+
 	const handleSubmit = useCallback(
 		async (e: React.FormEvent<HTMLFormElement>) => {
 			e.preventDefault()
 			await axios
-				.post('https://ya-praktikum.tech/api/v2/auth/signin', formValues, {
+				.post(`${BASE_URL}auth/signin`, formValues, {
 					headers: {
 						'Content-Type': 'application/json'
 					},
@@ -134,6 +163,27 @@ export const Login: React.FC = () => {
 						</Button>
 					</Box>
 				</form>
+				<Button
+					type='button'
+					onClick={onLoginClick}
+					sx={{
+						color: '#fff',
+						fontWeight: 'bold',
+						padding: 2,
+						margin: 2,
+						width: '100%',
+						backgroundColor: '#000'
+					}}>
+					<img
+						alt='иконка'
+						src={icon}
+					/>
+					<Box
+						component='span'
+						sx={{ml: 2}}>
+						Войти с помощью Яндекс
+					</Box>
+				</Button>
 				<Typography
 					variant='body2'
 					sx={{textAlign: 'center', marginTop: 2, color: 'white'}}>
