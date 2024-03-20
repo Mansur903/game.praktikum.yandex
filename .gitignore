@@ -7,3 +7,4 @@ tmp
 yarn.lock
 yarn-*
 learna-*
+package-lock.json
