@@ -13,6 +13,7 @@ import ProtectedRoute from './routing/ProtectedRoute'
 import Forum from './pages/Forum/Main/index'
 import CreateTopicPage from './pages/Forum/CreateTopic/index'
 import Topic from './pages/Forum/Topic/index'
+import ServerErrorPage from './pages/ServerError/500'
 
 const App = () => {
 	const handle = useFullScreenHandle()
@@ -80,6 +81,10 @@ const App = () => {
 						<Route
 							path={'/topic'}
 							element={<Topic />}
+						/>
+						<Route
+							path={'/server-error'}
+							element={<ServerErrorPage />}
 						/>
 						<Route
 							path={'*'}
