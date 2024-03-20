@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 import {AppError, AppErrorCode} from './error'
 
 type YandexJsApiObject = Record<string, any> | undefined

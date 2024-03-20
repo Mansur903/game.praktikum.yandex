@@ -1,5 +1,6 @@
 import {callJsApi} from './utils'
 import {AppError, AppErrorCode} from './error'
+import {OAUTH_BASE_URL, OAUTH_REDIRECT_URI} from '../config/api'
 
 enum YandexAuthErrorName {
 	NotLoggedIn = 'AuthErrorCode::ERROR_NOT_LOGGED_IN'
@@ -18,7 +19,7 @@ type JWTPayload = {
 
 export type YandexAuthPSUIDInfo = {
 	payload: JWTPayload & PSUIDPayload
-	jwtToken: string
+	code: string
 }
 
 export async function jsApiIdentify(clientID: string): Promise<YandexAuthPSUIDInfo> {
@@ -45,8 +46,8 @@ export function redirectToOauthAuthorize(clientID: string): void {
 	const search = new URLSearchParams()
 
 	search.append('client_id', clientID)
-	search.append('redirect_uri', 'http://localhost:3000')
+	search.append('redirect_uri', OAUTH_REDIRECT_URI)
 	search.append('response_type', 'code')
 
-	window.location.href = `https://oauth.yandex.ru/authorize?${search.toString()}`
+	window.location.href = `${OAUTH_BASE_URL}?${search.toString()}`
 }

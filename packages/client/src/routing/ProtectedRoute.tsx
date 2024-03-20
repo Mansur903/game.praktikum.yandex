@@ -1,6 +1,7 @@
 import {Navigate, Outlet, useLocation, useNavigate} from 'react-router-dom'
 import {useEffect, useState} from 'react'
 import axios from 'axios'
+import {BASE_URL, OAUTH_REDIRECT_URI, OAUTH_YANDEX} from '../config/api'
 
 const ProtectedRoute = () => {
 	const [status, setStatus] = useState(0)
@@ -9,7 +10,7 @@ const ProtectedRoute = () => {
 	useEffect(() => {
 		const fetchUser = async () => {
 			await axios
-				.get('https://ya-praktikum.tech/api/v2/auth/user', {withCredentials: true})
+				.get(`${BASE_URL}auth/user`, {withCredentials: true})
 				.then((res) => {
 					setStatus(res.status)
 				})
@@ -19,10 +20,10 @@ const ProtectedRoute = () => {
 		const oauthLogin = async (code: string) => {
 			await axios
 				.post(
-					'https://ya-praktikum.tech/api/v2/oauth/yandex',
+					`${BASE_URL}${OAUTH_YANDEX}`,
 					{
 						code: code,
-						redirect_uri: window.location.origin
+						redirect_uri: OAUTH_REDIRECT_URI
 					},
 					{
 						withCredentials: true,

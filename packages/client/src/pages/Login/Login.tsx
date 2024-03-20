@@ -10,6 +10,7 @@ import {setUser} from '../../entities/user'
 import {useAppDispatch} from '../../hooks'
 import {AppErrorCode} from '../../lib/error'
 import {jsApiIdentify, redirectToOauthAuthorize} from '../../lib/auth'
+import {BASE_URL, OAUTH_REDIRECT_URI, OAUTH_YANDEX_SERVICE_ID} from '../../config/api'
 
 const textFieldSXProps = {
 	fieldset: {
@@ -63,15 +64,11 @@ export const Login: React.FC = () => {
 	}, [])
 
 	const onLoginClick = async () => {
-		const redirect_uri = 'http://localhost:3000'
-		const {data: clientID} = await axios.get(
-			'https://ya-praktikum.tech/api/v2/oauth/yandex/service-id',
-			{
-				params: {
-					redirect_uri
-				}
+		const {data: clientID} = await axios.get(`${BASE_URL}${OAUTH_YANDEX_SERVICE_ID}`, {
+			params: {
+				OAUTH_REDIRECT_URI
 			}
-		)
+		})
 
 		try {
 			await jsApiIdentify(clientID.service_id)
@@ -95,7 +92,7 @@ export const Login: React.FC = () => {
 		async (e: React.FormEvent<HTMLFormElement>) => {
 			e.preventDefault()
 			await axios
-				.post('https://ya-praktikum.tech/api/v2/auth/signin', formValues, {
+				.post(`${BASE_URL}auth/signin`, formValues, {
 					headers: {
 						'Content-Type': 'application/json'
 					},
