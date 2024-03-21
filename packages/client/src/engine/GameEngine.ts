@@ -57,18 +57,15 @@ export default class GameEngine extends EventTarget {
 		this.start
 		switch (this.state) {
 			case GameState.START:
-				this.point++
+				this.point = 0
 				this.state = GameState.PLAY
 				break
 			case GameState.PLAY:
 				this.bird.flap()
-				if (this.bird.isGrounded(this.ground.sprite.height)) {
-					this.state = GameState.END
-				}
 				break
 			case GameState.END:
-				this.point++
 				this.state = GameState.START
+				this.inStart()
 				break
 		}
 		this.dispatchEvent(
@@ -79,6 +76,11 @@ export default class GameEngine extends EventTarget {
 				}
 			})
 		)
+	}
+
+	inStart() {
+		this.pipes.clear()
+		this.bird.inStart()
 	}
 
 	/**
@@ -100,10 +102,10 @@ export default class GameEngine extends EventTarget {
 		this.context.fillStyle = constants.color.sky
 		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
 		this.background.drawFullWidth()
-		this.ui.draw(this.state)
-		this.bird.draw(this.frames)
-		this.ground.draw()
 		this.pipes.draw()
+		this.ground.draw()
+		this.bird.draw(this.frames)
+		this.ui.draw(this.state, this.point)
 	}
 
 	/**
@@ -111,10 +113,11 @@ export default class GameEngine extends EventTarget {
 	 * кадров.
 	 */
 	update() {
-		this.ui.update(this.frames)
-		this.bird.update(this.frames, this.state)
 		this.ground.update(this.state)
+		this.bird.update(this.frames, this.state, this.ground.y)
 		this.pipes.update(this.state, this.frames)
+		this.checkCollision()
+		this.ui.update(this.frames)
 	}
 	/**
 	 * Функция gameLoop обновляет состояние игры, рисует игру и увеличивает количество кадров.
@@ -135,17 +138,20 @@ export default class GameEngine extends EventTarget {
 		const roof = y + firstPipe.top.height
 		const floor = roof + constants.params.tubeGap
 		const w = firstPipe.top.width
-		if (this.bird.x + r >= x) {
-			if (this.bird.x + r < x + w) {
-				if (this.bird.y - r <= roof || this.bird.y + r >= floor) {
-					// SFX.hit.play();
-					return true
-				}
-			} else if (this.pipes.moved) {
-				// UI.score.curr++;
-				// SFX.score.play();
-				// this.pipes.moved = false;
+		if (this.bird.isGrounded(this.ground.sprite.height)) {
+			this.state = GameState.END
+		}
+		if (!(this.bird.x + r >= x)) return
+		if (this.bird.x + r < x + w) {
+			if (this.bird.y - r <= roof || this.bird.y + r >= floor) {
+				// SFX.hit.play();
+				this.state = GameState.END
+				return true
 			}
+		} else if (this.pipes.moved) {
+			this.point++
+			// SFX.score.play();
+			this.pipes.moved = false
 		}
 	}
 }

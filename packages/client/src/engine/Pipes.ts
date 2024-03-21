@@ -56,7 +56,7 @@ export class Pipes extends GameElement {
 		return this.list[0]
 	}
 	update(state: GameState, frames: number) {
-		if (state != GameState.PLAY) return
+		if (state !== GameState.PLAY) return
 		if (frames % 100 == 0) {
 			const pipe = new Pipe(this.screen, this.context)
 			this.list.push(pipe.create())
@@ -72,5 +72,8 @@ export class Pipes extends GameElement {
 	}
 	draw() {
 		this.list.forEach((pipe) => pipe.draw())
+	}
+	clear() {
+		this.list = []
 	}
 }
