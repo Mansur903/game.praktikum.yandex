@@ -1,16 +1,26 @@
 import {renderToString} from 'react-dom/server'
 import {Provider} from 'react-redux'
+import {Route, Routes} from 'react-router-dom'
 import {StaticRouter} from 'react-router-dom/server'
-import App from './src/App'
-import {createStore, RootState} from './src/store'
+import {createStore} from './src/store'
 
-export const render = (url: string, initialState: RootState): string => {
-	const store = createStore(initialState)
+export const render = (url: string, initialState: string): string => {
+	const store = createStore(JSON.parse(initialState))
 	return renderToString(
-		<StaticRouter location={url}>
-			<Provider store={store}>
-				<App />
-			</Provider>
-		</StaticRouter>
+		<Provider store={store}>
+			<StaticRouter location={url}>
+				<Routes>
+					<Route
+						path='/'
+						Component={() => <div>hello</div>}
+					/>
+					<Route
+						path='/2'
+						Component={() => <div>hello2</div>}
+					/>
+				</Routes>
+				{/* <App /> */}
+			</StaticRouter>
+		</Provider>
 	)
 }
