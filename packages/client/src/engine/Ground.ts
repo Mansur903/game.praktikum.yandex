@@ -1,22 +1,18 @@
 import GroundImage from '../assets/game/ground.png'
 import {GameState} from '../types/enum/Game.enum'
 import GameElement from './GameElement'
+import constants from './constants'
 
 export default class Ground extends GameElement {
-	scrn: HTMLCanvasElement
-	sctx: CanvasRenderingContext2D
-	sprite = new Image()
-	x = 0
-	y = 0
 	constructor(scrn: HTMLCanvasElement, sctx: CanvasRenderingContext2D) {
 		super(scrn, sctx)
-		this.scrn = scrn
-		this.sctx = sctx
+		this.screen = scrn
+		this.context = sctx
 		this.sprite.src = GroundImage
 	}
 
 	draw = () => {
-		this.y = this.scrn.height - this.sprite.height
+		this.y = this.screen.height - this.sprite.height
 		const pattern = this.context.createPattern(this.sprite, 'repeat')
 		if (pattern) {
 			this.context.setTransform(1, 0, 0, 1, this.x, this.y)
@@ -33,7 +29,7 @@ export default class Ground extends GameElement {
 
 	update = (state: GameState) => {
 		if (state != GameState.PLAY) return
-		this.x -= 2
+		this.x -= constants.params.speed
 		this.x = this.x % (this.sprite.width / 2)
 	}
 }

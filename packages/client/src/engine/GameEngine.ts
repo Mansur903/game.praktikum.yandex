@@ -3,6 +3,7 @@ import Background from './Background'
 import Bird from './Bird'
 import constants from './constants'
 import Ground from './Ground'
+import {Pipes} from './Pipes'
 import UI from './UI'
 
 /* Класс GameEngine в TypeScript управляет состоянием игры, обрабатывает взаимодействие с пользователем
@@ -12,6 +13,7 @@ export default class GameEngine extends EventTarget {
 	context: CanvasRenderingContext2D
 	bird: Bird
 	ground: Ground
+	pipes: Pipes
 	background
 	ui
 	frames = 0
@@ -21,7 +23,7 @@ export default class GameEngine extends EventTarget {
 	 * END - экран поражения
 	 */
 	state = GameState.START
-	mainInstance = this
+
 	startTime = null
 	/**
 	 * Количество последних набранных очков. изначальное состояние равно 0.
@@ -41,9 +43,10 @@ export default class GameEngine extends EventTarget {
 		if (!context) throw Error('Error: missing context')
 		this.context = context
 		this.background = new Background(this.canvas, this.context)
-		this.bird = new Bird(this.canvas, this.context, this.state, this.mainInstance)
+		this.bird = new Bird(this.canvas, this.context)
 		this.ground = new Ground(this.canvas, this.context)
 		this.ui = new UI(this.canvas, this.context)
+		this.pipes = new Pipes(this.canvas, this.context)
 	}
 
 	/**
@@ -51,17 +54,18 @@ export default class GameEngine extends EventTarget {
 	 * отправляет пользовательское событие с текущим состоянием и точкой.
 	 */
 	onClick() {
+		this.start
 		switch (this.state) {
 			case GameState.START:
-				this.point++
+				this.point = 0
 				this.state = GameState.PLAY
 				break
 			case GameState.PLAY:
 				this.bird.flap()
 				break
 			case GameState.END:
-				this.point++
 				this.state = GameState.START
+				this.inStart()
 				break
 		}
 		this.dispatchEvent(
@@ -72,6 +76,11 @@ export default class GameEngine extends EventTarget {
 				}
 			})
 		)
+	}
+
+	inStart() {
+		this.pipes.clear()
+		this.bird.inStart()
 	}
 
 	/**
@@ -93,9 +102,10 @@ export default class GameEngine extends EventTarget {
 		this.context.fillStyle = constants.color.sky
 		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
 		this.background.drawFullWidth()
-		this.ui.draw(this.state)
-		this.bird.draw(this.frames)
+		this.pipes.draw()
 		this.ground.draw()
+		this.bird.draw(this.frames)
+		this.ui.draw(this.state, this.point)
 	}
 
 	/**
@@ -103,9 +113,11 @@ export default class GameEngine extends EventTarget {
 	 * кадров.
 	 */
 	update() {
-		this.ui.update(this.frames)
-		this.bird.update(this.frames, this.state)
 		this.ground.update(this.state)
+		this.bird.update(this.frames, this.state, this.ground.y)
+		this.pipes.update(this.state, this.frames)
+		this.checkCollision()
+		this.ui.update(this.frames)
 	}
 	/**
 	 * Функция gameLoop обновляет состояние игры, рисует игру и увеличивает количество кадров.
@@ -114,5 +126,32 @@ export default class GameEngine extends EventTarget {
 		this.update()
 		this.draw()
 		this.frames++
+	}
+
+	checkCollision() {
+		if (!this.pipes.size) return
+		const bird = this.bird.animations[0].sprite
+		const firstPipe = this.pipes.firstPipe
+		const x = firstPipe.x
+		const y = firstPipe.y
+		const r = bird.height / 4 + bird.width / 4
+		const roof = y + firstPipe.top.height
+		const floor = roof + constants.params.tubeGap
+		const w = firstPipe.top.width
+		if (this.bird.isGrounded(this.ground.sprite.height)) {
+			this.state = GameState.END
+		}
+		if (!(this.bird.x + r >= x)) return
+		if (this.bird.x + r < x + w) {
+			if (this.bird.y - r <= roof || this.bird.y + r >= floor) {
+				// SFX.hit.play();
+				this.state = GameState.END
+				return true
+			}
+		} else if (this.pipes.moved) {
+			this.point++
+			// SFX.score.play();
+			this.pipes.moved = false
+		}
 	}
 }
