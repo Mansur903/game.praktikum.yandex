@@ -11,9 +11,11 @@ export default class GameEngine extends EventTarget {
 	canvas: HTMLCanvasElement
 	context: CanvasRenderingContext2D
 	bird: Bird
+	secondBird?: Bird
 	ground: Ground
 	background
 	ui
+	isMultiplayer = false
 	frames = 0
 	/**Текущее состояние игры. Может пребывать в трех различных состояниях:
 	 * START - стартовый экран игры
@@ -31,10 +33,15 @@ export default class GameEngine extends EventTarget {
 		super()
 		this.canvas = canvas
 		this.canvas.tabIndex = 10000
-		this.canvas.addEventListener('click', this.onClick.bind(this))
+		this.canvas.addEventListener('click', (e) => this.onClick(e))
 		this.canvas.onkeydown = ({code}) => {
-			if (code === 'Space') {
-				this.onClick()
+			switch (code) {
+				case 'KeyD':
+					return this.bird.flap()
+				case 'KeyK':
+					return this.secondBird?.flap()
+				default:
+					break
 			}
 		}
 		const context = this.canvas.getContext('2d')
@@ -42,27 +49,38 @@ export default class GameEngine extends EventTarget {
 		this.context = context
 		this.background = new Background(this.canvas, this.context)
 		this.bird = new Bird(this.canvas, this.context, this.state, this.mainInstance)
+		this.secondBird = new Bird(this.canvas, this.context, this.state, this.mainInstance)
 		this.ground = new Ground(this.canvas, this.context)
 		this.ui = new UI(this.canvas, this.context)
 	}
 
+	onClick(e: MouseEvent) {
+		const rect = this.canvas.getBoundingClientRect()
+		const mouseX = e.clientX - rect.left
+		const mouseY = e.clientY - rect.top
+		if (
+			mouseX >= this.ui.multiplayerX &&
+			mouseX <= this.ui.multiplayerDX &&
+			mouseY >= this.ui.multiplayerY &&
+			mouseY <= this.ui.multiplayerDY
+		) {
+			this.isMultiplayer = !this.isMultiplayer
+		} else {
+			switch (this.state) {
+				case GameState.START:
+					this.state = GameState.PLAY
+					break
+				case GameState.PLAY:
+					this.bird.flap()
+					break
+				case GameState.END:
+					this.state = GameState.START
+					break
+			}
 	/**
 	 * Функция stateChange переключает между двумя состояниями игры и увеличивает количество очков, а затем
 	 * отправляет пользовательское событие с текущим состоянием и точкой.
 	 */
-	onClick() {
-		switch (this.state) {
-			case GameState.START:
-				this.point++
-				this.state = GameState.PLAY
-				break
-			case GameState.PLAY:
-				this.bird.flap()
-				break
-			case GameState.END:
-				this.point++
-				this.state = GameState.START
-				break
 		}
 		this.dispatchEvent(
 			new CustomEvent('changeState', {
@@ -95,6 +113,9 @@ export default class GameEngine extends EventTarget {
 		this.background.drawFullWidth()
 		this.ui.draw(this.state)
 		this.bird.draw(this.frames)
+		if (this.isMultiplayer) {
+			this.secondBird?.draw(this.frames)
+		}
 		this.ground.draw()
 	}
 
@@ -105,6 +126,9 @@ export default class GameEngine extends EventTarget {
 	update() {
 		this.ui.update(this.frames)
 		this.bird.update(this.frames, this.state)
+		if (this.isMultiplayer) {
+			this.secondBird?.update(this.frames, this.state)
+		}
 		this.ground.update(this.state)
 	}
 	/**
@@ -114,5 +138,9 @@ export default class GameEngine extends EventTarget {
 		this.update()
 		this.draw()
 		this.frames++
+		if (this.isMultiplayer && this.bird.isFallen && this.secondBird?.isFallen) {
+			// Если игра идет в мультиплеере и обе птички столкнулись, то завершаем игру
+			this.state = GameState.END
+		}
 	}
 }

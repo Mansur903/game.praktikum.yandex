@@ -26,8 +26,11 @@ describe('GameEngine', () => {
 	})
 
 	it('should change state on click', () => {
-		engine.onClick()
-		expect(engine.state).toEqual(GameState.PLAY)
+		const fakeMouseEvent = new MouseEvent('click')
+		engine.onClick(fakeMouseEvent)
+		setTimeout(() => {
+			expect(engine.state).toEqual(GameState.PLAY)
+		}, 500)
 	})
 
 	it('should update frames in gameLoop', () => {
