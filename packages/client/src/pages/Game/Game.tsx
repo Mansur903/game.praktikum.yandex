@@ -1,4 +1,4 @@
-import {FC, useEffect, useRef, useState} from 'react'
+import {FC, useEffect, useRef, useState, useCallback} from 'react'
 import GameEngine from '../../engine/GameEngine'
 import styles from './Game.module.scss'
 import {Typography} from '@mui/material'
@@ -16,6 +16,15 @@ const Game: FC = () => {
 	const [windowSize, setWindowSize] = useState(getWindowSize())
 
 	const [somePoint, setSomePoint] = useState<number>(0)
+
+	const toggleFullScreen = useCallback((e: React.KeyboardEvent) => {
+		if (e.key === 'f' && !document.fullscreenElement) {
+			document.documentElement.requestFullscreen()
+		} else if (document.exitFullscreen) {
+			document.exitFullscreen()
+		}
+	}, [])
+
 	useEffect(() => {
 		if (ref.current) {
 			const eventHandler = (event: Event) => {
@@ -35,11 +44,12 @@ const Game: FC = () => {
 		return () => {
 			window.removeEventListener('resize', handleWindowResize)
 		}
-		return
 	}, [])
 
 	return (
-		<div className={styles.wrapper}>
+		<div
+			className={styles.wrapper}
+			onKeyDown={toggleFullScreen}>
 			<Typography variant='body1'>Текущий счет: {somePoint}</Typography>
 			<canvas
 				ref={ref}
