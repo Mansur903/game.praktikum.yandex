@@ -5,7 +5,9 @@ import constants from './constants'
 import Ground from './Ground'
 import UI from './UI'
 
-export default class GameEngine {
+/* Класс GameEngine в TypeScript управляет состоянием игры, обрабатывает взаимодействие с пользователем
+и управляет игровым циклом простого игрового приложения. */
+export default class GameEngine extends EventTarget {
 	canvas: HTMLCanvasElement
 	context: CanvasRenderingContext2D
 	bird: Bird
@@ -15,10 +17,20 @@ export default class GameEngine {
 	ui
 	isMultiplayer = false
 	frames = 0
+	/**Текущее состояние игры. Может пребывать в трех различных состояниях:
+	 * START - стартовый экран игры
+	 * PLAY - игра идёт, птичка прыгает
+	 * END - экран поражения
+	 */
 	state = GameState.START
 	mainInstance = this
 	startTime = null
+	/**
+	 * Количество последних набранных очков. изначальное состояние равно 0.
+	 */
+	point = 0
 	constructor(canvas: HTMLCanvasElement) {
+		super()
 		this.canvas = canvas
 		this.canvas.tabIndex = 10000
 		this.canvas.addEventListener('click', (e) => this.onClick(e))
@@ -65,9 +77,25 @@ export default class GameEngine {
 					this.state = GameState.START
 					break
 			}
+	/**
+	 * Функция stateChange переключает между двумя состояниями игры и увеличивает количество очков, а затем
+	 * отправляет пользовательское событие с текущим состоянием и точкой.
+	 */
 		}
+		this.dispatchEvent(
+			new CustomEvent('changeState', {
+				detail: {
+					currState: this.state,
+					currPoint: this.point
+				}
+			})
+		)
 	}
 
+	/**
+	 * Функция start использует requestAnimationFrame для непрерывного вызова метода gameLoop и самого себя
+	 * для плавной анимации в TypeScript.
+	 */
 	start() {
 		requestAnimationFrame(() => {
 			this.gameLoop()
@@ -75,8 +103,12 @@ export default class GameEngine {
 		})
 	}
 
+	/**
+	 * Функция draw устанавливает цвет фона холста, рисует фон, а затем рисует пользовательский интерфейс
+	 * на основе текущего состояния.
+	 */
 	draw() {
-		this.context.fillStyle = constants.color.black
+		this.context.fillStyle = constants.color.sky
 		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
 		this.background.drawFullWidth()
 		this.ui.draw(this.state)
@@ -87,6 +119,10 @@ export default class GameEngine {
 		this.ground.draw()
 	}
 
+	/**
+	 * Функция обновления вызывает метод обновления объекта пользовательского интерфейса с параметром
+	 * кадров.
+	 */
 	update() {
 		this.ui.update(this.frames)
 		this.bird.update(this.frames, this.state)
@@ -95,7 +131,9 @@ export default class GameEngine {
 		}
 		this.ground.update(this.state)
 	}
-
+	/**
+	 * Функция gameLoop обновляет состояние игры, рисует игру и увеличивает количество кадров.
+	 */
 	gameLoop() {
 		this.update()
 		this.draw()
