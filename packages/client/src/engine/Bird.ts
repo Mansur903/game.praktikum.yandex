@@ -3,7 +3,6 @@ import Bird1 from '../assets/game/bird/b1.png'
 import Bird2 from '../assets/game/bird/b2.png'
 import {GameState} from '../types/enum/Game.enum'
 import GameElement from './GameElement'
-import Ground from './Ground'
 
 export default class Bird extends GameElement {
 	animations = [
