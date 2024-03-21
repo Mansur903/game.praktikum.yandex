@@ -3,6 +3,7 @@ import Bird1 from '../assets/game/bird/b1.png'
 import Bird2 from '../assets/game/bird/b2.png'
 import {GameState} from '../types/enum/Game.enum'
 import GameElement from './GameElement'
+import Ground from './Ground'
 
 export default class Bird extends GameElement {
 	animations = [
@@ -21,8 +22,7 @@ export default class Bird extends GameElement {
 
 	constructor(scrn: HTMLCanvasElement, sctx: CanvasRenderingContext2D) {
 		super(scrn, sctx)
-		this.x = 50
-		this.y = 100
+		this.inStart()
 		this.animations[0].sprite.src = Bird0
 		this.animations[1].sprite.src = Bird1
 		this.animations[2].sprite.src = Bird2
@@ -40,7 +40,7 @@ export default class Bird extends GameElement {
 		this.context.restore()
 	}
 
-	update = (frame: number, state: GameState) => {
+	update = (frame: number, state: GameState, groundY: number) => {
 		const r = this.animations[0].sprite.width / 2
 		switch (state) {
 			case GameState.START:
@@ -56,18 +56,18 @@ export default class Bird extends GameElement {
 				break
 			case GameState.END:
 				this.frame = 1
-				if (this.y + r < this.gnd.y) {
+				if (this.y + r < groundY) {
 					this.y += this.speed
 					this.setRotation()
 					this.speed += this.gravity * 2
 				} else {
 					this.speed = 0
-					this.y = this.gnd.y - r
+					this.y = groundY - r
 					this.rotation = 90
 				}
 				break
 		}
-		this.frame = frame % this.animations.length
+		if (state !== GameState.END) this.frame = frame % this.animations.length
 	}
 
 	flap = () => {
@@ -92,5 +92,10 @@ export default class Bird extends GameElement {
 		if (this.y - r >= this.screen.height - groundHeight || this.y + r <= 0) {
 			return true
 		}
+	}
+	inStart() {
+		this.x = 50
+		this.y = 100
+		this.rotation = 0
 	}
 }

@@ -50,7 +50,6 @@ const Game: FC = () => {
 		<div
 			className={styles.wrapper}
 			onKeyDown={toggleFullScreen}>
-			<Typography variant='body1'>Текущий счет: {somePoint}</Typography>
 			<canvas
 				ref={ref}
 				width={windowSize.innerWidth}
