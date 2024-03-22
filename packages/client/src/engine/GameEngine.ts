@@ -126,7 +126,7 @@ export default class GameEngine extends EventTarget {
 			this.secondBird?.draw(this.frames)
 		}
 		this.bird.draw(this.frames)
-		this.ui.draw(this.state, this.point)
+		this.ui.drawUi(this.state, this.point)
 	}
 
 	/**

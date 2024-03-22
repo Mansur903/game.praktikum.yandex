@@ -29,8 +29,9 @@ export default class UI extends GameElement {
 		this.tap[0].sprite.src = Tap1
 		this.tap[1].sprite.src = Tap2
 	}
-	draw(state?: GameState, score: number) {
+	drawUi(state: GameState | undefined, score?: number) {
 		if (state === undefined) return
+		if (score === undefined) return
 		switch (state) {
 			case GameState.START:
 				this.y = (this.screen.height - this.getReady.sprite.height) / 2
