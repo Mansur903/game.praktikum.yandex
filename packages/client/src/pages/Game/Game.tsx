@@ -1,7 +1,9 @@
 import {FC, useEffect, useRef, useState} from 'react'
 import GameEngine from '../../engine/GameEngine'
 import styles from './Game.module.scss'
-import {Typography} from '@mui/material'
+import axios from 'axios'
+import {GameState} from '../../types/enum/Game.enum'
+import {useAppSelector} from '../../hooks'
 
 const isCustomEvent = (event: Event): event is CustomEvent => {
 	return 'detail' in event
@@ -14,20 +16,37 @@ const Game: FC = () => {
 		return {innerWidth, innerHeight}
 	}
 	const [windowSize, setWindowSize] = useState(getWindowSize())
+	const user = useAppSelector((state) => state.user)
 
-	const [somePoint, setSomePoint] = useState<number>(0)
 	useEffect(() => {
 		if (ref.current) {
 			const eventHandler = (event: Event) => {
 				if (!isCustomEvent(event)) throw Error('Not custom event')
-				console.info(event.detail)
-				setSomePoint(event.detail.currPoint)
+				const result = event.detail
+				if (result.currState === GameState.END) {
+					const requestBody = {
+						data: {
+							score: result.currPoint,
+							login: user.login,
+							avatar: user.avatar
+						},
+						ratingFieldName: 'score',
+						teamName: 'Fantastic4'
+					}
+					axios.post('https://ya-praktikum.tech/api/v2/leaderboard', requestBody, {
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						withCredentials: true
+					})
+				}
 			}
 			const game = new GameEngine(ref.current)
 			game.addEventListener('changeState', eventHandler)
 			game.start()
 			return () => game.removeEventListener('changeState', eventHandler)
 		}
+
 		const handleWindowResize = () => {
 			setWindowSize(getWindowSize())
 		}

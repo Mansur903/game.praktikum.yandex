@@ -3,6 +3,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 export type User = {
 	password: string
 	login: string
+	avatar: null | string
 }
 
 type InitialStateProps = User & {
@@ -12,7 +13,8 @@ type InitialStateProps = User & {
 const initialState: InitialStateProps = {
 	password: '',
 	login: '',
-	isAuthenticated: false
+	isAuthenticated: false,
+	avatar: null
 }
 
 export const userModel = createSlice({

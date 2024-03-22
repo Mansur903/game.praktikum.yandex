@@ -59,15 +59,20 @@ export default class GameEngine extends EventTarget {
 			case GameState.START:
 				this.point = 0
 				this.state = GameState.PLAY
+				this.emitEvent()
 				break
 			case GameState.PLAY:
 				this.bird.flap()
 				break
 			case GameState.END:
 				this.state = GameState.START
+				this.emitEvent()
 				this.inStart()
 				break
 		}
+	}
+
+	private emitEvent() {
 		this.dispatchEvent(
 			new CustomEvent('changeState', {
 				detail: {
@@ -116,7 +121,7 @@ export default class GameEngine extends EventTarget {
 		this.ground.update(this.state)
 		this.bird.update(this.frames, this.state, this.ground.y)
 		this.pipes.update(this.state, this.frames)
-		this.checkCollision()
+		if (this.state === GameState.PLAY) this.checkCollision()
 		this.ui.update(this.frames)
 	}
 	/**
@@ -140,12 +145,14 @@ export default class GameEngine extends EventTarget {
 		const w = firstPipe.top.width
 		if (this.bird.isGrounded(this.ground.sprite.height)) {
 			this.state = GameState.END
+			this.emitEvent()
 		}
 		if (!(this.bird.x + r >= x)) return
 		if (this.bird.x + r < x + w) {
 			if (this.bird.y - r <= roof || this.bird.y + r >= floor) {
 				// SFX.hit.play();
 				this.state = GameState.END
+				this.emitEvent()
 				return true
 			}
 		} else if (this.pipes.moved) {
