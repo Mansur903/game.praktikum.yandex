@@ -16,7 +16,7 @@ describe('GameEngine', () => {
 		canvas = document.createElement('canvas')
 		engine = new GameEngine(canvas)
 		engine.background.drawFullWidth = mockDrawFullWidth
-		engine.ui.draw = mockDrawUI
+		engine.ui.drawUi = mockDrawUI
 		engine.bird.draw = mockDrawBird
 		engine.ground.draw = mockDrawGround
 	})

@@ -105,7 +105,7 @@ export default class GameEngine extends EventTarget {
 		this.pipes.draw()
 		this.ground.draw()
 		this.bird.draw(this.frames)
-		this.ui.draw(this.state, this.point)
+		this.ui.drawUi(this.state, this.point)
 	}
 
 	/**
