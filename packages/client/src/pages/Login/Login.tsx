@@ -8,7 +8,7 @@ import bg from '../../assets/backgroundMain.png'
 import icon from '../../assets/yandexLogo.svg'
 import {setUser} from '../../entities/user'
 import {useAppDispatch} from '../../hooks'
-import {AppErrorCode} from '../../lib/error'
+import {AppError, AppErrorCode} from '../../lib/error'
 import {jsApiIdentify, redirectToOauthAuthorize} from '../../lib/auth'
 import {BASE_URL, OAUTH_REDIRECT_URI, OAUTH_YANDEX_SERVICE_ID} from '../../config/api'
 
@@ -73,8 +73,7 @@ export const Login: React.FC = () => {
 		try {
 			await jsApiIdentify(clientID.service_id)
 		} catch (err) {
-			// @ts-ignore
-			const {code} = err
+			const {code} = err as AppError
 
 			switch (code) {
 				case AppErrorCode.JsApiCancelled:

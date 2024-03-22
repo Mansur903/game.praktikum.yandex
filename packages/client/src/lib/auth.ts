@@ -27,12 +27,11 @@ export async function jsApiIdentify(clientID: string): Promise<YandexAuthPSUIDIn
 		return await callJsApi({
 			name: 'window.yandex.app.auth.identify',
 			args: [clientID],
-			scope: window?.yandex?.app?.auth,
+			scope: window.yandex?.app?.auth,
 			method: 'identify'
 		})
 	} catch (err) {
-		// @ts-ignore
-		const {name} = err
+		const {name} = err as typeof AppError
 
 		if (name === YandexAuthErrorName.NotLoggedIn) {
 			throw new AppError(AppErrorCode.JsApiCancelled, 'User not logged.')
