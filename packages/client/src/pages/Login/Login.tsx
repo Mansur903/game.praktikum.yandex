@@ -73,17 +73,23 @@ export const Login: React.FC = () => {
 		try {
 			await jsApiIdentify(clientID.service_id)
 		} catch (err) {
-			const {code} = err as AppError
+			if (err instanceof AppError) {
+				const {code} = err
 
-			switch (code) {
-				case AppErrorCode.JsApiCancelled:
-					return console.warn(err)
-				case AppErrorCode.JsApiMethodNotAvailable:
-					return redirectToOauthAuthorize(clientID.service_id)
+				switch (code) {
+					case AppErrorCode.JsApiCancelled:
+						console.warn(err)
+						return
+					case AppErrorCode.JsApiMethodNotAvailable:
+						redirectToOauthAuthorize(clientID.service_id)
+						return
+				}
+
+				console.error(err)
+				alert('Не удалось войти. Попробуйте ещё раз')
+			} else {
+				throw err
 			}
-
-			console.error(err)
-			alert('Не удалось войти. Попробуйте ещё раз')
 		}
 	}
 

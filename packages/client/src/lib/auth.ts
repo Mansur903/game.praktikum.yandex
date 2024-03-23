@@ -31,10 +31,10 @@ export async function jsApiIdentify(clientID: string): Promise<YandexAuthPSUIDIn
 			method: 'identify'
 		})
 	} catch (err) {
-		const {name} = err as typeof AppError
-
-		if (name === YandexAuthErrorName.NotLoggedIn) {
-			throw new AppError(AppErrorCode.JsApiCancelled, 'User not logged.')
+		if (err instanceof AppError) {
+			if (err.name === YandexAuthErrorName.NotLoggedIn) {
+				throw new AppError(AppErrorCode.JsApiCancelled, 'User not logged.')
+			}
 		}
 
 		throw err
