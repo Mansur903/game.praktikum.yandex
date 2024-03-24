@@ -38,6 +38,10 @@ async function startServer() {
 		app.use('/assets', express.static(path.resolve(distPath, 'assets')))
 	}
 
+	app.get('/user', (_, res) => {
+		res.json({name: '</script>Степа', secondName: 'Степанов'})
+	})
+
 	app.use('*', async (req, res, next) => {
 		const url = req.originalUrl
 
@@ -52,16 +56,24 @@ async function startServer() {
 				template = await vite!.transformIndexHtml(url, template)
 			}
 
-			let render: () => Promise<string>
+			let render: () => Promise<{html: string; initialState: unknown}>
+
 			if (!isDev()) {
 				render = (await import(ssrClientPath)).render
 			} else {
 				render = (await vite!.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx'))).render
 			}
 
-			const appHtml = await render()
+			const {html: appHtml, initialState} = await render()
 
-			const html = template.replace(`<!--ssr-outlet-->`, appHtml)
+			const html = template
+				.replace(`<!--ssr-outlet-->`, appHtml)
+				.replace(
+					`<!--ssr-initial-state-->`,
+					`<script>window.APP_INITIAL_STATE = ${JSON.stringify(initialState)}</script>`
+				)
+
+			console.log({html})
 
 			res.status(200).set({'Content-Type': 'text/html'}).end(html)
 		} catch (e) {

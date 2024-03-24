@@ -1,4 +1,5 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit'
+import {createSlice, PayloadAction, createAsyncThunk} from '@reduxjs/toolkit'
+import {RootState} from '../../store'
 
 export type User = {
 	password: string
@@ -15,6 +16,11 @@ const initialState: InitialStateProps = {
 	isAuthenticated: false
 }
 
+export const fetchUserThunk = createAsyncThunk('user/fetchUserThunk', async (_: void) => {
+	const url = `http://localhost:3001/user`
+	return fetch(url).then((res) => res.json())
+})
+
 export const userModel = createSlice({
 	name: 'user',
 	initialState,
@@ -30,5 +36,7 @@ export const userModel = createSlice({
 })
 
 export const {setUser, clearUser} = userModel.actions
+
+export const selectUser = (state: RootState) => state.user
 
 export default userModel.reducer
