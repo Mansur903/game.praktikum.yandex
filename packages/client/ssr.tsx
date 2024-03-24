@@ -13,6 +13,7 @@ export async function render() {
 	})
 
 	await store.dispatch(fetchUserThunk())
+	console.log('store :', store.getState())
 
 	return {
 		html: renderToString(

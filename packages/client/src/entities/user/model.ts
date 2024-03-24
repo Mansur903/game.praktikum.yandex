@@ -8,17 +8,21 @@ export type User = {
 
 type InitialStateProps = User & {
 	isAuthenticated: boolean
+	isLoading: boolean
 }
 
 const initialState: InitialStateProps = {
 	password: '',
 	login: '',
-	isAuthenticated: false
+	isAuthenticated: false,
+	isLoading: false
 }
 
 export const fetchUserThunk = createAsyncThunk('user/fetchUserThunk', async (_: void) => {
 	const url = `http://localhost:3001/user`
-	return fetch(url).then((res) => res.json())
+	return await fetch(url)
+		.then((res) => res.json())
+		.then((data) => data)
 })
 
 export const userModel = createSlice({
@@ -30,8 +34,32 @@ export const userModel = createSlice({
 			...payload,
 			isAuthenticated: true
 		}),
-
 		clearUser: () => initialState
+	},
+	extraReducers: (builder) => {
+		builder
+			.addCase(fetchUserThunk.pending, (state) => ({
+				...state,
+				login: '',
+				password: '',
+				isAuthenticated: false,
+				isLoading: true
+			}))
+			.addCase(fetchUserThunk.fulfilled, (state, {payload}: PayloadAction<User>) => {
+				console.log('payload :', payload)
+
+				return {
+					...state,
+					login: payload.login,
+					password: payload.password,
+					isAuthenticated: false,
+					isLoading: true
+				}
+			})
+			.addCase(fetchUserThunk.rejected, (state) => ({
+				...state,
+				isLoading: false
+			}))
 	}
 })
 

@@ -39,7 +39,7 @@ async function startServer() {
 	}
 
 	app.get('/user', (_, res) => {
-		res.json({name: '</script>Степа', secondName: 'Степанов'})
+		res.json({login: 'Степа', password: 'Степанов'})
 	})
 
 	app.use('*', async (req, res, next) => {
