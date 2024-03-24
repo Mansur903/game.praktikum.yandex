@@ -4,6 +4,19 @@ import axios from 'axios'
 import {useCallback, useEffect, useState} from 'react'
 import {IUserData} from '../../entities/user'
 import Avatar from '../../components/Avatar/Avatar'
+import {styled} from '@mui/material/styles'
+import TextField from '@mui/material/TextField'
+import {StyledButton} from '../Forum/BasicComponents'
+
+const StyledDataHolder = styled(TextField)(() => ({
+	color: 'var(--white)',
+	borderRadius: '10px',
+	borderColor: 'var(--white)',
+	pointerEvents: 'none',
+	'&:hover': {
+		borderColor: 'var(--white)'
+	}
+}))
 
 interface ProfileProps {
 	record?: number | undefined
@@ -32,8 +45,8 @@ const Profile = ({record}: ProfileProps) => {
 	}, [])
 
 	return (
-		<div className={styles.wrapper}>
-			<div className={styles.back}>
+		<div className={styles.profile}>
+			<div className={styles.profile__backBtn}>
 				<img
 					src='src/pages/Profile/images/back-btn.svg'
 					alt='back'
@@ -41,35 +54,39 @@ const Profile = ({record}: ProfileProps) => {
 				/>
 			</div>
 
-			<div className={styles.avatarContainer}>
+			<div className={styles.profile__avatarContainer}>
 				<Avatar avatar={userData?.avatar} />
 
-				<div className={styles.rating}>
+				<div className={styles.profile__rating}>
 					<img
 						src='src/pages/Profile/images/rating.svg'
 						alt='rating'
 					/>
-					<p className={styles.ratingCount}>{record}</p>
+					<p className={styles.avatar__ratingCount}>{record}</p>
 				</div>
 			</div>
 
-			<div className={styles.contentBlock}>
+			<div className={styles.profile__contentBlock}>
 				{userData ? (
 					<>
-						<p className={styles.paragraph}>{userData.login}</p>
-						<p className={styles.paragraph}>{userData.email}</p>
+						<StyledDataHolder
+							placeholder={userData.login}
+							className={styles.paragraph}
+						/>
+						<StyledDataHolder
+							placeholder={userData.email}
+							className={styles.paragraph}
+						/>
 					</>
 				) : (
 					<p>Данные загружаются...</p>
 				)}
 
-				<div className={styles.settingsBtns}>
-					<button
-						className={styles.button}
-						onClick={() => navigate('/profile-settings')}>
-						Изменить данные
-					</button>
-				</div>
+				<StyledButton
+					variant='outlined'
+					onClick={() => navigate('/profile-settings')}>
+					Изменить данные
+				</StyledButton>
 			</div>
 		</div>
 	)

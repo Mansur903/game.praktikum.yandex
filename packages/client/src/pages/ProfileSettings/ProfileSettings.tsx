@@ -4,10 +4,13 @@ import axios from 'axios'
 import {useCallback, useEffect, useState} from 'react'
 import {IUserData} from '../../entities/user'
 import Avatar from '../../components/Avatar/Avatar'
+import ChangeAvatarModal from '../../components/Avatar/modules/ChangeAvatarModal'
+import Input from '@mui/material/Input'
+import {StyledButton} from '../Forum/BasicComponents'
 
 interface IPassword {
-	oldPassword?: string | undefined
-	newPassword?: string | undefined
+	oldPassword?: string
+	newPassword?: string
 }
 
 const ProfileSettings = () => {
@@ -18,6 +21,8 @@ const ProfileSettings = () => {
 		oldPassword: '',
 		newPassword: ''
 	})
+
+	const [isVisible, setIsVisible] = useState(false)
 
 	const getUserData = useCallback(async () => {
 		return axios
@@ -45,10 +50,7 @@ const ProfileSettings = () => {
 				withCredentials: true
 			})
 			.then((res) => {
-				console.log('avatar changed: ' + res.data)
 				setUserData(res.data)
-
-				console.log('userData: ' + userData)
 			})
 			.catch((error) => {
 				console.error(error)
@@ -67,7 +69,7 @@ const ProfileSettings = () => {
 					{withCredentials: true}
 				)
 				.then((res) => {
-					console.log('пароль изменён: ' + res)
+					console.log('Пароль изменён')
 				})
 		},
 		[]
@@ -79,13 +81,16 @@ const ProfileSettings = () => {
 		})
 	}, [])
 
-	useEffect(() => {
-		console.log(userData)
-	}, [userData])
+	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const input: HTMLInputElement = event.target
+		const file = input.files && input.files[0]
+
+		setAvatarImage(file)
+	}
 
 	return (
-		<div className={styles.wrapper}>
-			<div className={styles.back}>
+		<div className={styles.profileSettings}>
+			<div className={styles.profileSettings__backBtn}>
 				<img
 					src='src/pages/Profile/images/back-btn.svg'
 					alt='back'
@@ -93,72 +98,66 @@ const ProfileSettings = () => {
 				/>
 			</div>
 
-			<div className={styles.avatarContainer}>
-				<div className={styles.avatarImageContainer}>
-					<Avatar avatar={userData?.avatar} />
+			<div className={styles.profileSettings__avatar}>
+				<Avatar
+					currentPage='settings'
+					onButtonClick={() => {
+						setIsVisible(!isVisible)
+					}}
+					avatar={userData?.avatar}
+				/>
 
-					<input
-						type='file'
-						onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-							const input: HTMLInputElement = event.target
-							const file = input.files && input.files[0]
-
-							setAvatarImage(file)
+				{isVisible ? (
+					<ChangeAvatarModal
+						onInputChange={handleInputChange}
+						onCloseButtonClick={() => {
+							setIsVisible(!isVisible)
+						}}
+						onLoadButtonClick={() => {
+							setAvatar(avatarImage)
+							setIsVisible(!isVisible)
 						}}
 					/>
-
-					<button
-						onClick={() => {
-							setAvatar(avatarImage)
-						}}>
-						Изменить аватар
-					</button>
-				</div>
+				) : null}
 			</div>
 
-			<div className={styles.contentBlock}>
+			<div className={styles.profileSettings__data}>
 				{userData ? (
 					<>
 						<form
 							onSubmit={(event) => {
 								event.preventDefault()
-
-								console.log(password)
 								changePassword(password?.oldPassword, password?.newPassword)
 							}}>
-							<label>
-								Введите старый пароль:
-								<input
-									className={styles.input}
-									type='password'
-									placeholder='.....'
-									onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-										const inputValue = event.target.value
-										setPassword((prevState) => ({
-											...prevState,
-											oldPassword: inputValue
-										}))
-									}}
-								/>
-							</label>
+							<Input
+								type='password'
+								placeholder='Старый пароль'
+								onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+									const inputValue = event.target.value
+									setPassword((prevState) => ({
+										...prevState,
+										oldPassword: inputValue
+									}))
+								}}
+							/>
 
-							<label>
-								Введите новый пароль:
-								<input
-									className={styles.input}
-									type='password'
-									placeholder='.....'
-									onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-										const inputValue = event.target.value
-										setPassword((prevState) => ({
-											...prevState,
-											newPassword: inputValue
-										}))
-									}}
-								/>
-							</label>
+							<Input
+								type='password'
+								placeholder='Новый пароль'
+								onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+									const inputValue = event.target.value
+									setPassword((prevState) => ({
+										...prevState,
+										newPassword: inputValue
+									}))
+								}}
+							/>
 
-							<button type='submit'>Изменить пароль</button>
+							<StyledButton
+								variant='outlined'
+								type='submit'>
+								Изменить пароль
+							</StyledButton>
 						</form>
 					</>
 				) : (
