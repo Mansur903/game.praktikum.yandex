@@ -79,6 +79,32 @@ const Game: FC = () => {
 		}
 	}, [])
 
+	const isPointerLockActive = () => {
+		return document.pointerLockElement === ref.current
+	}
+
+	const togglePointerLock = () => {
+		if (isPointerLockActive()) {
+			document.exitPointerLock()
+		} else {
+			ref.current?.requestPointerLock()
+		}
+	}
+
+	const handleKeyDown = (e: KeyboardEvent) => {
+		if (e.key === 'f') {
+			togglePointerLock()
+		}
+	}
+
+	useEffect(() => {
+		document.addEventListener('keydown', handleKeyDown)
+
+		return () => {
+			document.removeEventListener('keydown', handleKeyDown)
+		}
+	}, [])
+
 	return (
 		<div
 			className={styles.wrapper}
