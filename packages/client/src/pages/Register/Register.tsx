@@ -15,6 +15,7 @@ const textFieldSXProps = {
 		}
 	}
 }
+
 const textFieldInputLabelProps = {
 	style: {
 		color: 'white'
@@ -43,8 +44,11 @@ const boxFormSXProps = {
 
 export type FormErrors = Partial<Record<keyof FormValues, string>>
 
-// HOOK
-const useAuthorizationValidation = (formValues: FormValues, errors: FormErrors) => {
+// Custom Hook for Authorization Validation
+const useAuthorizationValidation = (
+	formValues: FormValues,
+	errors: FormErrors
+): {isValid: boolean; validationErrors: FormErrors} => {
 	const validateForm = useCallback(() => {
 		let isValid = true
 		let validationErrors = {...errors}
@@ -63,7 +67,7 @@ const useAuthorizationValidation = (formValues: FormValues, errors: FormErrors) 
 		return {isValid, validationErrors}
 	}, [formValues, errors])
 
-	return validateForm
+	return validateForm()
 }
 
 const SignUpPage: React.FC = () => {
@@ -127,6 +131,8 @@ const SignUpPage: React.FC = () => {
 		},
 		[formValues, errors]
 	)
+
+	const {isValid, validationErrors} = useAuthorizationValidation(formValues, errors)
 
 	return (
 		<Box sx={boxRootSXProps}>
@@ -216,7 +222,9 @@ const SignUpPage: React.FC = () => {
 								padding: 2,
 								width: '100%',
 								border: 'solid 1px #36981D'
-							}}>
+							}}
+							disabled={!isValid} // Disable button if form is not valid
+						>
 							Зарегистрироваться
 						</Button>
 					</Box>
