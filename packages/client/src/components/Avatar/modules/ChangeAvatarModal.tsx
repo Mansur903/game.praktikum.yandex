@@ -4,24 +4,6 @@ import Button from '@mui/material/Button'
 import {styled} from '@mui/material/styles'
 import {StyledButton} from '../../../pages/Forum/BasicComponents'
 
-const StyledInput = styled('input')({
-	display: 'none'
-})
-
-const StyledLabel = styled('label')({
-	display: 'flex',
-	alignItems: 'center',
-	justifyContent: 'center',
-	padding: '10px 20px',
-	borderRadius: '10px',
-	border: '1px solid transparent',
-	color: '#f0f0f0',
-	cursor: 'pointer',
-	'&:hover': {
-		borderColor: 'var(--white)'
-	}
-})
-
 interface IChangeAvatarModalProps {
 	onLoadButtonClick: () => void
 	onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void
@@ -43,13 +25,11 @@ const ChangeAvatarModal: React.FC<IChangeAvatarModalProps> = ({
 						Закрыть
 					</StyledButton>
 
-					<StyledInput
+					<input
 						type='file'
 						onChange={onInputChange}
 						id='avatarInput'
 					/>
-
-					<StyledLabel htmlFor='avatarInput'>Выберите файл</StyledLabel>
 
 					<StyledButton
 						variant='outlined'
