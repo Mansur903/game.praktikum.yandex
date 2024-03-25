@@ -94,7 +94,7 @@ const ProfileSettings = () => {
 				<img
 					src='src/pages/Profile/images/back-btn.svg'
 					alt='back'
-					onClick={() => navigate('/')}
+					onClick={() => navigate('/profile')}
 				/>
 			</div>
 

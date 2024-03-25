@@ -13,34 +13,34 @@ const Avatar = ({avatar, onButtonClick, currentPage}: IAvatarProps) => {
 
 	return (
 		<>
-			{avatar ? (
-				<div
-					className={styles.avatar}
-					onMouseEnter={() => {
-						currentPage === 'settings' && setIsVisible(!isVisible)
-					}}
-					onMouseLeave={() => {
-						currentPage === 'settings' && setIsVisible(!isVisible)
-					}}>
-					<img
-						src={`https://ya-praktikum.tech/api/v2/resources${avatar}`}
-						className={styles.avatar__image}
-						alt='avatar'
-					/>
+			<div
+				className={styles.avatar}
+				onMouseEnter={() => {
+					currentPage === 'settings' && setIsVisible(!isVisible)
+				}}
+				onMouseLeave={() => {
+					currentPage === 'settings' && setIsVisible(!isVisible)
+				}}>
+				<img
+					src={
+						avatar
+							? `https://ya-praktikum.tech/api/v2/resources${avatar}`
+							: 'src/components/Avatar/images/avatar.png'
+					}
+					className={styles.avatar__image}
+					alt='avatar'
+				/>
 
-					{isVisible ? (
-						<div className={styles.avatar__btnContainer}>
-							<StyledButton
-								variant='outlined'
-								onClick={onButtonClick}>
-								Изменить аватар
-							</StyledButton>
-						</div>
-					) : null}
-				</div>
-			) : (
-				<p>Данные загружаются...</p>
-			)}
+				{isVisible ? (
+					<div className={styles.avatar__btnContainer}>
+						<StyledButton
+							variant='outlined'
+							onClick={onButtonClick}>
+							Изменить аватар
+						</StyledButton>
+					</div>
+				) : null}
+			</div>
 		</>
 	)
 }
