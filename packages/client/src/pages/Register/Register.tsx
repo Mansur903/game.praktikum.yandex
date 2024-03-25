@@ -43,6 +43,29 @@ const boxFormSXProps = {
 
 export type FormErrors = Partial<Record<keyof FormValues, string>>
 
+// HOOK
+const useAuthorizationValidation = (formValues: FormValues, errors: FormErrors) => {
+	const validateForm = useCallback(() => {
+		let isValid = true
+		let validationErrors = {...errors}
+
+		for (const [name, value] of Object.entries(formValues)) {
+			const {isValid: isFieldValid, newErrors} = fieldValidation({
+				fieldName: name as keyof FormValues,
+				value,
+				errors
+			})
+
+			isValid = isValid && isFieldValid
+			validationErrors = {...validationErrors, ...newErrors}
+		}
+
+		return {isValid, validationErrors}
+	}, [formValues, errors])
+
+	return validateForm
+}
+
 const SignUpPage: React.FC = () => {
 	const navigate = useNavigate()
 	const [formValues, setFormValues] = useState<FormValues>({
