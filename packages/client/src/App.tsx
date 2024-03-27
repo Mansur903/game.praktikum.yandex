@@ -13,6 +13,7 @@ import Forum from './pages/Forum/Main/index'
 import CreateTopicPage from './pages/Forum/CreateTopic/index'
 import Topic from './pages/Forum/Topic/index'
 import ServerErrorPage from './pages/ServerError/500'
+import {ErrorBoundary} from './components/ErrorBoundary/ErrorBoundary'
 
 const App = () => {
 	useEffect(() => {
@@ -30,56 +31,58 @@ const App = () => {
 		<div
 			className='App'
 			tabIndex={0}>
-			<BrowserRouter>
-				<Routes>
-					<Route element={<ProtectedRoute />}>
+			<ErrorBoundary>
+				<BrowserRouter>
+					<Routes>
+						<Route element={<ProtectedRoute />}>
+							<Route
+								path={'/signup'}
+								element={<Register />}
+							/>
+							<Route
+								path={'/signin'}
+								element={<Login />}
+							/>
+							<Route
+								path={'/forum'}
+								element={<Forum />}
+							/>
+							<Route
+								path={'/create-topic'}
+								element={<CreateTopicPage />}
+							/>
+						</Route>
 						<Route
-							path={'/'}
-							element={<MainPage />}
+							path={'/signup'}
+							element={<Register />}
 						/>
 						<Route
-							path={'/game'}
-							element={<Game />}
+							path={'/signin'}
+							element={<Login />}
 						/>
 						<Route
-							path={'/profile'}
-							element={<Profile />}
+							path={'/forum'}
+							element={<Forum />}
 						/>
 						<Route
-							path={'/leaderboard'}
-							element={<Leaderboard />}
+							path={'/create-topic'}
+							element={<CreateTopicPage />}
 						/>
-					</Route>
-					<Route
-						path={'/signup'}
-						element={<Register />}
-					/>
-					<Route
-						path={'/signin'}
-						element={<Login />}
-					/>
-					<Route
-						path={'/forum'}
-						element={<Forum />}
-					/>
-					<Route
-						path={'/create-topic'}
-						element={<CreateTopicPage />}
-					/>
-					<Route
-						path={'/topic'}
-						element={<Topic />}
-					/>
-					<Route
-						path={'/server-error'}
-						element={<ServerErrorPage />}
-					/>
-					<Route
-						path={'*'}
-						element={<NotFoundPage />}
-					/>
-				</Routes>
-			</BrowserRouter>
+						<Route
+							path={'/topic'}
+							element={<Topic />}
+						/>
+						<Route
+							path={'/server-error'}
+							element={<ServerErrorPage />}
+						/>
+						<Route
+							path={'*'}
+							element={<NotFoundPage />}
+						/>
+					</Routes>
+				</BrowserRouter>
+			</ErrorBoundary>
 		</div>
 	)
 }
