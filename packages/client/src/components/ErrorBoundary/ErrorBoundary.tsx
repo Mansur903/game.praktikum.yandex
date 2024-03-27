@@ -5,16 +5,16 @@ type PropsType = {
 	children: ReactNode
 }
 type StateType = {
-	hasError: boolean
+	isError: string
 }
 class ErrorBoundary extends Component<PropsType, StateType> {
 	constructor(props: PropsType) {
 		super(props)
-		this.state = {hasError: false}
+		this.state = {isError: ''}
 	}
 
-	static getDerivedStateFromError() {
-		return {hasError: true}
+	static getDerivedStateFromError(error: Error) {
+		return {isError: error}
 	}
 
 	componentDidCatch(error: Error, info: ErrorInfo) {
@@ -23,12 +23,13 @@ class ErrorBoundary extends Component<PropsType, StateType> {
 
 	render() {
 		const {children, fallback} = this.props
-		if (this.state.hasError) {
+		if (this.state.isError) {
 			return fallback ? (
 				fallback()
 			) : (
 				<div className={styles['error-container']}>
 					<h1>Кажется возникла ошибка:(</h1>
+					<span>{this.state.isError}</span>
 					<h1>Попробуйте снова</h1>
 				</div>
 			)
