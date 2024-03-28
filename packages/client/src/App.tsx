@@ -36,12 +36,20 @@ const App = () => {
 					<Routes>
 						<Route element={<ProtectedRoute />}>
 							<Route
-								path={'/signup'}
-								element={<Register />}
+								path={'/'}
+								element={<MainPage />}
 							/>
 							<Route
-								path={'/signin'}
-								element={<Login />}
+								path={'/game'}
+								element={<Game />}
+							/>
+							<Route
+								path={'/profile'}
+								element={<Profile />}
+							/>
+							<Route
+								path={'/leaderboard'}
+								element={<Leaderboard />}
 							/>
 							<Route
 								path={'/forum'}
@@ -51,6 +59,10 @@ const App = () => {
 								path={'/create-topic'}
 								element={<CreateTopicPage />}
 							/>
+							<Route
+								path={'/topic'}
+								element={<Topic />}
+							/>
 						</Route>
 						<Route
 							path={'/signup'}
@@ -59,18 +71,6 @@ const App = () => {
 						<Route
 							path={'/signin'}
 							element={<Login />}
-						/>
-						<Route
-							path={'/forum'}
-							element={<Forum />}
-						/>
-						<Route
-							path={'/create-topic'}
-							element={<CreateTopicPage />}
-						/>
-						<Route
-							path={'/topic'}
-							element={<Topic />}
 						/>
 						<Route
 							path={'/server-error'}
