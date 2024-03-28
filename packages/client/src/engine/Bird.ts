@@ -20,6 +20,7 @@ export default class Bird {
 	rotatation = 0
 	x = 50
 	y = 100
+	initY: number
 	speed = 0
 	frame = 0
 	gravity = 0.125
@@ -30,7 +31,8 @@ export default class Bird {
 		scrn: HTMLCanvasElement,
 		sctx: CanvasRenderingContext2D,
 		state: GameState,
-		mainInstance: GameEngine
+		mainInstance: GameEngine,
+		initY: number
 	) {
 		this.sctx = sctx
 		this.scrn = scrn
@@ -41,6 +43,8 @@ export default class Bird {
 		this.animations[1].sprite.src = Bird1
 		this.animations[2].sprite.src = Bird2
 		this.animations[3].sprite.src = Bird0
+		this.y = initY
+		this.initY = initY
 	}
 
 	draw = (frame = 0) => {
@@ -59,7 +63,7 @@ export default class Bird {
 		switch (state) {
 			case GameState.START:
 				this.rotatation = 0
-				this.y = 100
+				this.y = this.initY
 				this.isFallen = false
 				this.frame += frame % 10 == 0 ? 1 : 0
 				break
