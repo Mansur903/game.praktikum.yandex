@@ -6,14 +6,14 @@ export type User = {
 	login: string
 }
 
-type InitialStateProps = User & {
+type InitialStateProps = {
+	data: User | null
 	isAuthenticated: boolean
 	isLoading: boolean
 }
 
 const initialState: InitialStateProps = {
-	password: '',
-	login: '',
+	data: null,
 	isAuthenticated: false,
 	isLoading: false
 }
@@ -40,22 +40,16 @@ export const userModel = createSlice({
 		builder
 			.addCase(fetchUserThunk.pending, (state) => ({
 				...state,
-				login: '',
-				password: '',
+				data: null,
 				isAuthenticated: false,
 				isLoading: true
 			}))
-			.addCase(fetchUserThunk.fulfilled, (state, {payload}: PayloadAction<User>) => {
-				console.log('payload :', payload)
-
-				return {
-					...state,
-					login: payload.login,
-					password: payload.password,
-					isAuthenticated: false,
-					isLoading: true
-				}
-			})
+			.addCase(fetchUserThunk.fulfilled, (state, {payload}: PayloadAction<User>) => ({
+				...state,
+				data: payload,
+				isAuthenticated: false,
+				isLoading: true
+			}))
 			.addCase(fetchUserThunk.rejected, (state) => ({
 				...state,
 				isLoading: false
@@ -65,6 +59,6 @@ export const userModel = createSlice({
 
 export const {setUser, clearUser} = userModel.actions
 
-export const selectUser = (state: RootState) => state.user
+export const selectUser = (state: RootState) => state.user.data
 
 export default userModel.reducer

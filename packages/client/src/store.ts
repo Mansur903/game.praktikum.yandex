@@ -1,7 +1,7 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit'
 import userReducer from './entities/user/model'
 
-const reducer = combineReducers({
+export const reducer = combineReducers({
 	user: userReducer
 })
 
@@ -13,7 +13,7 @@ declare global {
 
 export const store = configureStore({
 	reducer,
-	preloadedState: typeof window === 'undefined' ? undefined : window.APP_INITIAL_STATE
+	preloadedState: typeof window === 'undefined' ? undefined : window?.APP_INITIAL_STATE
 })
 
 export type RootState = ReturnType<typeof reducer>

@@ -18,8 +18,7 @@ import {useAppSelector} from './hooks'
 import {selectUser} from './entities/user'
 
 const App = () => {
-	const user = useAppSelector(selectUser)
-	console.log({user})
+	const user = useAppSelector((state) => state?.user?.data)
 
 	return (
 		<div>
