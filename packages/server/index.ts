@@ -1,10 +1,11 @@
 import cors from 'cors'
 import dotenv from 'dotenv'
-import express from 'express'
+import express, {Request as ExpressRequest} from 'express'
 import {createServer as createViteServer} from 'vite'
 import type {ViteDevServer} from 'vite'
 import * as fs from 'fs'
 import * as path from 'path'
+import {createClientAndConnect} from './db'
 
 dotenv.config()
 
@@ -14,6 +15,7 @@ async function startServer() {
 	const app = express()
 	app.use(cors())
 	const port = Number(process.env.SERVER_PORT) || 3001
+	createClientAndConnect()
 
 	let vite: ViteDevServer | undefined
 	const distPath = path.dirname(require.resolve('client/dist/index.html'))
@@ -56,7 +58,7 @@ async function startServer() {
 				template = await vite!.transformIndexHtml(url, template)
 			}
 
-			let render: () => Promise<{html: string; initialState: unknown}>
+			let render: (req: ExpressRequest) => Promise<{html: string; initialState: unknown}>
 
 			if (!isDev()) {
 				render = (await import(ssrClientPath)).render
@@ -64,7 +66,7 @@ async function startServer() {
 				render = (await vite!.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx'))).render
 			}
 
-			const {html: appHtml, initialState} = await render()
+			const {html: appHtml, initialState} = await render(req)
 
 			const html = template
 				.replace(`<!--ssr-outlet-->`, appHtml)

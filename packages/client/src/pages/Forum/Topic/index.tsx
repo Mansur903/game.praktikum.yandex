@@ -14,6 +14,8 @@ import {
 	StyledTableRowCell,
 	StyledTableHead
 } from '../BasicComponents'
+import {PageInitArgs} from '../../../../routes'
+import {fetchUserThunk, selectUser} from '../../../entities/user'
 
 const rows = [
 	{
@@ -155,4 +157,11 @@ const Topic = () => {
 		</div>
 	)
 }
+
+export const initTopicPage = async ({dispatch, state}: PageInitArgs) => {
+	if (!selectUser(state)) {
+		return dispatch(fetchUserThunk())
+	}
+}
+
 export default Topic

@@ -1,5 +1,7 @@
 import styles from './styles.module.scss'
 import {useNavigate} from 'react-router-dom'
+import {PageInitArgs} from '../../../routes'
+import {fetchUserThunk, selectUser} from '../../entities/user'
 
 interface ProfileProps {
 	avatarImage?: string | undefined
@@ -48,6 +50,12 @@ const Profile = ({avatarImage, record, name, email}: ProfileProps) => {
 			</div>
 		</div>
 	)
+}
+
+export const initProfilePage = async ({dispatch, state}: PageInitArgs) => {
+	if (!selectUser(state)) {
+		return dispatch(fetchUserThunk())
+	}
 }
 
 export default Profile

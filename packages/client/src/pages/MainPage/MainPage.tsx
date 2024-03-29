@@ -1,6 +1,15 @@
 import styles from './MainPage.module.scss'
 import logo from './../../assets/logo.png'
+import {useAppSelector} from '../../hooks'
+import {selectUser, fetchUserThunk} from '../../entities/user'
+import {PageInitArgs} from '../../../routes'
+import {usePage} from '../../hooks'
+
 const MainPage = () => {
+	const user = useAppSelector(selectUser)
+	console.log({user})
+	usePage({initPage: initMainPage})
+
 	const navigationLeft = [
 		{title: 'Игра', path: '/game'},
 		{title: 'Форум', path: '/forum'},
@@ -60,6 +69,12 @@ const MainPage = () => {
 			</div>
 		</div>
 	)
+}
+
+export const initMainPage = async ({dispatch, state}: PageInitArgs) => {
+	if (!selectUser(state)) {
+		return dispatch(fetchUserThunk())
+	}
 }
 
 export default MainPage

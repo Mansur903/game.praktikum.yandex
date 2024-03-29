@@ -14,13 +14,4 @@ export default defineConfig({
 		__INTERNAL_SERVER_URL__: JSON.stringify(process.env.INTERNAL_SERVER_URL)
 	},
 	plugins: [react()]
-	// css: {
-	// 	preprocessorOptions: {
-	// 		scss: {
-	// 			additionalData: `
-	//         @import "./src/styles/vars.scss";
-	//       `
-	// 		}
-	// 	}
-	// }
 })

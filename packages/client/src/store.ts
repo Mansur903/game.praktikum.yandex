@@ -1,8 +1,10 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit'
 import userReducer from './entities/user/model'
+import {ssrReducer} from './entities/ssrSlice/ssrSlice'
 
 export const reducer = combineReducers({
-	user: userReducer
+	user: userReducer,
+	ssr: ssrReducer
 })
 
 declare global {

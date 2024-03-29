@@ -4,6 +4,8 @@ import '../../../styles/vars.scss'
 import {StyledButton, StyledTextField} from '../BasicComponents'
 import Typography from '@mui/material/Typography'
 import {useNavigate} from 'react-router-dom'
+import {PageInitArgs} from '../../../../routes'
+import {fetchUserThunk, selectUser} from '../../../entities/user'
 
 const CreateTopicPage = () => {
 	const navigate = useNavigate()
@@ -74,4 +76,11 @@ const CreateTopicPage = () => {
 		</div>
 	)
 }
+
+export const initCreateTopicPage = async ({dispatch, state}: PageInitArgs) => {
+	if (!selectUser(state)) {
+		return dispatch(fetchUserThunk())
+	}
+}
+
 export default CreateTopicPage

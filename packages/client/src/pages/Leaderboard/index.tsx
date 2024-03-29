@@ -2,6 +2,8 @@ import styles from './styles.module.scss'
 import BoardItem from './BoardItem/index'
 import {useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
+import {PageInitArgs} from '../../../routes'
+import {fetchUserThunk, selectUser} from '../../entities/user'
 
 // моковые данные
 const leaders = [
@@ -113,6 +115,12 @@ const Leaderboard = () => {
 			</div>
 		</div>
 	)
+}
+
+export const initLeaderboardPage = async ({dispatch, state}: PageInitArgs) => {
+	if (!selectUser(state)) {
+		return dispatch(fetchUserThunk())
+	}
 }
 
 export default Leaderboard

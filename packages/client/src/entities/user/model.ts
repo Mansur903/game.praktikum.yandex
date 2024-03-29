@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction, createAsyncThunk} from '@reduxjs/toolkit'
 import {RootState} from '../../store'
-import {SERVER_HOST} from '../../constants'
+import axios from 'axios'
 
 export type User = {
 	password: string
@@ -19,12 +19,29 @@ const initialState: InitialStateProps = {
 	isLoading: false
 }
 
-export const fetchUserThunk = createAsyncThunk('user/fetchUserThunk', async (_: void) => {
-	const url = `${SERVER_HOST}/user`
-	return await fetch(url)
-		.then((res) => res.json())
-		.then((data) => data)
-})
+// export const fetchUserThunk = createAsyncThunk('user/fetchUserThunk', async (_: void) => {
+// 	const url = `${SERVER_HOST}/user`
+// 	return await fetch(url)
+// 		.then((res) => res.json())
+// 		.then((data) => data)
+// })
+
+// export const fetchUserThunk = createAsyncThunk('user/fetchUserThunk', async (_: void) => {
+// 	// const url = `${SERVER_HOST}/user`
+// 	return await axios
+//     .get('https://ya-praktikum.tech/api/v2/auth/user', {withCredentials: true})
+// })
+
+export const fetchUserThunk = createAsyncThunk<User, undefined>(
+	'user/fetchUserThunk',
+	async () => {
+		const response = await axios.get('https://ya-praktikum.tech/api/v2/auth/user', {
+			withCredentials: true
+		})
+		console.log({response})
+		return response.data
+	}
+)
 
 export const userModel = createSlice({
 	name: 'user',
