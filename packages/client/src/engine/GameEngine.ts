@@ -176,33 +176,4 @@ export default class GameEngine extends EventTarget {
 			}
 		})
 	}
-
-	checkCollision() {
-		if (!this.pipes.size) return
-		const bird = this.bird.animations[0].sprite
-		const firstPipe = this.pipes.firstPipe
-		const x = firstPipe.x
-		const y = firstPipe.y
-		const r = bird.height / 4 + bird.width / 4
-		const roof = y + firstPipe.top.height
-		const floor = roof + constants.params.tubeGap
-		const w = firstPipe.top.width
-		if (this.bird.isGrounded(this.ground.sprite.height)) {
-			this.state = GameState.END
-			this.emitEvent()
-		}
-		if (!(this.bird.x + r >= x)) return
-		if (this.bird.x + r < x + w) {
-			if (this.bird.y - r <= roof || this.bird.y + r >= floor) {
-				// SFX.hit.play();
-				this.state = GameState.END
-				this.emitEvent()
-				return true
-			}
-		} else if (this.pipes.moved) {
-			this.point++
-			// SFX.score.play();
-			this.pipes.moved = false
-		}
-	}
 }

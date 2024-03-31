@@ -17,7 +17,7 @@ describe('GameEngine', () => {
 		engine = new GameEngine(canvas)
 		engine.background.drawFullWidth = mockDrawFullWidth
 		engine.ui.drawUi = mockDrawUI
-		engine.bird.draw = mockDrawBird
+		engine.birds.forEach((bird) => (bird.draw = mockDrawBird))
 		engine.ground.draw = mockDrawGround
 	})
 
