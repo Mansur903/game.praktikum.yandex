@@ -4,6 +4,7 @@ import Bird2 from '../assets/game/bird/b2.png'
 import {GameState} from '../types/enum/Game.enum'
 import GameElement from './GameElement'
 import Ground from './Ground'
+import constants from './constants'
 
 export default class Bird extends GameElement {
 	animations = [
@@ -19,9 +20,15 @@ export default class Bird extends GameElement {
 	thrust = 4.5
 	RAD = Math.PI / 180
 	isFallen = false
+	key = 'Space'
 
-	constructor(scrn: HTMLCanvasElement, sctx: CanvasRenderingContext2D) {
+	constructor(
+		scrn: HTMLCanvasElement,
+		sctx: CanvasRenderingContext2D,
+		registerKey = 'Space'
+	) {
 		super(scrn, sctx)
+		this.key = registerKey
 		this.inStart()
 		this.animations[0].sprite.src = Bird0
 		this.animations[1].sprite.src = Bird1
@@ -41,33 +48,34 @@ export default class Bird extends GameElement {
 	}
 
 	update = (frame: number, state: GameState, groundY: number) => {
-		const r = this.animations[0].sprite.width / 2
-		switch (state) {
-			case GameState.START:
-				this.isFallen = false
-				this.rotation = 0
-				this.y += frame % 10 == 0 ? Math.sin(frame * this.RAD) : 0
-				this.frame += frame % 10 == 0 ? 1 : 0
-				break
-			case GameState.PLAY:
-				this.frame += frame % 5 == 0 ? 1 : 0
+		if (this.isFallen) {
+			const r = this.animations[0].sprite.width / 2
+			if (this.x > -this.animations[0].sprite.height && state !== GameState.END)
+				this.x -= constants.params.speed
+			if (this.y + r < this.screen.height - groundY) {
 				this.y += this.speed
-				this.speed += this.gravity
-				break
-			case GameState.END:
-				this.frame = 1
-				if (this.y + r < groundY) {
+				this.setRotation()
+				this.speed += this.gravity * 2
+			} else {
+				this.speed = 0
+				this.y = this.screen.height - groundY
+				this.rotation = 90
+			}
+		} else {
+			switch (state) {
+				case GameState.START:
+					this.rotation = 0
+					this.y += frame % 10 == 0 ? Math.sin(frame * this.RAD) : 0
+					this.frame += frame % 10 == 0 ? 1 : 0
+					break
+				case GameState.PLAY:
+					this.frame += frame % 5 == 0 ? 1 : 0
 					this.y += this.speed
-					this.setRotation()
-					this.speed += this.gravity * 2
-				} else {
-					this.speed = 0
-					this.y = groundY - r
-					this.rotation = 90
-				}
-				break
+					this.speed += this.gravity
+					break
+			}
+			if (state !== GameState.END) this.frame = frame % this.animations.length
 		}
-		if (state !== GameState.END) this.frame = frame % this.animations.length
 	}
 
 	flap = () => {
@@ -75,6 +83,13 @@ export default class Bird extends GameElement {
 			this.speed = -this.thrust
 		}
 	}
+
+	handleClick(code: string) {
+		if (code === this.key) {
+			this.flap()
+		}
+	}
+
 	setRotation = () => {
 		if (this.speed <= 0) {
 			this.rotation = Math.max(-25, (-25 * this.speed) / (-1 * this.thrust))
@@ -84,6 +99,7 @@ export default class Bird extends GameElement {
 	}
 
 	setFallen() {
+		this.frame = 1
 		this.isFallen = true
 	}
 
@@ -94,6 +110,7 @@ export default class Bird extends GameElement {
 		}
 	}
 	inStart() {
+		this.isFallen = false
 		this.x = 50
 		this.y = 100
 		this.rotation = 0
