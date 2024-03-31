@@ -34,48 +34,54 @@ export default class GameEngine extends EventTarget {
 		super()
 		this.canvas = canvas
 		this.canvas.tabIndex = 10000
-		this.canvas.addEventListener('click', (e) => this.onClick(e))
+		this.canvas.addEventListener('click', () => this.onClick())
+		this.canvas.onkeydown = ({code}) => {
+			switch (code) {
+				case 'KeyD':
+					return this.bird.flap()
+				case 'KeyK':
+					return this.secondBird?.flap()
+				case 'KeyM':
+					this.isMultiplayer = !this.isMultiplayer
+					break
+				case 'Space':
+					return this.onClick()
+				default:
+					break
+			}
+		}
 		const context = this.canvas.getContext('2d')
 		if (!context) throw Error('Error: missing context')
 		this.context = context
 		this.background = new Background(this.canvas, this.context)
-		this.birds = [new Bird(this.canvas, this.context, 'KeyD')]
-		if (this.isMultiplayer) this.birds.push(new Bird(this.canvas, this.context, 'KeyK'))
-		this.canvas.onkeydown = ({code}) => {
-			this.birds.forEach((bird) => bird.handleClick(code))
-		}
+		this.bird = new Bird(this.canvas, this.context, this.state, this.mainInstance, 100)
+		this.secondBird = new Bird(
+			this.canvas,
+			this.context,
+			this.state,
+			this.mainInstance,
+			250
+		)
 		this.ground = new Ground(this.canvas, this.context)
-		this.ui = new UI(this.canvas, this.context)
-		this.pipes = new Pipes(this.canvas, this.context)
+		this.ui = new UI(this.canvas, this.context, this)
 	}
-	/**
-	 * Функция stateChange переключает между двумя состояниями игры и увеличивает количество очков, а затем
-	 * отправляет пользовательское событие с текущим состоянием и точкой.
-	 */
-	onClick(e: MouseEvent) {
-		const rect = this.canvas.getBoundingClientRect()
-		const mouseX = e.clientX - rect.left
-		const mouseY = e.clientY - rect.top
-		if (
-			mouseX >= this.ui.multiplayerX &&
-			mouseX <= this.ui.multiplayerDX &&
-			mouseY >= this.ui.multiplayerY &&
-			mouseY <= this.ui.multiplayerDY
-		) {
-			this.isMultiplayer = !this.isMultiplayer
-		} else {
-			switch (this.state) {
-				case GameState.START:
-					this.point = 0
-					this.state = GameState.PLAY
-					this.emitEvent()
-					break
-				case GameState.END:
-					this.state = GameState.START
-					this.emitEvent()
-					this.inStart()
-					break
-			}
+
+	onClick() {
+		switch (this.state) {
+			case GameState.START:
+				this.state = GameState.PLAY
+				break
+			case GameState.PLAY:
+				this.bird.flap()
+				break
+			case GameState.END:
+				this.state = GameState.START
+				break
+			// }
+			/**
+			 * Функция stateChange переключает между двумя состояниями игры и увеличивает количество очков, а затем
+			 * отправляет пользовательское событие с текущим состоянием и точкой.
+			 */
 		}
 	}
 
