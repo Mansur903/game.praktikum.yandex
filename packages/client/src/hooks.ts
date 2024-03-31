@@ -26,10 +26,10 @@ export const usePage = ({initPage}: PageProps) => {
 	const store = useAppStore()
 
 	useEffect(() => {
-		if (pageHasBeenInitializedOnServer) {
-			dispatch(setPageHasBeenInitializedOnServer(false))
-			return
-		}
+		// if (pageHasBeenInitializedOnServer) {
+		// 	dispatch(setPageHasBeenInitializedOnServer(false))
+		// 	return
+		// }
 
 		initPage({dispatch, state: store.getState()})
 	}, [])

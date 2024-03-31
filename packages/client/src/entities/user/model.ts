@@ -3,8 +3,14 @@ import {RootState} from '../../store'
 import axios from 'axios'
 
 export type User = {
-	password: string
+	avatar: string | null
+	display_name: string | null
+	email: string
+	first_name: string
+	id: number
 	login: string
+	phone: string
+	second_name: string
 }
 
 type InitialStateProps = {
@@ -32,14 +38,17 @@ const initialState: InitialStateProps = {
 //     .get('https://ya-praktikum.tech/api/v2/auth/user', {withCredentials: true})
 // })
 
-export const fetchUserThunk = createAsyncThunk<User, undefined>(
+export const fetchUserThunk = createAsyncThunk<User | null>(
 	'user/fetchUserThunk',
 	async () => {
-		const response = await axios.get('https://ya-praktikum.tech/api/v2/auth/user', {
-			withCredentials: true
-		})
-		console.log({response})
-		return response.data
+		const {data} = await axios.get<User | null>(
+			'https://ya-praktikum.tech/api/v2/auth/user',
+			{
+				withCredentials: true
+			}
+		)
+		console.log('user/fetchUserThunk', data)
+		return data
 	}
 )
 
@@ -62,12 +71,15 @@ export const userModel = createSlice({
 				isAuthenticated: false,
 				isLoading: true
 			}))
-			.addCase(fetchUserThunk.fulfilled, (state, {payload}: PayloadAction<User>) => ({
-				...state,
-				data: payload,
-				isAuthenticated: false,
-				isLoading: true
-			}))
+			.addCase(
+				fetchUserThunk.fulfilled,
+				(state, {payload}: PayloadAction<User | null>) => ({
+					...state,
+					data: payload,
+					isAuthenticated: false,
+					isLoading: true
+				})
+			)
 			.addCase(fetchUserThunk.rejected, (state) => ({
 				...state,
 				isLoading: false

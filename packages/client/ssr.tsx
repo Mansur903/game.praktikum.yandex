@@ -33,7 +33,7 @@ export const render = async (req: ExpressRequest) => {
 
 	const url = createUrl(req)
 
-	const foundRoutes = matchRoutes(routes, url)
+	const foundRoutes: any[] | null = matchRoutes(routes, url)
 	if (!foundRoutes) {
 		throw new Error('Страница не найдена!')
 	}
@@ -44,8 +44,8 @@ export const render = async (req: ExpressRequest) => {
 		}
 	] = foundRoutes
 
-	store.dispatch(setPageHasBeenInitializedOnServer(true))
-
+	console.log('typeof fetchData :', typeof fetchData)
+	console.log('fetchData :', fetchData)
 	if (typeof fetchData === 'function') {
 		try {
 			await fetchData({
@@ -56,6 +56,8 @@ export const render = async (req: ExpressRequest) => {
 			console.log('Инициализация страницы произошла с ошибкой', e)
 		}
 	}
+
+	store.dispatch(setPageHasBeenInitializedOnServer(true))
 
 	const router = createStaticRouter(dataRoutes, context)
 
