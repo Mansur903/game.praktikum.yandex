@@ -18,11 +18,10 @@ const Game: FC = () => {
 	const [windowSize, setWindowSize] = useState(getWindowSize())
 	const user = useAppSelector((state) => state.user)
 
-
 	const toggleFullScreen = useCallback((e: React.KeyboardEvent) => {
 		if (e.key === 'f' && !document.fullscreenElement) {
 			document.documentElement.requestFullscreen()
-		} else if (document.exitFullscreen) {
+		} else if (e.key === 'f' && document.exitFullscreen) {
 			document.exitFullscreen()
 		}
 	}, [])
