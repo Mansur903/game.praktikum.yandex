@@ -2,75 +2,38 @@ import styles from './styles.module.scss'
 import BoardItem from './BoardItem/index'
 import {useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
+import axios from 'axios'
 
-// моковые данные
-const leaders = [
-	{
-		position: 1,
-		name: 'Michael',
-		score: 15
-	},
-	{
-		position: 2,
-		name: 'Alex',
-		score: 12
-	},
-	{
-		position: 3,
-		name: 'Nikita',
-		score: 10
-	},
-	{
-		position: 4,
-		name: 'Dima',
-		score: 5
-	},
-	{
-		position: 5,
-		name: 'Oleg',
-		score: 4
-	},
-	{
-		position: 6,
-		name: 'Oleg2',
-		score: 3
-	},
-	{
-		position: 7,
-		name: 'Oleg3',
-		score: 2
-	},
-	{
-		position: 8,
-		name: 'Oleg4',
-		score: 1
-	}
-]
-const server = {
-	getLeaders() {
-		return new Promise((resolve) => {
-			setTimeout(() => resolve(leaders), 150)
-		})
-	}
-}
-
-interface ILeader {
-	position: number
-	name: string
-	score: number
-	photo?: string
-}
+import api from '../../api'
+import {ILeaderboardResponseItem, ILeader} from '../../types/types'
 
 const Leaderboard = () => {
 	const [list, setList] = useState<ILeader[]>([])
 	const navigate = useNavigate()
 
 	useEffect(() => {
-		const getLeaders = async () => {
-			const response = await server.getLeaders()
-			setList(response as ILeader[])
+		const requestBody = {
+			ratingFieldName: 'score',
+			cursor: 0,
+			limit: 8
 		}
-		getLeaders()
+
+		axios
+			.post(api.leaderboard.getTeam, requestBody, {
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				withCredentials: true
+			})
+			.then((response) => {
+				const data = response.data.map(
+					(item: ILeaderboardResponseItem, index: number) => ({
+						position: index + 1,
+						...item.data
+					})
+				)
+				setList(data)
+			})
 	}, [])
 
 	const setIconPath = (position: number) => {
@@ -102,8 +65,8 @@ const Leaderboard = () => {
 							<BoardItem
 								key={index}
 								position={item.position}
-								name={item.name}
-								photo={item.photo ? item.photo : ''}
+								name={item.login ? item.login : 'Unknown user'}
+								photo={item.avatar ? item.avatar : ''}
 								icon={`../../src/assets/${setIconPath(item.position)}`}
 								score={item.score}
 							/>

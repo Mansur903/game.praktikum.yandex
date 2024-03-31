@@ -4,6 +4,7 @@ import styles from './Game.module.scss'
 import axios from 'axios'
 import {GameState} from '../../types/enum/Game.enum'
 import {useAppSelector} from '../../hooks'
+import api from '../../api'
 
 const isCustomEvent = (event: Event): event is CustomEvent => {
 	return 'detail' in event
@@ -41,7 +42,7 @@ const Game: FC = () => {
 						ratingFieldName: 'score',
 						teamName: 'Fantastic4'
 					}
-					axios.post('https://ya-praktikum.tech/api/v2/leaderboard', requestBody, {
+					axios.post(api.leaderboard.addRecord, requestBody, {
 						headers: {
 							'Content-Type': 'application/json'
 						},
