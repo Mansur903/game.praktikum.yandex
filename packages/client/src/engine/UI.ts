@@ -49,8 +49,9 @@ export default class UI extends GameElement {
 		this.keySpace[0].sprite.src = KeySpace
 		this.keySpace[1].sprite.src = KeySpacePress
 	}
-	draw(state?: GameState) {
+	drawUi(state: GameState | undefined, score?: number) {
 		if (state === undefined) return
+		if (score === undefined) return
 		switch (state) {
 			case GameState.START:
 				this.y = (this.screen.height - this.getReady.sprite.height) / 2
@@ -75,7 +76,7 @@ export default class UI extends GameElement {
 				} else {
 					this.context.drawImage(this.tap[this.frame].sprite, this.tx, this.ty)
 				}
-				this.drawScore()
+				this.drawScore(score)
 				break
 			case GameState.END:
 				this.y = (this.screen.height - this.gameOver.sprite.height) / 2
@@ -84,13 +85,29 @@ export default class UI extends GameElement {
 				this.ty = this.y + this.gameOver.sprite.height - this.tap[0].sprite.height
 				this.context.drawImage(this.gameOver.sprite, this.x, this.y)
 				this.context.drawImage(this.tap[this.frame].sprite, this.tx, this.ty)
+				this.drawBestScore(score)
+				break
 		}
 	}
-	drawScore() {
+	drawScore(score: number) {
 		this.context.fillStyle = constants.color.white
 		this.context.strokeStyle = constants.color.black
 		this.context.lineWidth = 2
-		this.context.font = '35px Lato'
+		this.context.font = '55px Lato'
+		this.context.fillText(`${score}`, this.screen.width / 2 - 5, 50)
+		this.context.strokeText(`${score}`, this.screen.width / 2 - 5, 50)
+	}
+	drawBestScore(score: number) {
+		this.context.lineWidth = 2
+		this.context.font = '65px Lato'
+		const sc = `SCORE :     ${score}`
+		const bestScore = Math.max(score, +(localStorage.getItem('best') || 0))
+		localStorage.setItem('best', `${bestScore}`)
+		const bs = `BEST  :     ${bestScore}`
+		this.context.fillText(sc, this.screen.width / 2 - 80, this.screen.height / 3 - 30)
+		this.context.strokeText(sc, this.screen.width / 2 - 80, this.screen.height / 3 - 30)
+		this.context.fillText(bs, this.screen.width / 2 - 80, this.screen.height / 3 + 30)
+		this.context.strokeText(bs, this.screen.width / 2 - 80, this.screen.height / 3 + 30)
 	}
 	update(frames: number) {
 		this.frame += frames % 10 == 0 ? 1 : 0
