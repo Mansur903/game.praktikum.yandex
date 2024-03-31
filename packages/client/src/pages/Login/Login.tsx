@@ -5,8 +5,6 @@ import axios from 'axios'
 
 import {LoginValues} from './model'
 import bg from '../../assets/backgroundMain.png'
-import {setUser} from '../../store/slices/user'
-import {useAppDispatch} from '../../hooks'
 
 const textFieldSXProps = {
 	fieldset: {
@@ -45,7 +43,7 @@ const boxFormSXProps = {
 
 export const Login: React.FC = () => {
 	const navigate = useNavigate()
-	const dispatch = useAppDispatch()
+
 	const [formValues, setFormValues] = useState<LoginValues>({
 		login: '',
 		password: ''
@@ -71,7 +69,7 @@ export const Login: React.FC = () => {
 				})
 				.then((response) => {
 					const userData = JSON.parse(response.config.data)
-					dispatch(setUser(userData))
+					console.log(userData)
 				})
 				.then(() => {
 					navigate('/')
