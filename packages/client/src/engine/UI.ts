@@ -13,9 +13,7 @@ import KeySpacePress from '../assets/game/keyCaps/Space_PRESS.png'
 import {GameState} from '../types/enum/Game.enum'
 import GameElement from './GameElement'
 import constants from './constants'
-import GameEngine from './GameEngine'
 export default class UI extends GameElement {
-	mainInstance: GameEngine
 	getReady = {sprite: new Image()}
 	gameOver = {sprite: new Image()}
 	multiplayer = [{sprite: new Image()}, {sprite: new Image()}]
@@ -29,13 +27,8 @@ export default class UI extends GameElement {
 	isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
 		navigator.userAgent
 	)
-	constructor(
-		canvas: HTMLCanvasElement,
-		context: CanvasRenderingContext2D,
-		mainInstance: GameEngine
-	) {
+	constructor(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
 		super(canvas, context)
-		this.mainInstance = mainInstance
 		this.gameOver.sprite.src = GameOver
 		this.getReady.sprite.src = GetReady
 		this.multiplayer[0].sprite.src = Multiplayer
@@ -49,7 +42,7 @@ export default class UI extends GameElement {
 		this.keySpace[0].sprite.src = KeySpace
 		this.keySpace[1].sprite.src = KeySpacePress
 	}
-	drawUi(state: GameState | undefined, score?: number) {
+	drawUi(state: GameState | undefined, score?: number, isMultiplayer?: boolean) {
 		if (state === undefined) return
 		if (score === undefined) return
 		switch (state) {
@@ -71,8 +64,7 @@ export default class UI extends GameElement {
 						this.screen.height / 1.5
 					)
 					this.context.drawImage(this.keyD[this.frame].sprite, 80, 60)
-					this.mainInstance.isMultiplayer &&
-						this.context.drawImage(this.keyK[this.frame].sprite, 80, 210)
+					isMultiplayer && this.context.drawImage(this.keyK[this.frame].sprite, 80, 210)
 				} else {
 					this.context.drawImage(this.tap[this.frame].sprite, this.tx, this.ty)
 				}

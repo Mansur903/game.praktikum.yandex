@@ -3,7 +3,6 @@ import Bird1 from '../assets/game/bird/b1.png'
 import Bird2 from '../assets/game/bird/b2.png'
 import {GameState} from '../types/enum/Game.enum'
 import GameElement from './GameElement'
-import Ground from './Ground'
 import constants from './constants'
 
 export default class Bird extends GameElement {
@@ -13,9 +12,7 @@ export default class Bird extends GameElement {
 		{sprite: new Image()},
 		{sprite: new Image()}
 	]
-	rotatation = 0
-	x = 50
-	y = 100
+	rotation = 0
 	initY: number
 	speed = 0
 	frame = 0
@@ -28,8 +25,7 @@ export default class Bird extends GameElement {
 	constructor(
 		scrn: HTMLCanvasElement,
 		sctx: CanvasRenderingContext2D,
-		state: GameState,
-		mainInstance: GameEngine,
+		registerKey = 'Space',
 		initY: number
 	) {
 		super(scrn, sctx)
@@ -54,17 +50,12 @@ export default class Bird extends GameElement {
 		this.context.restore()
 	}
 
-	update = (frame: number, state: GameState) => {
-		const r = this.animations[0].sprite.width / 2
-		switch (state) {
-			case GameState.START:
-				this.rotatation = 0
-				this.y = this.initY
-				this.isFallen = false
-				this.frame += frame % 10 == 0 ? 1 : 0
-				break
-			case GameState.PLAY:
-				this.frame += frame % 5 == 0 ? 1 : 0
+	update = (frame: number, state: GameState, groundY: number) => {
+		if (this.isFallen) {
+			const r = this.animations[0].sprite.width / 2
+			if (this.x > -this.animations[0].sprite.height && state !== GameState.END)
+				this.x -= constants.params.speed
+			if (this.y + r < this.screen.height - groundY) {
 				this.y += this.speed
 				this.setRotation()
 				this.speed += this.gravity * 2
@@ -124,7 +115,7 @@ export default class Bird extends GameElement {
 	inStart() {
 		this.isFallen = false
 		this.x = 50
-		this.y = 100
+		this.y = this.initY
 		this.rotation = 0
 	}
 }
