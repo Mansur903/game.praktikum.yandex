@@ -35,14 +35,22 @@ export default class GameEngine extends EventTarget {
 		this.canvas = canvas
 		this.canvas.tabIndex = 10000
 		this.canvas.addEventListener('click', () => this.onClick())
+		const context = this.canvas.getContext('2d')
+		if (!context) throw Error('Error: missing context')
+		this.context = context
+		this.background = new Background(this.canvas, this.context)
+		this.birds = [new Bird(this.canvas, this.context, 'KeyD', 100)]
+		if (this.isMultiplayer)
+			this.birds.push(new Bird(this.canvas, this.context, 'KeyK', 250))
 		this.canvas.onkeydown = ({code}) => {
+			this.birds.forEach((bird) => bird.handleClick(code))
+			console.log(code)
 			switch (code) {
-				case 'KeyD':
-					return this.bird.flap()
-				case 'KeyK':
-					return this.secondBird?.flap()
 				case 'KeyM':
 					this.isMultiplayer = !this.isMultiplayer
+					if (this.isMultiplayer)
+						this.birds.push(new Bird(this.canvas, this.context, 'KeyK', 250))
+					else this.birds.pop()
 					break
 				case 'Space':
 					return this.onClick()
@@ -50,38 +58,23 @@ export default class GameEngine extends EventTarget {
 					break
 			}
 		}
-		const context = this.canvas.getContext('2d')
-		if (!context) throw Error('Error: missing context')
-		this.context = context
-		this.background = new Background(this.canvas, this.context)
-		this.bird = new Bird(this.canvas, this.context, this.state, this.mainInstance, 100)
-		this.secondBird = new Bird(
-			this.canvas,
-			this.context,
-			this.state,
-			this.mainInstance,
-			250
-		)
 		this.ground = new Ground(this.canvas, this.context)
-		this.ui = new UI(this.canvas, this.context, this)
+		this.ui = new UI(this.canvas, this.context)
+		this.pipes = new Pipes(this.canvas, this.context)
 	}
 
 	onClick() {
 		switch (this.state) {
 			case GameState.START:
+				this.point = 0
 				this.state = GameState.PLAY
-				break
-			case GameState.PLAY:
-				this.bird.flap()
+				this.emitEvent()
 				break
 			case GameState.END:
 				this.state = GameState.START
+				this.emitEvent()
+				this.inStart()
 				break
-			// }
-			/**
-			 * Функция stateChange переключает между двумя состояниями игры и увеличивает количество очков, а затем
-			 * отправляет пользовательское событие с текущим состоянием и точкой.
-			 */
 		}
 	}
 
@@ -123,7 +116,7 @@ export default class GameEngine extends EventTarget {
 		this.pipes.draw()
 		this.ground.draw()
 		this.birds.forEach((bird) => bird.draw(this.frames))
-		this.ui.drawUi(this.state, this.point)
+		this.ui.drawUi(this.state, this.point, this.isMultiplayer)
 	}
 
 	/**
