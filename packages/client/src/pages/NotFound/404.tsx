@@ -19,4 +19,5 @@ const NotFoundPage = () => {
 	)
 }
 
+export const initNotFoundPage = () => Promise.resolve()
 export default NotFoundPage

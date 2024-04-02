@@ -1,5 +1,8 @@
 import styles from './styles.module.scss'
 import {useNavigate} from 'react-router-dom'
+import {PageInitArgs} from '../../../routes'
+import {fetchUserThunk, selectUser} from '../../store/slices/user'
+import {useAppSelector, usePage} from '../../hooks'
 
 interface ProfileProps {
 	avatarImage?: string | undefined
@@ -8,8 +11,10 @@ interface ProfileProps {
 	record?: number | undefined
 }
 
-const Profile = ({avatarImage, record, name, email}: ProfileProps) => {
+const Profile = () => {
 	const navigate = useNavigate()
+	const user = useAppSelector(selectUser)
+	usePage({initPage: initProfilePage})
 
 	return (
 		<div className={styles.wrapper}>
@@ -23,7 +28,7 @@ const Profile = ({avatarImage, record, name, email}: ProfileProps) => {
 
 			<div className={styles.avatarContainer}>
 				<img
-					src={avatarImage}
+					src={user?.avatar ?? ''}
 					className={styles.avatar}
 					alt='avatar'
 				/>
@@ -33,13 +38,14 @@ const Profile = ({avatarImage, record, name, email}: ProfileProps) => {
 						src='src/pages/Profile/images/rating.svg'
 						alt='rating'
 					/>
-					<p className={styles.ratingCount}>{record}</p>
 				</div>
 			</div>
 
 			<div className={styles.contentBlock}>
-				<p className={styles.paragraph}>{name}</p>
-				<p className={styles.paragraph}>{email}</p>
+				<p className={styles.paragraph}>
+					{user?.second_name} {user?.first_name}
+				</p>
+				<p className={styles.paragraph}>{user?.email}</p>
 
 				<div className={styles.settingsBtns}>
 					<button className={styles.button}>Изменить данные</button>
@@ -48,6 +54,12 @@ const Profile = ({avatarImage, record, name, email}: ProfileProps) => {
 			</div>
 		</div>
 	)
+}
+
+export const initProfilePage = async ({dispatch, state}: PageInitArgs) => {
+	if (!selectUser(state)) {
+		return dispatch(fetchUserThunk())
+	}
 }
 
 export default Profile
