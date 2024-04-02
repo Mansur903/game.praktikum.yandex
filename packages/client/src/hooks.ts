@@ -1,10 +1,10 @@
 import {useEffect} from 'react'
-import type {AppDispatch, RootState, store} from './store'
+import type {AppDispatch, RootState, store} from './store/store'
 
 import {
 	setPageHasBeenInitializedOnServer,
 	selectPageHasBeenInitializedOnServer
-} from './entities/ssrSlice/ssrSlice'
+} from './store/slices/ssrSlice/ssrSlice'
 import {PageInitArgs} from '../routes'
 import type {TypedUseSelectorHook} from 'react-redux'
 import {useDispatch, useSelector, useStore} from 'react-redux'

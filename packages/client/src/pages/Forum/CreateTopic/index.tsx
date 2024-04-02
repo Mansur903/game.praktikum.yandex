@@ -5,7 +5,7 @@ import {StyledButton, StyledTextField} from '../BasicComponents'
 import Typography from '@mui/material/Typography'
 import {useNavigate} from 'react-router-dom'
 import {PageInitArgs} from '../../../../routes'
-import {fetchUserThunk, selectUser} from '../../../entities/user'
+import {fetchUserThunk, selectUser} from '../../../store/slices/user'
 
 const CreateTopicPage = () => {
 	const navigate = useNavigate()

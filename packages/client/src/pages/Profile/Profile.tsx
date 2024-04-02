@@ -1,8 +1,8 @@
 import styles from './styles.module.scss'
 import {useNavigate} from 'react-router-dom'
 import {PageInitArgs} from '../../../routes'
-import {fetchUserThunk, selectUser} from '../../entities/user'
-import {useAppSelector, useAppStore, usePage} from '../../hooks'
+import {fetchUserThunk, selectUser} from '../../store/slices/user'
+import {useAppSelector, usePage} from '../../hooks'
 
 interface ProfileProps {
 	avatarImage?: string | undefined
@@ -38,7 +38,6 @@ const Profile = () => {
 						src='src/pages/Profile/images/rating.svg'
 						alt='rating'
 					/>
-					{/* <p className={styles.ratingCount}>{user?.record??''}</p> */}
 				</div>
 			</div>
 

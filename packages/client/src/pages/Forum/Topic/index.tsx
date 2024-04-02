@@ -15,7 +15,7 @@ import {
 	StyledTableHead
 } from '../BasicComponents'
 import {PageInitArgs} from '../../../../routes'
-import {fetchUserThunk, selectUser} from '../../../entities/user'
+import {fetchUserThunk, selectUser} from '../../../store/slices/user'
 
 const rows = [
 	{

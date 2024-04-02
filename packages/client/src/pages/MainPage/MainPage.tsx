@@ -1,7 +1,7 @@
 import styles from './MainPage.module.scss'
 import logo from './../../assets/logo.png'
 import {useAppSelector} from '../../hooks'
-import {selectUser, fetchUserThunk} from '../../entities/user'
+import {selectUser, fetchUserThunk} from '../../store/slices/user'
 import {PageInitArgs} from '../../../routes'
 import {usePage} from '../../hooks'
 import {Link} from 'react-router-dom'
@@ -49,6 +49,7 @@ const MainPage = () => {
 					<img
 						src={logo}
 						className={styles['main-page__content-logo']}
+						alt='logo'
 					/>
 					<h3>Тут суер крутое описание игры</h3>
 					<div>

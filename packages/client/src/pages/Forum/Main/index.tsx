@@ -10,7 +10,7 @@ import topicIcon from '../../../assets/topic-icon.png'
 import {StyledTableRowCell, StyledTableHead, StyledButton} from '../BasicComponents'
 import {useNavigate} from 'react-router-dom'
 import {PageInitArgs} from '../../../../routes'
-import {fetchUserThunk, selectUser} from '../../../entities/user'
+import {fetchUserThunk, selectUser} from '../../../store/slices/user'
 
 function createData(topic: string, comments: number) {
 	return {topic, comments}

@@ -1,8 +1,7 @@
-import {RouteObject} from 'react-router-dom'
 import CreateTopicPage, {initCreateTopicPage} from './src/pages/Forum/CreateTopic'
 import Forum, {initForumPage} from './src/pages/Forum/Main'
 import Topic, {initTopicPage} from './src/pages/Forum/Topic'
-import Game from './src/pages/Game/Game'
+import Game, {initGamePage} from './src/pages/Game/Game'
 import Leaderboard, {initLeaderboardPage} from './src/pages/Leaderboard'
 import {Login} from './src/pages/Login/Login'
 import MainPage, {initMainPage} from './src/pages/MainPage/MainPage'
@@ -10,7 +9,7 @@ import NotFoundPage, {initNotFoundPage} from './src/pages/NotFound/404'
 import Profile, {initProfilePage} from './src/pages/Profile/Profile'
 import Register from './src/pages/Register/Register'
 import ProtectedRoute from './src/routing/ProtectedRoute'
-import {AppDispatch, RootState} from './src/store'
+import {AppDispatch, RootState} from './src/store/store'
 
 export type PageInitArgs = {
 	dispatch: AppDispatch
@@ -29,7 +28,8 @@ export const routes: any = [
 			},
 			{
 				path: '/game',
-				Component: Game
+				Component: Game,
+				fetchData: initGamePage
 			},
 			{
 				path: '/profile',

@@ -1,8 +1,8 @@
 import {renderToString} from 'react-dom/server'
 import {configureStore} from '@reduxjs/toolkit'
-import {fetchUserThunk} from './src/entities/user'
+import {fetchUserThunk} from './src/store/slices/user'
 import {Provider} from 'react-redux'
-import {reducer} from './src/store'
+import {reducer} from './src/store/store'
 
 import React from 'react'
 import {Request as ExpressRequest} from 'express'
@@ -14,7 +14,7 @@ import {
 import {matchRoutes} from 'react-router-dom'
 import {createFetchRequest, createUrl} from './ssr.utils'
 import {routes} from './routes'
-import {setPageHasBeenInitializedOnServer} from './src/entities/ssrSlice/ssrSlice'
+import {setPageHasBeenInitializedOnServer} from './src/store/slices/ssrSlice/ssrSlice'
 
 export const render = async (req: ExpressRequest) => {
 	const {query, dataRoutes} = createStaticHandler(routes)
