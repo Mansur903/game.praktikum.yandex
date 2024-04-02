@@ -4,6 +4,7 @@ import {useAppSelector} from '../../hooks'
 import {selectUser, fetchUserThunk} from '../../entities/user'
 import {PageInitArgs} from '../../../routes'
 import {usePage} from '../../hooks'
+import {Link} from 'react-router-dom'
 
 const MainPage = () => {
 	const user = useAppSelector(selectUser)
@@ -30,7 +31,7 @@ const MainPage = () => {
 							<div
 								className={styles['main-page__navigation-item']}
 								key={item.title}>
-								<a href={item.path}>{item.title}</a>
+								<Link to={item.path}>{item.title}</Link>
 							</div>
 						))}
 					</div>
@@ -39,7 +40,7 @@ const MainPage = () => {
 							<div
 								className={styles['main-page__navigation-item']}
 								key={item.title}>
-								<a href={item.path}>{item.title}</a>
+								<Link to={item.path}>{item.title}</Link>
 							</div>
 						))}
 					</div>
