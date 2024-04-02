@@ -6,12 +6,15 @@ import type {ViteDevServer} from 'vite'
 import * as fs from 'fs'
 import * as path from 'path'
 import {createClientAndConnect} from './db'
+import {forumCallback} from './routes/Forum'
+import {dbConnect} from './initDatabase'
 
 dotenv.config()
 
 const isDev = () => process.env.NODE_ENV === 'development'
 
 async function startServer() {
+	await dbConnect()
 	const app = express()
 	app.use(cors())
 	const port = Number(process.env.SERVER_PORT) || 3001
@@ -43,6 +46,8 @@ async function startServer() {
 	app.get('/user', (_, res) => {
 		res.json({login: 'Степа', password: 'Степанов'})
 	})
+
+	app.get('/forum123', forumCallback)
 
 	app.use('*', async (req, res, next) => {
 		const url = req.originalUrl
