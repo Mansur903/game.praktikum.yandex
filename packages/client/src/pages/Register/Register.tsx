@@ -44,7 +44,6 @@ const boxFormSXProps = {
 
 export type FormErrors = Partial<Record<keyof FormValues, string>>
 
-// Custom Hook for Authorization Validation
 const useAuthorizationValidation = (
 	formValues: FormValues,
 	errors: FormErrors
