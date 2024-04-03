@@ -2,15 +2,15 @@ import {createSlice, PayloadAction, createAsyncThunk} from '@reduxjs/toolkit'
 import {RootState} from '../../store'
 import axios from 'axios'
 
-export type User = {
-	avatar: string | null
-	display_name: string | null
-	email: string
-	first_name: string
-	id: number
-	login: string
-	phone: string
-	second_name: string
+export interface User {
+	avatar?: string | null | undefined
+	display_name?: string | null
+	email?: string
+	first_name?: string
+	id?: number
+	login?: string
+	phone?: string
+	second_name?: string
 }
 
 type InitialStateProps = {
