@@ -44,7 +44,6 @@ export default class GameEngine extends EventTarget {
 			this.birds.push(new Bird(this.canvas, this.context, 'KeyK', 250))
 		this.canvas.onkeydown = ({code}) => {
 			this.birds.forEach((bird) => bird.handleClick(code))
-			console.log(code)
 			switch (code) {
 				case 'KeyM':
 					this.isMultiplayer = !this.isMultiplayer
@@ -66,7 +65,7 @@ export default class GameEngine extends EventTarget {
 	onClick() {
 		switch (this.state) {
 			case GameState.START:
-				this.point = 0
+				this.birds.forEach((bird) => bird.clearPoint())
 				this.state = GameState.PLAY
 				this.emitEvent()
 				break
@@ -83,7 +82,7 @@ export default class GameEngine extends EventTarget {
 			new CustomEvent('changeState', {
 				detail: {
 					currState: this.state,
-					currPoint: this.point
+					currPoint: this.birds[0].point
 				}
 			})
 		)
@@ -116,7 +115,7 @@ export default class GameEngine extends EventTarget {
 		this.pipes.draw()
 		this.ground.draw()
 		this.birds.forEach((bird) => bird.draw(this.frames))
-		this.ui.drawUi(this.state, this.point, this.isMultiplayer)
+		this.ui.drawUi(this.state, this.birds[0].point, this.isMultiplayer)
 	}
 
 	/**
@@ -170,7 +169,7 @@ export default class GameEngine extends EventTarget {
 					return
 				}
 			} else if (this.pipes.moved) {
-				this.point++
+				bird.point = firstPipe.id
 				// SFX.score.play();
 			}
 		})
