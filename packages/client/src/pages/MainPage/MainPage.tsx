@@ -1,6 +1,16 @@
 import styles from './MainPage.module.scss'
 import logo from './../../assets/logo.png'
+import {useAppSelector} from '../../hooks'
+import {selectUser, fetchUserThunk} from '../../store/slices/user'
+import {PageInitArgs} from '../../../routes'
+import {usePage} from '../../hooks'
+import {Link} from 'react-router-dom'
+
 const MainPage = () => {
+	const user = useAppSelector(selectUser)
+	console.log({user})
+	usePage({initPage: initMainPage})
+
 	const navigationLeft = [
 		{title: 'Игра', path: '/game'},
 		{title: 'Форум', path: '/forum'},
@@ -21,7 +31,7 @@ const MainPage = () => {
 							<div
 								className={styles['main-page__navigation-item']}
 								key={item.title}>
-								<a href={item.path}>{item.title}</a>
+								<Link to={item.path}>{item.title}</Link>
 							</div>
 						))}
 					</div>
@@ -30,7 +40,7 @@ const MainPage = () => {
 							<div
 								className={styles['main-page__navigation-item']}
 								key={item.title}>
-								<a href={item.path}>{item.title}</a>
+								<Link to={item.path}>{item.title}</Link>
 							</div>
 						))}
 					</div>
@@ -39,6 +49,7 @@ const MainPage = () => {
 					<img
 						src={logo}
 						className={styles['main-page__content-logo']}
+						alt='logo'
 					/>
 					<h3>Тут суер крутое описание игры</h3>
 					<div>
@@ -60,6 +71,12 @@ const MainPage = () => {
 			</div>
 		</div>
 	)
+}
+
+export const initMainPage = async ({dispatch, state}: PageInitArgs) => {
+	if (!selectUser(state)) {
+		return dispatch(fetchUserThunk())
+	}
 }
 
 export default MainPage

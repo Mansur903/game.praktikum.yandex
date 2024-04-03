@@ -6,7 +6,7 @@ body {
   font-family: 'PT Sans';
 }
 
-.wrapper {
+.profile {
   position: relative;
   @include flexbox(center, center, column, 80px);
 
@@ -18,37 +18,32 @@ body {
     gap: 30px;
   }
 
-  .avatarContainer {
+  &__avatarContainer {
     position: relative;
+  }
 
-    .avatar {
-      max-width: 270px;
-      width: 100%;
+  &__rating {
+    position: absolute;
+    top: 0;
+    right: -100px;
+    @include flexbox(center, center, column, 10px);
+
+    @include query(max, tablet) {
+      position: static;
+      margin-top: 20px;
     }
 
-    .rating {
-      position: absolute;
-      top: 0;
-      right: -100px;
-      @include flexbox(center, center, column, 10px);
+    img {
+      width: 50px;
+    }
 
-      @include query(max, tablet) {
-        position: static;
-        margin-top: 20px;
-      }
-
-      img {
-        width: 50px;
-      }
-
-      p {
-        color: #fff;
-        font-size: 32px;
-      }
+    p {
+      color: #fff;
+      font-size: 32px;
     }
   }
 
-  .back {
+  &__backBtn {
     position: absolute;
     top: 20vh;
     left: 10vw;
@@ -67,39 +62,13 @@ body {
     }
   }
 
-  .contentBlock {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  &__contentBlock {
+    @include flexbox(initial, start, column, 30px);
     width: 100%;
     max-width: 530px;
 
-    .paragraph {
-      color: #f0f0f0;
-      font-size: 32px;
-      margin: 0 0 20px 0;
+    div {
       width: 100%;
-
-      padding-bottom: 27px;
-      border-bottom: 1px solid #fff;
-    }
-
-    .settingsBtns {
-      @include flexbox(space-between, initial, row, 30px);
-      width: 100%;
-
-      .button {
-        background-color: transparent;
-        border: none;
-        color: white;
-        font-size: 18px;
-
-        cursor: pointer;
-
-        &:hover {
-          opacity: 0.6;
-        }
-      }
     }
   }
 }
