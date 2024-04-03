@@ -6,41 +6,22 @@ body {
   font-family: 'PT Sans';
 }
 
-.profile {
+.profileSettings {
   position: relative;
   @include flexbox(center, center, column, 80px);
 
-  background-image: url(./images/bg.png);
+  background-image: url(../Profile/images/bg.png);
   height: 100vh;
+  width: 100%;
+
   display: flex;
 
   @include query(max, tablet) {
     gap: 30px;
   }
 
-  &__avatarContainer {
-    position: relative;
-  }
-
-  &__rating {
-    position: absolute;
-    top: 0;
-    right: -100px;
-    @include flexbox(center, center, column, 10px);
-
-    @include query(max, tablet) {
-      position: static;
-      margin-top: 20px;
-    }
-
-    img {
-      width: 50px;
-    }
-
-    p {
-      color: #fff;
-      font-size: 32px;
-    }
+  &__avatar {
+    @include flexbox(initial, start, column, 10px);
   }
 
   &__backBtn {
@@ -62,10 +43,9 @@ body {
     }
   }
 
-  &__contentBlock {
+  form {
     @include flexbox(initial, start, column, 30px);
-    width: 100%;
-    max-width: 530px;
+    min-width: 530px;
 
     div {
       width: 100%;

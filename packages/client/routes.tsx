@@ -8,6 +8,7 @@ import MainPage, {initMainPage} from './src/pages/MainPage/MainPage'
 import NotFoundPage, {initNotFoundPage} from './src/pages/NotFound/404'
 import Profile, {initProfilePage} from './src/pages/Profile/Profile'
 import Register from './src/pages/Register/Register'
+import ProfileSettings from './src/pages/ProfileSettings/ProfileSettings'
 import ProtectedRoute from './src/routing/ProtectedRoute'
 import {AppDispatch, RootState} from './src/store/store'
 
@@ -35,6 +36,10 @@ export const routes: any = [
 				path: '/profile',
 				Component: Profile,
 				fetchData: initProfilePage
+			},
+			{
+				path: '/profile-settings',
+				Component: ProfileSettings
 			},
 			{
 				path: '/leaderboard',
