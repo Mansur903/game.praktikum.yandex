@@ -1,5 +1,5 @@
 import {Sequelize, SequelizeOptions} from 'sequelize-typescript'
-// import { userModel, IUser } from '../models/user';
+import {User} from './models/user'
 
 const sequelizeOptions: SequelizeOptions = {
 	host: 'localhost',
@@ -10,12 +10,9 @@ const sequelizeOptions: SequelizeOptions = {
 	dialect: 'postgres' // 'mysql', 'sqlite', 'mariadb', 'mssql'
 }
 
-// Создаем инстанс Sequelize
 export const sequelize = new Sequelize(sequelizeOptions)
 
-// Инициализируем модели
-// export const User = sequelize.define('User', userModel, {});
-// sequelize.addModels()
+sequelize.addModels([User])
 
 export async function dbConnect() {
 	try {
