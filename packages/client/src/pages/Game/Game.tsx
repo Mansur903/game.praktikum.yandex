@@ -24,7 +24,7 @@ const Game: FC = () => {
 		}
 	}, [])
 	usePage({initPage: initGamePage})
-	const getWindowSize = () =>
+	const getWindowSize = (): {innerWidth: number; innerHeight: number} | null =>
 		window
 			? {
 					innerWidth: window.innerWidth,
@@ -35,6 +35,19 @@ const Game: FC = () => {
 		innerWidth: number
 		innerHeight: number
 	} | null>(null)
+
+	if (window) {
+		useEffect(() => {
+			setWindowSize(getWindowSize())
+			const handleWindowResize = () => {
+				setWindowSize(getWindowSize())
+			}
+			window?.addEventListener('resize', handleWindowResize)
+			return () => {
+				window?.removeEventListener('resize', handleWindowResize)
+			}
+		}, [])
+	}
 
 	useEffect(() => {
 		if (ref.current) {
@@ -63,16 +76,6 @@ const Game: FC = () => {
 			game.addEventListener('changeState', eventHandler)
 			game.start()
 			return () => game.removeEventListener('changeState', eventHandler)
-		}
-		if (window) {
-			setWindowSize(getWindowSize())
-			const handleWindowResize = () => {
-				setWindowSize(getWindowSize())
-			}
-			window?.addEventListener('resize', handleWindowResize)
-			return () => {
-				window?.removeEventListener('resize', handleWindowResize)
-			}
 		}
 	}, [])
 

@@ -75,7 +75,7 @@ async function startServer() {
 					`<script>window.APP_INITIAL_STATE = ${JSON.stringify(initialState)}</script>`
 				)
 
-			console.log({html})
+			// console.log({html})
 
 			res.status(200).set({'Content-Type': 'text/html'}).end(html)
 		} catch (e) {
