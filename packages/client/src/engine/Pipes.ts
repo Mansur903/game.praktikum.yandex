@@ -34,8 +34,6 @@ class Pipe extends GameElement {
 
 	create() {
 		this.x = this.screen.width
-		// this.y = Math.random() * (constants.params.maxHeight - constants.params.minHeight) +
-		// 	constants.params.minHeight;
 		const random = parseInt(
 			`${
 				Math.random() * (constants.params.maxHeight - constants.params.minHeight) +
