@@ -1,8 +1,11 @@
 import styles from './styles.module.scss'
 import {useNavigate} from 'react-router-dom'
+import {PageInitArgs} from '../../../routes'
+import {fetchUserThunk, selectUser} from '../../store/slices/user'
+import {useAppSelector, usePage} from '../../hooks'
 import axios from 'axios'
 import {useCallback, useEffect, useState} from 'react'
-import {IUserData} from '../../entities/user'
+import {User} from '../../store/slices/user'
 import Avatar from '../../components/Avatar/Avatar'
 import {styled} from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
@@ -19,12 +22,18 @@ const StyledDataHolder = styled(TextField)(() => ({
 }))
 
 interface ProfileProps {
+	avatarImage?: string | undefined
+	name?: string | undefined
+	email?: string | undefined
 	record?: number | undefined
 }
 
-const Profile = ({record}: ProfileProps) => {
+const Profile = ({avatarImage, record, name, email}: ProfileProps) => {
 	const navigate = useNavigate()
-	const [userData, setUserData] = useState<IUserData | null>(null)
+	const user = useAppSelector(selectUser)
+	usePage({initPage: initProfilePage})
+
+	const [userData, setUserData] = useState<User | null>(null)
 
 	const getUserData = useCallback(async () => {
 		return axios
@@ -90,6 +99,12 @@ const Profile = ({record}: ProfileProps) => {
 			</div>
 		</div>
 	)
+}
+
+export const initProfilePage = async ({dispatch, state}: PageInitArgs) => {
+	if (!selectUser(state)) {
+		return dispatch(fetchUserThunk())
+	}
 }
 
 export default Profile

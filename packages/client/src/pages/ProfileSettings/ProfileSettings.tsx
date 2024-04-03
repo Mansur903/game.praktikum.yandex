@@ -2,7 +2,7 @@ import styles from './styles.module.scss'
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import {useCallback, useEffect, useState} from 'react'
-import {IUserData} from '../../entities/user'
+import {User} from '../../store/slices/user'
 import Avatar from '../../components/Avatar/Avatar'
 import ChangeAvatarModal from '../../components/Avatar/modules/ChangeAvatarModal'
 import Input from '@mui/material/Input'
@@ -15,7 +15,7 @@ interface IPassword {
 
 const ProfileSettings = () => {
 	const navigate = useNavigate()
-	const [userData, setUserData] = useState<IUserData | null>(null)
+	const [userData, setUserData] = useState<User | null>(null)
 	const [avatarImage, setAvatarImage] = useState<File | null>(null)
 	const [password, setPassword] = useState<IPassword | null>({
 		oldPassword: '',

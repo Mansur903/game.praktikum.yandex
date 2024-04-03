@@ -1,9 +1,9 @@
 import styles from './styles.module.scss'
-import {IUserData} from '../../entities/user'
 import {useState} from 'react'
 import {StyledButton} from '../../pages/Forum/BasicComponents'
+import {User} from '../../store/slices/user'
 
-interface IAvatarProps extends IUserData {
+interface IAvatarProps extends User {
 	onButtonClick?: () => void
 	currentPage?: string
 }
