@@ -1,8 +1,7 @@
 import cors from 'cors'
 import dotenv from 'dotenv'
 import express, {Request as ExpressRequest} from 'express'
-import {createServer as createViteServer} from 'vite'
-import type {ViteDevServer} from 'vite'
+import {ViteDevServer, createServer} from 'vite'
 import * as fs from 'fs'
 import * as path from 'path'
 import {createClientAndConnect} from './db'
@@ -18,12 +17,19 @@ async function startServer() {
 	createClientAndConnect()
 
 	let vite: ViteDevServer | undefined
-	const distPath = path.dirname(require.resolve('client/dist/index.html'))
-	const srcPath = path.dirname(require.resolve('client/index.html'))
-	const ssrClientPath = require.resolve('client/ssr-dist/client.cjs')
+	let distPath = ''
+	let srcPath = ''
+	let ssrClientPath = ''
+
+	if (!isDev()) {
+		distPath = path.dirname(require.resolve('../client/index.html'))
+		ssrClientPath = require.resolve('../ssr/client.cjs')
+	} else {
+		srcPath = path.dirname(require.resolve('client/index.html'))
+	}
 
 	if (isDev()) {
-		vite = await createViteServer({
+		vite = await createServer({
 			server: {middlewareMode: true},
 			root: srcPath,
 			appType: 'custom'
@@ -74,8 +80,6 @@ async function startServer() {
 					`<!--ssr-initial-state-->`,
 					`<script>window.APP_INITIAL_STATE = ${JSON.stringify(initialState)}</script>`
 				)
-
-			// console.log({html})
 
 			res.status(200).set({'Content-Type': 'text/html'}).end(html)
 		} catch (e) {
