@@ -13,10 +13,12 @@ class Pipe extends GameElement {
 	place: PipePlace = PipePlace.DOWN
 	top = new Image()
 	bot = new Image()
-	constructor(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
+	id = 0
+	constructor(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D, id: number) {
 		super(canvas, context)
 		this.top.src = PipeSpriteTop
 		this.bot.src = PipeSpriteBot
+		this.id = id
 	}
 	draw(): void {
 		this.context.drawImage(this.top, this.x, this.y)
@@ -32,9 +34,14 @@ class Pipe extends GameElement {
 
 	create() {
 		this.x = this.screen.width
+		const random = parseInt(
+			`${
+				Math.random() * (constants.params.maxHeight - constants.params.minHeight) +
+				constants.params.minHeight
+			}`
+		)
 		this.y =
-			Math.random() * (constants.params.maxHeight - constants.params.minHeight) +
-			constants.params.minHeight
+			-this.top.height + (this.screen.height - constants.params.tubeGap) / 2 + random
 		return this
 	}
 
@@ -58,7 +65,7 @@ export class Pipes extends GameElement {
 	update(state: GameState, frames: number) {
 		if (state !== GameState.PLAY) return
 		if (frames % 100 == 0) {
-			const pipe = new Pipe(this.screen, this.context)
+			const pipe = new Pipe(this.screen, this.context, frames)
 			this.list.push(pipe.create())
 		}
 		this.list.forEach((pipe) => {

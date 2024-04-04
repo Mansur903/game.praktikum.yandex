@@ -21,7 +21,7 @@ export default class Bird extends GameElement {
 	RAD = Math.PI / 180
 	isFallen = false
 	key = 'Space'
-
+	private _point = new Set()
 	constructor(
 		scrn: HTMLCanvasElement,
 		sctx: CanvasRenderingContext2D,
@@ -37,6 +37,18 @@ export default class Bird extends GameElement {
 		this.animations[3].sprite.src = Bird0
 		this.y = initY
 		this.initY = initY
+	}
+
+	get point() {
+		return this._point.size
+	}
+
+	set point(value: number) {
+		this._point.add(value)
+	}
+
+	clearPoint() {
+		this._point = new Set()
 	}
 
 	draw = (frame = 0) => {
