@@ -6,8 +6,8 @@ import type {ViteDevServer} from 'vite'
 import * as fs from 'fs'
 import * as path from 'path'
 import {createClientAndConnect} from './db'
-import {forumCallback} from './routes/Forum'
 import {dbConnect} from './initDatabase'
+import {getTopics, getTopic, createTopic} from './services/topic'
 
 dotenv.config()
 
@@ -35,9 +35,9 @@ async function startServer() {
 		app.use(vite.middlewares)
 	}
 
-	app.get('/api', (_, res) => {
-		res.json('👋 Howdy from the server :)')
-	})
+	app.get('/api/topics', getTopics)
+	app.get('/api/topics/:id', getTopic)
+	app.post('/api/topics', createTopic)
 
 	if (!isDev()) {
 		app.use('/assets', express.static(path.resolve(distPath, 'assets')))
@@ -46,8 +46,6 @@ async function startServer() {
 	app.get('/user', (_, res) => {
 		res.json({login: 'Степа', password: 'Степанов'})
 	})
-
-	app.get('/forum123', forumCallback)
 
 	app.use('*', async (req, res, next) => {
 		const url = req.originalUrl

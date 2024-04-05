@@ -4,16 +4,19 @@ import {
 	Table,
 	Column,
 	ForeignKey,
-	BelongsTo,
-	AllowNull
+	AllowNull,
+	PrimaryKey,
+	AutoIncrement
 } from 'sequelize-typescript'
 import {User} from './user'
 
 @Table({
-	tableName: 'topics'
+	tableName: 'topics',
+	timestamps: false
 })
-export class Topics extends Model {
-	@AllowNull(false)
+export class Topic extends Model {
+	@AutoIncrement
+	@PrimaryKey
 	@Column(DataType.INTEGER)
 	topic_id!: number
 
@@ -28,7 +31,4 @@ export class Topics extends Model {
 	@AllowNull(false)
 	@Column(DataType.INTEGER)
 	user_id!: number
-
-	@BelongsTo(() => User)
-	user!: User
 }

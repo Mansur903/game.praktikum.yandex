@@ -7,11 +7,11 @@ import {
 	Table
 } from 'sequelize-typescript'
 
-import {Topics} from './topic'
+import {Topic} from './topic'
 import {User} from './user'
 
 @Table({tableName: 'comments'})
-export class ForumMessage extends Model {
+export class Comment extends Model {
 	@ForeignKey(() => User)
 	@AllowNull(false)
 	@Column
@@ -25,8 +25,8 @@ export class ForumMessage extends Model {
 	@Column
 	content!: string
 
-	@BelongsTo(() => Topics, 'topic_id')
-	topic!: Topics
+	@BelongsTo(() => Topic, 'topic_id')
+	topic!: Topic
 
 	@BelongsTo(() => User)
 	user!: User

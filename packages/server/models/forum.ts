@@ -12,7 +12,7 @@ import {User} from './user'
 @Table({
 	tableName: 'forum'
 })
-export class Topics extends Model {
+export class Forum extends Model {
 	@AllowNull(false)
 	@Column(DataType.STRING)
 	name!: string
