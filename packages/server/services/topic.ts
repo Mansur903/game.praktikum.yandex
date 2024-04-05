@@ -30,9 +30,14 @@ export const getTopic = async (req: Request, res: Response): Promise<void> => {
 }
 
 export const createTopic = async (req: Request, res: Response): Promise<void> => {
-	const {title, content} = req.body
+	const {topic_name, topic_content, user_id} = req.body
+
+	console.log(req.body)
+	console.log(req)
 	try {
-		const newTopic = await Topic.create({title, content})
+		console.log('creating topic')
+
+		const newTopic = await Topic.create({topic_name, topic_content, user_id})
 		res.status(201).json(newTopic)
 	} catch (error) {
 		console.error('Ошибка при создании топика:', error)

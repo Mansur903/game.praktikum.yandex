@@ -17,6 +17,8 @@ async function startServer() {
 	await dbConnect()
 	const app = express()
 	app.use(cors())
+	app.use(express.json())
+	app.use(express.urlencoded({extended: true}))
 	const port = Number(process.env.SERVER_PORT) || 3001
 	createClientAndConnect()
 
