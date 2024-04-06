@@ -5,6 +5,8 @@ import {selectUser, fetchUserThunk} from '../../store/slices/user'
 import {PageInitArgs} from '../../../routes'
 import {usePage} from '../../hooks'
 import {Link} from 'react-router-dom'
+import {useCallback} from 'react'
+import axios from 'axios'
 
 const MainPage = () => {
 	const user = useAppSelector(selectUser)
@@ -22,8 +24,46 @@ const MainPage = () => {
 		{title: 'Выйти', path: '/'}
 	]
 
+	const addEmojiReaction = useCallback(async (emojiData: unknown) => {
+		return axios
+			.post('http://localhost:3001/api/emojis/add', emojiData, {
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+			.then((res) => {
+				console.log('Cтатус: ', res.data.message)
+				return res.data
+			})
+	}, [])
+
+	const getEmojiReactions = useCallback(async (topicId: number) => {
+		return axios
+			.get(`http://localhost:3001/api/emojis/get?topicID=${topicId}`)
+			.then((res) => {
+				console.log(`Реакции к топику ${topicId}: `, res.data.reactions)
+				return res.data
+			})
+	}, [])
+
 	return (
 		<div className={styles['main-page']}>
+			{/* Тестовые кнопки для проверки работы бэка по взаимодействию с реакциями на топик */}
+			<button
+				onClick={() => {
+					addEmojiReaction({topicId: 2, reaction: ['☺']})
+				}}>
+				Добавить реакцию
+			</button>
+
+			<button
+				onClick={() => {
+					getEmojiReactions(2)
+				}}>
+				Получить массив реакций
+			</button>
+			{/* --- */}
+
 			<div className={styles['main-page__container']}>
 				<nav className={styles['main-page__navigation']}>
 					<div className={styles['main-page__navigation-item']}>
