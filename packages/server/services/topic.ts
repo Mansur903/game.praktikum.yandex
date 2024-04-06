@@ -33,7 +33,7 @@ export const createTopic = async (req: Request, res: Response): Promise<void> =>
 	const {topic_name, topic_content, user_id} = req.body
 
 	console.log(req.body)
-	console.log(req)
+
 	try {
 		console.log('creating topic')
 

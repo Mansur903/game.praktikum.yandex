@@ -12,7 +12,10 @@ import {
 import {Topic} from './topic'
 import {User} from './user'
 
-@Table({tableName: 'comments'})
+@Table({
+	tableName: 'comments',
+	timestamps: false
+})
 export class Comment extends Model {
 	@AutoIncrement
 	@PrimaryKey

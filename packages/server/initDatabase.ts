@@ -1,7 +1,6 @@
 import {Sequelize, SequelizeOptions} from 'sequelize-typescript'
 import {User} from './models/user'
 import {Topic} from './models/topic'
-import {Forum} from './models/forum'
 import {Comment} from './models/comment'
 
 const sequelizeOptions: SequelizeOptions = {
@@ -15,7 +14,7 @@ const sequelizeOptions: SequelizeOptions = {
 
 export const sequelize = new Sequelize(sequelizeOptions)
 
-sequelize.addModels([User, Topic, Forum, Comment])
+sequelize.addModels([User, Topic, Comment])
 
 export async function dbConnect() {
 	try {

@@ -8,6 +8,7 @@ import {
 	PrimaryKey,
 	AutoIncrement
 } from 'sequelize-typescript'
+
 import {User} from './user'
 
 @Table({
