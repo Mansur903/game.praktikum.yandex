@@ -10,6 +10,7 @@ import {dbConnect} from './initDatabase'
 import {getTopics, getTopic, createTopic} from './services/topic'
 import {getCommentsForTopic, createComment, getComment} from './services/comment'
 import {getCommentReplies, createCommentReply} from './services/commentReplies'
+import {validateXss, xssErrorHandler} from './middlewares/xss'
 
 dotenv.config()
 
@@ -41,14 +42,24 @@ async function startServer() {
 
 	app.get('/api/topics', getTopics)
 	app.get('/api/topics/:id', getTopic)
-	app.post('/api/topics', createTopic)
+	app.post('/api/topics', validateXss(), xssErrorHandler, createTopic)
 
 	app.get('/api/topics/:topic_id/comments', getCommentsForTopic)
 	app.get('/api/comments/:comment_id', getComment)
-	app.post('/api/topics/:topic_id/comments', createComment)
+	app.post(
+		'/api/topics/:topic_id/comments',
+		validateXss(),
+		xssErrorHandler,
+		createComment
+	)
 
 	app.get('/api/comments/:comment_id/replies', getCommentReplies)
-	app.post('/api/comments/:comment_id/replies', createCommentReply)
+	app.post(
+		'/api/comments/:comment_id/replies',
+		validateXss(),
+		xssErrorHandler,
+		createCommentReply
+	)
 
 	if (!isDev()) {
 		app.use('/assets', express.static(path.resolve(distPath, 'assets')))
