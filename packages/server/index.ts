@@ -77,7 +77,7 @@ async function startServer() {
 			const result = await sequelize.transaction(async (t) => {
 				for (let i = 0; i < reactions.length; i++) {
 					const reaction = reactions[i]
-					await TopicReaction.upsert(
+					await TopicReaction.create(
 						{
 							topic_id: topicId,
 							reaction_id: uuidv4(),

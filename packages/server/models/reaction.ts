@@ -1,16 +1,15 @@
-import {DataType, Model, Table, Column, PrimaryKey} from 'sequelize-typescript'
+import {DataType, Model, Table, Column, Index} from 'sequelize-typescript'
 
 @Table({
-	tableName: 'topic-reactions-table3'
+	tableName: 'topic-reactions-table4'
 })
 export class TopicReaction extends Model {
-	@PrimaryKey
 	@Column(DataType.INTEGER)
+	@Index
 	topic_id!: number
 
-	@PrimaryKey
 	@Column(DataType.UUID)
-	reaction_id!: number
+	reaction_id!: string
 
 	@Column(DataType.STRING)
 	reaction!: string
