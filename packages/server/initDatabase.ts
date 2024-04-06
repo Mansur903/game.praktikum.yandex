@@ -5,7 +5,7 @@ const sequelizeOptions: SequelizeOptions = {
 	host: 'localhost',
 	port: 5432,
 	username: 'postgres',
-	password: 'my-password', // Ваш пароль от локальной БД
+	password: 'my_password', // Ваш пароль от локальной БД
 	database: 'postgres',
 	dialect: 'postgres' // 'mysql', 'sqlite', 'mariadb', 'mssql'
 }

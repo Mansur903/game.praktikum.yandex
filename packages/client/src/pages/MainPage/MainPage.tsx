@@ -51,7 +51,7 @@ const MainPage = () => {
 			{/* Тестовые кнопки для проверки работы бэка по взаимодействию с реакциями на топик */}
 			<button
 				onClick={() => {
-					addEmojiReaction({topicId: 2, reaction: ['☺']})
+					addEmojiReaction({topicId: 2, reactions: ['☺']})
 				}}>
 				Добавить реакцию
 			</button>

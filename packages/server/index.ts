@@ -7,8 +7,9 @@ import * as fs from 'fs'
 import * as path from 'path'
 import {createClientAndConnect} from './db'
 import {forumCallback} from './routes/Forum'
-import {dbConnect} from './initDatabase'
+import {dbConnect, sequelize} from './initDatabase'
 import {TopicReaction} from './models/reaction'
+import {v4 as uuidv4} from 'uuid'
 
 dotenv.config()
 
@@ -45,16 +46,16 @@ async function startServer() {
 		console.log('topicId: ', topicID)
 
 		try {
-			const topicReactions = await TopicReaction.findOne({
+			const topicReactions = await TopicReaction.findAll({
 				where: {
 					topic_id: topicID
 				}
 			})
 
 			if (topicReactions) {
-				console.log(`Reactions of topic ${topicID}: ${topicReactions.reactions}`)
+				console.log(`Reactions of topic ${topicID}: ${topicReactions}`)
 
-				res.status(200).json({reactions: topicReactions.reactions})
+				res.status(200).json({reactions: topicReactions})
 			} else {
 				res.status(404).json({error: 'Реакции на топик не найдены'})
 			}
@@ -70,35 +71,29 @@ async function startServer() {
 		req: ExpressRequest,
 		res: ExpressResponse
 	): Promise<void> => {
-		const {topicId, reaction}: {topicId: number; reaction: string[]} = req.body
+		const {topicId, reactions}: {topicId: number; reactions: string[]} = req.body
 
 		try {
-			// Проверяем, есть ли у топика реакции
-			const existingTopicReaction = await TopicReaction.findOne({
-				where: {
-					topic_id: topicId
+			const result = await sequelize.transaction(async (t) => {
+				for (let i = 0; i < reactions.length; i++) {
+					const reaction = reactions[i]
+					await TopicReaction.upsert(
+						{
+							topic_id: topicId,
+							reaction_id: uuidv4(),
+							reaction: reaction
+						},
+						{transaction: t}
+					)
 				}
 			})
 
-			if (existingTopicReaction) {
-				// Добавляем новые реакций к массиву реакций
-				existingTopicReaction.reactions = existingTopicReaction.reactions.concat(reaction)
-				await existingTopicReaction.save()
-			} else {
-				// Создаём новую запись, если её нет
-				const newTopicReaction = TopicReaction.build({
-					topic_id: topicId,
-					reactions: reaction
-				})
-				await newTopicReaction.save()
-			}
+			console.log(result)
 
 			console.log(`Реакции успешно добавлены к топику ${topicId}`)
-
 			res.status(200).json({message: `Реакции успешно добавлены к топику ${topicId}`})
 		} catch (error) {
-			console.log(`Ошибка при добавлении реакций к топику ${topicId}`)
-
+			console.log(`Ошибка при добавлении реакций к топику ${topicId}: ${error}`)
 			res.status(500).json({error: `Ошибка при добавлении реакций к топику ${topicId}`})
 		}
 	}
