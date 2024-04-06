@@ -2,6 +2,7 @@ import {Sequelize, SequelizeOptions} from 'sequelize-typescript'
 import {User} from './models/user'
 import {Topic} from './models/topic'
 import {Comment} from './models/comment'
+import {CommentReply} from './models/commentReplies'
 
 const sequelizeOptions: SequelizeOptions = {
 	host: 'localhost',
@@ -14,7 +15,7 @@ const sequelizeOptions: SequelizeOptions = {
 
 export const sequelize = new Sequelize(sequelizeOptions)
 
-sequelize.addModels([User, Topic, Comment])
+sequelize.addModels([User, Topic, Comment, CommentReply])
 
 export async function dbConnect() {
 	try {

@@ -8,7 +8,8 @@ import * as path from 'path'
 import {createClientAndConnect} from './db'
 import {dbConnect} from './initDatabase'
 import {getTopics, getTopic, createTopic} from './services/topic'
-import {getCommentsForTopic, createComment} from './services/comment'
+import {getCommentsForTopic, createComment, getComment} from './services/comment'
+import {getCommentReplies, createCommentReply} from './services/commentReplies'
 
 dotenv.config()
 
@@ -43,7 +44,11 @@ async function startServer() {
 	app.post('/api/topics', createTopic)
 
 	app.get('/api/topics/:topic_id/comments', getCommentsForTopic)
+	app.get('/api/comments/:comment_id', getComment)
 	app.post('/api/topics/:topic_id/comments', createComment)
+
+	app.get('/api/comments/:comment_id/replies', getCommentReplies)
+	app.post('/api/comments/:comment_id/replies', createCommentReply)
 
 	if (!isDev()) {
 		app.use('/assets', express.static(path.resolve(distPath, 'assets')))
