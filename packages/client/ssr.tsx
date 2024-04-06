@@ -44,8 +44,6 @@ export const render = async (req: ExpressRequest) => {
 		}
 	] = foundRoutes
 
-	console.log('typeof fetchData :', typeof fetchData)
-	console.log('fetchData :', fetchData)
 	if (typeof fetchData === 'function') {
 		try {
 			await fetchData({
@@ -62,7 +60,6 @@ export const render = async (req: ExpressRequest) => {
 	const router = createStaticRouter(dataRoutes, context)
 
 	await store.dispatch(fetchUserThunk())
-	console.log('store in render :', store.getState())
 
 	return {
 		html: renderToString(
