@@ -2,8 +2,16 @@ import {styled} from '@mui/material/styles'
 import SwitchMui from '@mui/material/Switch'
 export const Switch = styled(SwitchMui)(({theme}) => ({
 	width: 62,
+	top: 10,
 	height: 34,
 	padding: 7,
+	display: 'flex',
+	position: 'fixed',
+	right: 10,
+	opacity: 0.5,
+	'&:hover': {
+		opacity: 1
+	},
 	'& .MuiSwitch-switchBase': {
 		margin: 1,
 		padding: 0,
