@@ -1,0 +1,26 @@
+{
+  "development": {
+    "host": "localhost",
+    "port": 5432,
+    "username": "postgres",
+    "password": "1111",
+    "database": "game",
+    "dialect": "postgres"
+  },
+  "test": {
+    "host": "localhost",
+    "port": 5432,
+    "username": "postgres",
+    "password": "1111",
+    "database": "game",
+    "dialect": "postgres"
+  },
+  "production": {
+    "host": "localhost",
+    "port": 5432,
+    "username": "postgres",
+    "password": "1111",
+    "database": "game",
+    "dialect": "postgres"
+  }
+}
