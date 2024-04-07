@@ -6,7 +6,8 @@ import {
 	Table,
 	AutoIncrement,
 	DataType,
-	BelongsTo
+	BelongsTo,
+	Unique
 } from 'sequelize-typescript'
 import {Theme} from './Theme'
 @Table({
@@ -14,6 +15,9 @@ import {Theme} from './Theme'
 	paranoid: true,
 	tableName: 'user_theme'
 })
+/**
+ * TODO: Мб, когда появится юзер, добавить его id. Чтоб ориентироваться не только на device, но и на user_id
+ */
 export class UserTheme extends Model {
 	@AutoIncrement
 	@PrimaryKey
@@ -22,9 +26,15 @@ export class UserTheme extends Model {
 
 	@AllowNull(false)
 	@BelongsTo(() => Theme, {foreignKey: 'themeId', as: 'theme_id'})
+	/**
+	 * id темы
+	 */
 	@Column(DataType.INTEGER)
 	themeId!: number
-
+	/**
+	 * Уникальный ключ, генерируемый на фронте, чтобы запоминать, что выбрал не авторизированный пользователь.
+	 */
 	@Column(DataType.STRING)
+	@Unique
 	device!: string
 }
