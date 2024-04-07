@@ -4,7 +4,7 @@ import express, {Request as ExpressRequest} from 'express'
 import {ViteDevServer, createServer} from 'vite'
 import * as fs from 'fs'
 import * as path from 'path'
-import {createClientAndConnect} from './db'
+// import {createClientAndConnect} from './db'
 
 dotenv.config()
 
@@ -14,7 +14,7 @@ async function startServer() {
 	const app = express()
 	app.use(cors())
 	const port = Number(process.env.SERVER_PORT) || 3001
-	createClientAndConnect()
+	// createClientAndConnect()
 
 	let vite: ViteDevServer | undefined
 	let distPath = ''
