@@ -26,7 +26,7 @@ async function startServer() {
 	app.use(express.urlencoded({extended: true}))
 	app.use(xssShield())
 	const port = Number(process.env.SERVER_PORT) || 3001
-	createClientAndConnect()
+	// createClientAndConnect()
 
 	let vite: ViteDevServer | undefined
 	let distPath = ''
