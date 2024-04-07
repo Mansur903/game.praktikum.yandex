@@ -4,17 +4,22 @@ import express, {Request as ExpressRequest} from 'express'
 import {ViteDevServer, createServer} from 'vite'
 import * as fs from 'fs'
 import * as path from 'path'
-// import {createClientAndConnect} from './db'
+import {createClientAndConnect} from './db'
+import {dbConnect} from './initDatabase'
+import {setTheme, getTheme} from './services/userTheme'
 
 dotenv.config()
 
 const isDev = () => process.env.NODE_ENV === 'development'
 
 async function startServer() {
+	await dbConnect()
 	const app = express()
 	app.use(cors())
 	const port = Number(process.env.SERVER_PORT) || 3001
-	// createClientAndConnect()
+	app.use(express.json())
+	app.use(express.urlencoded({extended: true}))
+	createClientAndConnect()
 
 	let vite: ViteDevServer | undefined
 	let distPath = ''
@@ -49,6 +54,8 @@ async function startServer() {
 	app.get('/user', (_, res) => {
 		res.json({login: 'Степа', password: 'Степанов'})
 	})
+
+	app.post('/theme', setTheme).get('/theme/:device', getTheme)
 
 	app.use('*', async (req, res, next) => {
 		const url = req.originalUrl
