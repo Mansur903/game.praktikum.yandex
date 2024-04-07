@@ -3,6 +3,10 @@ import {UserTheme} from '../models/UserTheme'
 import {Theme} from '../models/Theme'
 
 export const setTheme = async (req: Request, res: Response) => {
+	/**
+	 * Так как по ТЗ менять тему, может любой, то генерим уникальный ключ на фронте,
+	 * и передаем его в параметре device.
+	 */
 	const {code, device} = req.body
 	const theme = await Theme.findOne({
 		where: {
