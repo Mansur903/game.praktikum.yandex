@@ -1,0 +1,54 @@
+@import '../../styles/mixins/_flexbox';
+@import '../../styles/mixins/_query';
+
+body {
+  margin: 0;
+  font-family: 'PT Sans';
+}
+
+.profileSettings {
+  position: relative;
+  @include flexbox(center, center, column, 80px);
+
+  background-image: url(../Profile/images/bg.png);
+  height: 100vh;
+  width: 100%;
+
+  display: flex;
+
+  @include query(max, tablet) {
+    gap: 30px;
+  }
+
+  &__avatar {
+    @include flexbox(initial, start, column, 10px);
+  }
+
+  &__backBtn {
+    position: absolute;
+    top: 20vh;
+    left: 10vw;
+
+    @include query(max, tablet) {
+      position: static;
+    }
+
+    img {
+      width: 110px;
+
+      &:hover {
+        opacity: 0.6;
+        cursor: pointer;
+      }
+    }
+  }
+
+  form {
+    @include flexbox(initial, start, column, 30px);
+    min-width: 530px;
+
+    div {
+      width: 100%;
+    }
+  }
+}

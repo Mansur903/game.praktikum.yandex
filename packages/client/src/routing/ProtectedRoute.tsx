@@ -3,10 +3,15 @@ import {useEffect, useState} from 'react'
 import axios from 'axios'
 import {BASE_URL, OAUTH_REDIRECT_URI, OAUTH_YANDEX} from '../config/api'
 
+import {useAppDispatch} from '../hooks'
+import {setUser} from '../store/slices/user'
+
 const ProtectedRoute = () => {
 	const [status, setStatus] = useState(0)
 	const {search} = useLocation()
 	const navigate = useNavigate()
+	const dispatch = useAppDispatch()
+
 	useEffect(() => {
 		const fetchUser = async () => {
 			await axios
@@ -34,6 +39,8 @@ const ProtectedRoute = () => {
 					}
 				)
 				.then((res) => {
+					const user = res.data
+					dispatch(setUser(user))
 					navigate('/', {replace: true})
 					setStatus(res.status)
 				})

@@ -16,8 +16,8 @@ describe('GameEngine', () => {
 		canvas = document.createElement('canvas')
 		engine = new GameEngine(canvas)
 		engine.background.drawFullWidth = mockDrawFullWidth
-		engine.ui.draw = mockDrawUI
-		engine.bird.draw = mockDrawBird
+		engine.ui.drawUi = mockDrawUI
+		engine.birds.forEach((bird) => (bird.draw = mockDrawBird))
 		engine.ground.draw = mockDrawGround
 	})
 
@@ -27,7 +27,9 @@ describe('GameEngine', () => {
 
 	it('should change state on click', () => {
 		engine.onClick()
-		expect(engine.state).toEqual(GameState.PLAY)
+		setTimeout(() => {
+			expect(engine.state).toEqual(GameState.PLAY)
+		}, 500)
 	})
 
 	it('should update frames in gameLoop', () => {

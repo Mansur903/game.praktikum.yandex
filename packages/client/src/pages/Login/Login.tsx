@@ -6,8 +6,6 @@ import axios from 'axios'
 import {LoginValues} from './model'
 import bg from '../../assets/backgroundMain.png'
 import icon from '../../assets/yandexLogo.svg'
-import {setUser} from '../../entities/user'
-import {useAppDispatch} from '../../hooks'
 import {AppError, AppErrorCode} from '../../lib/error'
 import {jsApiIdentify, redirectToOauthAuthorize} from '../../lib/auth'
 import {BASE_URL, OAUTH_REDIRECT_URI, OAUTH_YANDEX_SERVICE_ID} from '../../config/api'
@@ -49,7 +47,7 @@ const boxFormSXProps = {
 
 export const Login: React.FC = () => {
 	const navigate = useNavigate()
-	const dispatch = useAppDispatch()
+
 	const [formValues, setFormValues] = useState<LoginValues>({
 		login: '',
 		password: ''
@@ -105,7 +103,7 @@ export const Login: React.FC = () => {
 				})
 				.then((response) => {
 					const userData = JSON.parse(response.config.data)
-					dispatch(setUser(userData))
+					console.log(userData)
 				})
 				.then(() => {
 					navigate('/')
@@ -114,7 +112,6 @@ export const Login: React.FC = () => {
 		},
 		[formValues]
 	)
-
 	return (
 		<Box sx={boxRootSXProps}>
 			<Box
