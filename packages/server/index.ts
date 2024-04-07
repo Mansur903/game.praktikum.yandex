@@ -10,7 +10,7 @@ import {dbConnect} from './initDatabase'
 import {getTopics, getTopic, createTopic} from './services/topic'
 import {getCommentsForTopic, createComment, getComment} from './services/comment'
 import {getCommentReplies, createCommentReply} from './services/commentReplies'
-import {validateXss, xssErrorHandler} from './middlewares/xss'
+import xssShield from 'xss-shield/build/main/lib/xssShield'
 
 dotenv.config()
 
@@ -22,6 +22,7 @@ async function startServer() {
 	app.use(cors())
 	app.use(express.json())
 	app.use(express.urlencoded({extended: true}))
+	app.use(xssShield())
 	const port = Number(process.env.SERVER_PORT) || 3001
 	createClientAndConnect()
 
@@ -42,24 +43,14 @@ async function startServer() {
 
 	app.get('/api/topics', getTopics)
 	app.get('/api/topics/:id', getTopic)
-	app.post('/api/topics', validateXss(), xssErrorHandler, createTopic)
+	app.post('/api/topics', createTopic)
 
 	app.get('/api/topics/:topic_id/comments', getCommentsForTopic)
 	app.get('/api/comments/:comment_id', getComment)
-	app.post(
-		'/api/topics/:topic_id/comments',
-		validateXss(),
-		xssErrorHandler,
-		createComment
-	)
+	app.post('/api/topics/:topic_id/comments', createComment)
 
 	app.get('/api/comments/:comment_id/replies', getCommentReplies)
-	app.post(
-		'/api/comments/:comment_id/replies',
-		validateXss(),
-		xssErrorHandler,
-		createCommentReply
-	)
+	app.post('/api/comments/:comment_id/replies', createCommentReply)
 
 	if (!isDev()) {
 		app.use('/assets', express.static(path.resolve(distPath, 'assets')))
@@ -99,8 +90,6 @@ async function startServer() {
 					`<!--ssr-initial-state-->`,
 					`<script>window.APP_INITIAL_STATE = ${JSON.stringify(initialState)}</script>`
 				)
-
-			// console.log({html})
 
 			res.status(200).set({'Content-Type': 'text/html'}).end(html)
 		} catch (e) {

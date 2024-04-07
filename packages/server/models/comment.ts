@@ -6,7 +6,8 @@ import {
 	Model,
 	Table,
 	AutoIncrement,
-	DataType
+	DataType,
+	Index
 } from 'sequelize-typescript'
 
 import {Topic} from './topic'
@@ -28,6 +29,7 @@ export class Comment extends Model {
 	user_id!: number
 
 	@ForeignKey(() => Topic)
+	@Index({name: 'index_topic_id'})
 	@AllowNull(false)
 	@Column
 	topic_id!: number
