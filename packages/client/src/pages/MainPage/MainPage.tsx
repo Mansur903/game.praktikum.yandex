@@ -5,6 +5,7 @@ import {selectUser, fetchUserThunk} from '../../store/slices/user'
 import {PageInitArgs} from '../../../routes'
 import {usePage} from '../../hooks'
 import {Link} from 'react-router-dom'
+import {Switch} from '../../components/Switch/Switch'
 
 const MainPage = () => {
 	const user = useAppSelector(selectUser)
@@ -34,6 +35,7 @@ const MainPage = () => {
 								<Link to={item.path}>{item.title}</Link>
 							</div>
 						))}
+						<Switch />
 					</div>
 					<div className={styles['main-page__navigation-item']}>
 						{navigationRight.map((item) => (
