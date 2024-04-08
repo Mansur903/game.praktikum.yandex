@@ -1,75 +1,104 @@
-import styles from './MainPage.module.scss'
 import logo from './../../assets/logo.png'
-import {useAppSelector} from '../../hooks'
-import {selectUser, fetchUserThunk} from '../../store/slices/user'
+import background from './../../assets/backgroundMain.png'
+import {useAppDispatch, useAppSelector} from '../../hooks'
+import {selectUser, fetchUserThunk, clearUser} from '../../store/slices/user'
 import {PageInitArgs} from '../../../routes'
 import {usePage} from '../../hooks'
-import {Link} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
+import {Box, Button} from '@mui/material'
+import axios from 'axios'
+
+const buttonProps = {
+	color: 'white',
+	border: 1,
+	marginTop: 2
+}
 
 const MainPage = () => {
 	const user = useAppSelector(selectUser)
+	const dispatch = useAppDispatch()
 	console.log({user})
 	usePage({initPage: initMainPage})
 
-	const navigationLeft = [
-		{title: 'Игра', path: '/game'},
-		{title: 'Форум', path: '/forum'},
-		{title: 'Рейтинг', path: '/leaderboard'}
-	]
+	const navigate = useNavigate()
 
-	const navigationRight = [
-		{title: 'Профиль', path: '/profile'},
-		{title: 'Выйти', path: '/'}
-	]
+	const handleButtonClick = (url: string) => {
+		navigate(url)
+	}
+
+	const handleLogoutClick = async () => {
+		await axios
+			.post('https://ya-praktikum.tech/api/v2/auth/logout', {}, {withCredentials: true})
+			.then(() => {
+				dispatch(clearUser())
+				navigate('/signin')
+			})
+	}
 
 	return (
-		<div className={styles['main-page']}>
-			<div className={styles['main-page__container']}>
-				<nav className={styles['main-page__navigation']}>
-					<div className={styles['main-page__navigation-item']}>
-						{navigationLeft.map((item) => (
-							<div
-								className={styles['main-page__navigation-item']}
-								key={item.title}>
-								<Link to={item.path}>{item.title}</Link>
-							</div>
-						))}
-					</div>
-					<div className={styles['main-page__navigation-item']}>
-						{navigationRight.map((item) => (
-							<div
-								className={styles['main-page__navigation-item']}
-								key={item.title}>
-								<Link to={item.path}>{item.title}</Link>
-							</div>
-						))}
-					</div>
-				</nav>
-				<div className={styles['main-page__content']}>
-					<img
-						src={logo}
-						className={styles['main-page__content-logo']}
-						alt='logo'
-					/>
-					<h3>Тут суер крутое описание игры</h3>
-					<div>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-						incididunt ut labore et dolore magna aliqua. Etiam tempor orci eu lobortis
-						elementum. Lobortis scelerisque fermentum dui faucibus in ornare quam viverra.
-						Turpis massa sed elementum tempus egestas sed sed risus. Blandit cursus risus
-						at ultrices mi tempus imperdiet. Tristique senectus et netus et malesuada
-						fames. Augue eget arcu dictum varius duis at. A lacus vestibulum sed arcu non
-						odio. Parturient montes nascetur ridiculus mus mauris vitae ultricies. Sed
-						cras ornare arcu dui vivamus arcu felis bibendum ut. Viverra suspendisse
-						potenti nullam ac tortor vitae. Eu facilisis sed odio morbi quis commodo odio.
-						A arcu cursus vitae congue mauris. Sapien pellentesque habitant morbi
-						tristique. Habitant morbi tristique senectus et netus. Scelerisque felis
-						imperdiet proin fermentum leo. Purus sit amet luctus venenatis. Euismod nisi
-						porta lorem mollis aliquam ut porttitor. Est placerat in egestas erat.
-					</div>
-				</div>
-			</div>
-		</div>
+		<Box
+			sx={{
+				backgroundImage: `url(${background})`,
+				backgroundSize: 'cover',
+				backgroundPosition: 'center',
+				height: '100vh',
+				position: 'relative'
+			}}>
+			<Button
+				sx={{position: 'absolute', top: '10px', left: '10px', color: 'white'}}
+				onClick={() => handleLogoutClick()}>
+				Выйти
+			</Button>
+			<Box
+				sx={{
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'center',
+					justifyContent: 'center',
+					height: '100%'
+				}}>
+				<Box sx={{display: 'flex', justifyContent: 'center', width: '50%'}}>
+					<Box
+						sx={{
+							width: '50%',
+							display: 'flex',
+							flexDirection: 'column',
+							padding: '30px',
+							textAlign: 'center',
+							maxWidth: '200px',
+							justifyContent: 'center'
+						}}>
+						<Button
+							sx={buttonProps}
+							onClick={() => handleButtonClick('/game')}>
+							Играть
+						</Button>
+						<Button
+							sx={buttonProps}
+							onClick={() => handleButtonClick('/profile')}>
+							Профиль
+						</Button>
+						<Button
+							sx={buttonProps}
+							onClick={() => handleButtonClick('/leaderboard')}>
+							Рейтинг
+						</Button>
+						<Button
+							sx={buttonProps}
+							onClick={() => handleButtonClick('/forum')}>
+							Форум
+						</Button>
+					</Box>
+					<Box sx={{width: '50%', textAlign: 'center'}}>
+						<img
+							src={logo}
+							alt='Изображение'
+							style={{maxWidth: '100%', maxHeight: '100%'}}
+						/>
+					</Box>
+				</Box>
+			</Box>
+		</Box>
 	)
 }
 
