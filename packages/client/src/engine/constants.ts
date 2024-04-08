@@ -1,6 +1,6 @@
 export default {
 	color: {
-		sky: '#30c0df',
+		sky: '#161816',
 		white: '#FFFFFF',
 		black: '#000000'
 	},
