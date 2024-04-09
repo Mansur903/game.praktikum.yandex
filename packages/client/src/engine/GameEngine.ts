@@ -46,6 +46,7 @@ export default class GameEngine extends EventTarget {
 			this.birds.forEach((bird) => bird.handleClick(code))
 			switch (code) {
 				case 'KeyM':
+					if (this.state === GameState.PLAY) return
 					this.isMultiplayer = !this.isMultiplayer
 					if (this.isMultiplayer)
 						this.birds.push(new Bird(this.canvas, this.context, 'KeyK', 250))
@@ -113,8 +114,8 @@ export default class GameEngine extends EventTarget {
 		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
 		this.background.drawFullWidth()
 		this.pipes.draw()
-		this.ground.draw()
 		this.birds.forEach((bird) => bird.draw(this.frames))
+		this.ground.draw()
 		this.ui.drawUi(this.state, this.birds[0].point, this.isMultiplayer)
 	}
 
@@ -140,7 +141,7 @@ export default class GameEngine extends EventTarget {
 		this.frames++
 		if (this.birds.every((bird) => bird.isFallen) && this.state !== GameState.END) {
 			this.state = GameState.END
-			// this.emitEvent()
+			this.emitEvent()
 			this.pipes.moved = false
 		}
 	}
