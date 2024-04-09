@@ -1,7 +1,8 @@
 import cors from 'cors'
 import dotenv from 'dotenv'
 import express, {Request as ExpressRequest} from 'express'
-import {ViteDevServer, createServer} from 'vite'
+import {createServer as createViteServer} from 'vite'
+import type {ViteDevServer} from 'vite'
 import * as fs from 'fs'
 import * as path from 'path'
 import {createClientAndConnect} from './db'
@@ -9,6 +10,8 @@ import {dbConnect} from './initDatabase'
 import {getTopics, getTopic, createTopic} from './services/topic'
 import {getCommentsForTopic, createComment, getComment} from './services/comment'
 import {getCommentReplies, createCommentReply} from './services/commentReplies'
+import {createTopicReaction} from './services/createTopicReaction'
+import {getAllTopicReactions} from './services/getAllTopicReactions'
 import xssShield from 'xss-shield/build/main/lib/xssShield'
 
 dotenv.config()
@@ -38,7 +41,7 @@ async function startServer() {
 	}
 
 	if (isDev()) {
-		vite = await createServer({
+		vite = await createViteServer({
 			server: {middlewareMode: true},
 			root: srcPath,
 			appType: 'custom'
@@ -57,6 +60,9 @@ async function startServer() {
 
 	app.get('/api/comments/:comment_id/replies', getCommentReplies)
 	app.post('/api/comments/:comment_id/replies', createCommentReply)
+
+	app.post('/api/emojis/add', createTopicReaction)
+	app.get('/api/emojis/get', getAllTopicReactions)
 
 	if (!isDev()) {
 		app.use('/assets', express.static(path.resolve(distPath, 'assets')))

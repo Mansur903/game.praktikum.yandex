@@ -7,7 +7,7 @@
     "build": "lerna run build",
     "dev:client": "lerna run dev  --scope=client",
     "dev:server": "lerna run dev --scope=server",
-    "dev": "lerna run dev",
+    "dev": "npm --prefix packages/client run build && npm --prefix packages/server run build && npm --prefix packages/client run dev",
     "test": "lerna run test",
     "lint": "lerna run lint",
     "format": "lerna run format",
@@ -22,20 +22,22 @@
   },
   "devDependencies": {
     "@evilmartians/lefthook": "^1.3.9",
+    "@types/uuid": "^9.0.8",
     "lerna": "^5.4.3"
   },
   "dependencies": {
     "dotenv": "^16.0.2",
     "eslint-config-prettier": "^8.5.0",
+    "jest-environment-jsdom": "^29.0.1",
+    "lefthook": "^1.3.9",
     "normalize.css": "^8.0.1",
     "prettier": "^2.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "jest-environment-jsdom": "^29.0.1",
-    "lefthook": "^1.3.9",
     "sass": "^1.70.0",
     "ts-jest": "^28.0.8",
     "typescript": "^4.8.2",
+    "uuid": "^9.0.1",
     "vite": "^3.0.7"
   }
 }

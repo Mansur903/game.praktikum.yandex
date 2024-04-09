@@ -3,6 +3,7 @@ import {User} from './models/user'
 import {Topic} from './models/topic'
 import {Comment} from './models/comment'
 import {CommentReply} from './models/commentReplies'
+import {TopicReaction} from './models/reaction'
 
 const sequelizeOptions: SequelizeOptions = {
 	host: 'localhost',
@@ -15,7 +16,7 @@ const sequelizeOptions: SequelizeOptions = {
 
 export const sequelize = new Sequelize(sequelizeOptions)
 
-sequelize.addModels([User, Topic, Comment, CommentReply])
+sequelize.addModels([User, Topic, Comment, CommentReply, TopicReaction])
 
 export async function dbConnect() {
 	try {
