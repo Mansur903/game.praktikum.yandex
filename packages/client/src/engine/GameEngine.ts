@@ -140,7 +140,7 @@ export default class GameEngine extends EventTarget {
 		this.frames++
 		if (this.birds.every((bird) => bird.isFallen) && this.state !== GameState.END) {
 			this.state = GameState.END
-			// this.emitEvent()
+			this.emitEvent()
 			this.pipes.moved = false
 		}
 	}
