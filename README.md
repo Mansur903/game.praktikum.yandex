@@ -5,6 +5,7 @@
 ### Ссылки
 [![Figma][figma-logo]][figma]
 [![Видео][video_logo]][video]
+[Видео 7-8 спринты](https://www.loom.com/share/b998437feb2d472aa9d821381984dab2)
 ### Используемые технологии
 [![Typescript][ts_logo]][ts]
 [![SASS][sass-logo]][sass]
@@ -20,16 +21,16 @@
 ### Используемые API
 [Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API)
 [Fullscreen API](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API)
+[Pointer Lock](https://developer.mozilla.org/en-US/docs/Web/API/Pointer_Lock_API)
 
 
 ### Как запускать?
 
 1. Убедитесь что у вас установлен `node` и `docker`
 2. Выполните команду `yarn bootstrap` - это обязательный шаг, без него ничего работать не будет :)
-3. Выполните команду `yarn dev`
-3. Выполните команду `yarn dev --scope=client` чтобы запустить только клиент
-4. Выполните команду `yarn dev --scope=server` чтобы запустить только server
-
+3. Выполните команду `yarn build` на клиенте
+4. Выполните команду `yarn build` на сервере
+5. Выполните команду `yarn dev --scope=client` чтобы запустить проект
 
 ### Как добавить зависимости?
 В этом проекте используется `monorepo` на основе [`lerna`](https://github.com/lerna/lerna)

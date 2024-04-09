@@ -17,7 +17,6 @@ const buttonProps = {
 const MainPage = () => {
 	const user = useAppSelector(selectUser)
 	const dispatch = useAppDispatch()
-	console.log({user})
 	usePage({initPage: initMainPage})
 
 	const navigate = useNavigate()
