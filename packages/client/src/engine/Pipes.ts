@@ -41,7 +41,9 @@ class Pipe extends GameElement {
 			}`
 		)
 		this.y =
-			-this.top.height + (this.screen.height - constants.params.tubeGap) / 2 + random
+			-(this.top.height || 800) +
+			(this.screen.height - constants.params.tubeGap) / 2 +
+			random
 		return this
 	}
 
@@ -64,7 +66,7 @@ export class Pipes extends GameElement {
 	}
 	update(state: GameState, frames: number) {
 		if (state !== GameState.PLAY) return
-		if (frames % 100 == 0) {
+		if (frames % 150 == 0) {
 			const pipe = new Pipe(this.screen, this.context, frames)
 			this.list.push(pipe.create())
 		}

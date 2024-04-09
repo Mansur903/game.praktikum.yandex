@@ -6,7 +6,7 @@ export default {
 	},
 	params: {
 		speed: 2,
-		tubeGap: 150,
+		tubeGap: 200,
 		maxHeight: 180,
 		minHeight: -180
 	}
