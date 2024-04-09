@@ -5,14 +5,23 @@ import {ViteDevServer, createServer} from 'vite'
 import * as fs from 'fs'
 import * as path from 'path'
 import {createClientAndConnect} from './db'
+import {dbConnect} from './initDatabase'
+import {getTopics, getTopic, createTopic} from './services/topic'
+import {getCommentsForTopic, createComment, getComment} from './services/comment'
+import {getCommentReplies, createCommentReply} from './services/commentReplies'
+import xssShield from 'xss-shield/build/main/lib/xssShield'
 
 dotenv.config()
 
 const isDev = () => process.env.NODE_ENV === 'development'
 
 async function startServer() {
+	await dbConnect()
 	const app = express()
 	app.use(cors())
+	app.use(express.json())
+	app.use(express.urlencoded({extended: true}))
+	app.use(xssShield())
 	const port = Number(process.env.SERVER_PORT) || 3001
 	createClientAndConnect()
 
@@ -38,9 +47,16 @@ async function startServer() {
 		app.use(vite.middlewares)
 	}
 
-	app.get('/api', (_, res) => {
-		res.json('👋 Howdy from the server :)')
-	})
+	app.get('/api/topics', getTopics)
+	app.get('/api/topics/:id', getTopic)
+	app.post('/api/topics', createTopic)
+
+	app.get('/api/topics/:topic_id/comments', getCommentsForTopic)
+	app.get('/api/comments/:comment_id', getComment)
+	app.post('/api/topics/:topic_id/comments', createComment)
+
+	app.get('/api/comments/:comment_id/replies', getCommentReplies)
+	app.post('/api/comments/:comment_id/replies', createCommentReply)
 
 	if (!isDev()) {
 		app.use('/assets', express.static(path.resolve(distPath, 'assets')))
