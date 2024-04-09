@@ -1,15 +1,15 @@
 import cors from 'cors'
 import dotenv from 'dotenv'
-import express, {Request as ExpressRequest, Response as ExpressResponse} from 'express'
+import express, {Request as ExpressRequest} from 'express'
 import {createServer as createViteServer} from 'vite'
 import type {ViteDevServer} from 'vite'
 import * as fs from 'fs'
 import * as path from 'path'
 import {createClientAndConnect} from './db'
 import {forumCallback} from './routes/Forum'
-import {dbConnect, sequelize} from './initDatabase'
-import {TopicReaction} from './models/reaction'
-import {v4 as uuidv4} from 'uuid'
+import {dbConnect} from './initDatabase'
+import {createTopicReaction} from './services/createTopicReaction'
+import {getAllTopicReactions} from './services/getAllTopicReactions'
 
 dotenv.config()
 
@@ -35,67 +35,6 @@ async function startServer() {
 		})
 
 		app.use(vite.middlewares)
-	}
-
-	// Контроллер для получения реакций к топику
-	const getAllTopicReactions = async (
-		req: ExpressRequest,
-		res: ExpressResponse
-	): Promise<void> => {
-		const {topicID}: {topicID?: number} = req.query
-		console.log('topicId: ', topicID)
-
-		try {
-			const topicReactions = await TopicReaction.findAll({
-				where: {
-					topic_id: topicID
-				}
-			})
-
-			if (topicReactions) {
-				console.log(`Reactions of topic ${topicID}: ${topicReactions}`)
-
-				res.status(200).json({reactions: topicReactions})
-			} else {
-				res.status(404).json({error: 'Реакции на топик не найдены'})
-			}
-		} catch (error) {
-			console.error('Ошибка при получении записей из таблицы TopicReaction:', error)
-
-			res.status(500).json({error: 'Ошибка при получении реакций'})
-		}
-	}
-
-	// Контроллер для добавления реакции к топику
-	const createTopicReaction = async (
-		req: ExpressRequest,
-		res: ExpressResponse
-	): Promise<void> => {
-		const {topicId, reactions}: {topicId: number; reactions: string[]} = req.body
-
-		try {
-			const result = await sequelize.transaction(async (t) => {
-				for (let i = 0; i < reactions.length; i++) {
-					const reaction = reactions[i]
-					await TopicReaction.create(
-						{
-							topic_id: topicId,
-							reaction_id: uuidv4(),
-							reaction: reaction
-						},
-						{transaction: t}
-					)
-				}
-			})
-
-			console.log(result)
-
-			console.log(`Реакции успешно добавлены к топику ${topicId}`)
-			res.status(200).json({message: `Реакции успешно добавлены к топику ${topicId}`})
-		} catch (error) {
-			console.log(`Ошибка при добавлении реакций к топику ${topicId}: ${error}`)
-			res.status(500).json({error: `Ошибка при добавлении реакций к топику ${topicId}`})
-		}
 	}
 
 	// Middleware для обработки JSON данных
