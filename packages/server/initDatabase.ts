@@ -3,7 +3,9 @@ import {User} from './models/user'
 import {Topic} from './models/topic'
 import {Comment} from './models/comment'
 import {CommentReply} from './models/commentReplies'
-import {TopicReaction} from './models/reaction'
+import { TopicReaction } from './models/reaction'
+import {Theme} from './models/Theme'
+import {UserTheme} from './models/UserTheme'
 
 const sequelizeOptions: SequelizeOptions = {
 	host: 'localhost',
@@ -16,7 +18,7 @@ const sequelizeOptions: SequelizeOptions = {
 
 export const sequelize = new Sequelize(sequelizeOptions)
 
-sequelize.addModels([User, Topic, Comment, CommentReply, TopicReaction])
+sequelize.addModels([User, Topic, Comment, CommentReply, TopicReaction, UserTheme, Theme])
 
 export async function dbConnect() {
 	try {

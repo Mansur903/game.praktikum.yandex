@@ -5,6 +5,7 @@ import store from './store/store'
 import {Provider} from 'react-redux'
 import {routes} from '../routes'
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
+import {Switch} from './components/Switch/Switch'
 
 const router = createBrowserRouter(routes)
 
@@ -13,6 +14,9 @@ ReactDOM.hydrateRoot(
 	<React.StrictMode>
 		<Provider store={store}>
 			<RouterProvider router={router} />
+			<div className='switch'>
+				<Switch />
+			</div>
 		</Provider>
 	</React.StrictMode>
 )

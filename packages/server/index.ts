@@ -12,6 +12,7 @@ import {getCommentsForTopic, createComment, getComment} from './services/comment
 import {getCommentReplies, createCommentReply} from './services/commentReplies'
 import {createTopicReaction} from './services/createTopicReaction'
 import {getAllTopicReactions} from './services/getAllTopicReactions'
+import {setTheme, getTheme} from './services/userTheme'
 import xssShield from 'xss-shield/build/main/lib/xssShield'
 
 dotenv.config()
@@ -26,6 +27,8 @@ async function startServer() {
 	app.use(express.urlencoded({extended: true}))
 	app.use(xssShield())
 	const port = Number(process.env.SERVER_PORT) || 3001
+	app.use(express.json())
+	app.use(express.urlencoded({extended: true}))
 	createClientAndConnect()
 
 	let vite: ViteDevServer | undefined
@@ -71,6 +74,8 @@ async function startServer() {
 	app.get('/user', (_, res) => {
 		res.json({login: 'Степа', password: 'Степанов'})
 	})
+
+	app.post('/theme', setTheme).get('/theme/:device', getTheme)
 
 	app.use('*', async (req, res, next) => {
 		const url = req.originalUrl
