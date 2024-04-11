@@ -8,7 +8,8 @@
     "dev": "cross-env NODE_ENV=development nodemon index.ts",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "test": "jest ."
+    "test": "jest .",
+    "migration": "npx sequelize-cli db:seed:all"
   },
   "dependencies": {
     "cors": "^2.8.5",

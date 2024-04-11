@@ -12,7 +12,7 @@ import {getCommentsForTopic, createComment, getComment} from './services/comment
 import {getCommentReplies, createCommentReply} from './services/commentReplies'
 import {createTopicReaction} from './services/createTopicReaction'
 import {getAllTopicReactions} from './services/getAllTopicReactions'
-import {setTheme, getTheme} from './services/userTheme'
+import {setTheme, getTheme, createTheme} from './services/userTheme'
 import xssShield from 'xss-shield/build/main/lib/xssShield'
 
 dotenv.config()
