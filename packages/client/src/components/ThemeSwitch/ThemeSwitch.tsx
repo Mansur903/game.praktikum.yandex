@@ -18,12 +18,21 @@ export const ThemeSwitch: FC<PropsType> = ({children}) => {
 		} else {
 			try {
 				const {data} = await axios.get(`/theme/${deviceThemeId}`)
-				setTheme(data.theme_id.theme)
+				handleChangeTheme(data.theme_id.theme)
 			} catch (e) {
 				console.error(e)
 			}
 		}
 	}, [])
+
+	const handleChangeTheme = (theme: string) => {
+		const root = document.getElementById('root')
+		if (root) {
+			root?.classList.remove(...root.classList)
+			root?.classList.add(theme)
+		}
+		setTheme(theme)
+	}
 
 	const changeTheme = async () => {
 		const deviceThemeId = localStorage.getItem('deviceThemeId')
@@ -37,7 +46,7 @@ export const ThemeSwitch: FC<PropsType> = ({children}) => {
 				id: deviceThemeId,
 				code
 			})
-			setTheme(data.theme_id.theme)
+			handleChangeTheme(data.theme_id.theme)
 		} catch (e) {
 			console.error(e)
 		}

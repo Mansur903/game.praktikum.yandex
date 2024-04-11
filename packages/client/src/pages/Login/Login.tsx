@@ -1,14 +1,16 @@
-import React, {useCallback, useState} from 'react'
+import React, {useCallback, useContext, useState} from 'react'
 import {Button, Box, TextField, Typography, Link, Icon} from '@mui/material'
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios'
-
 import {LoginValues} from './model'
 import bg from '../../assets/backgroundMain.png'
+import bgDark from '../../assets/backgroundDark.jpg'
 import icon from '../../assets/yandexLogo.svg'
 import {AppError, AppErrorCode} from '../../lib/error'
 import {jsApiIdentify, redirectToOauthAuthorize} from '../../lib/auth'
 import {BASE_URL, OAUTH_REDIRECT_URI, OAUTH_YANDEX_SERVICE_ID} from '../../config/api'
+import {ThemeVariant} from '../../types/enum/Theme.enum'
+import {ThemeContext} from '../../components/ThemeContext/ThemeContext'
 
 const textFieldSXProps = {
 	fieldset: {
@@ -25,14 +27,14 @@ const textFieldInputLabelProps = {
 	}
 }
 
-const boxRootSXProps = {
-	backgroundImage: `url(${bg})`,
+const boxRootSXProps = (theme: string) => ({
+	backgroundImage: `url(${theme === ThemeVariant.LIGHT ? bg : bgDark})`,
 	backgroundSize: 'cover',
 	backgroundRepeat: 'no-repeat',
 	backgroundPosition: 'center',
 	width: '100vw',
 	height: '100vh'
-}
+})
 
 const boxFormSXProps = {
 	display: 'flex',
@@ -52,6 +54,7 @@ export const Login: React.FC = () => {
 		login: '',
 		password: ''
 	})
+	const theme = useContext(ThemeContext)
 
 	const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		const {name, value} = e.target
@@ -113,7 +116,7 @@ export const Login: React.FC = () => {
 		[formValues]
 	)
 	return (
-		<Box sx={boxRootSXProps}>
+		<Box sx={boxRootSXProps(theme)}>
 			<Box
 				sx={{
 					minWidth: 400,
@@ -155,11 +158,11 @@ export const Login: React.FC = () => {
 						<Button
 							type='submit'
 							sx={{
-								color: '#36981D',
+								color: 'var(--red)',
 								fontWeight: 'bold',
 								padding: 2,
 								width: '100%',
-								border: 'solid 1px #36981D'
+								border: 'solid 1px var(--red)'
 							}}>
 							Войти
 						</Button>
