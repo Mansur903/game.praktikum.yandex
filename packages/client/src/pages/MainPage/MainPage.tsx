@@ -1,5 +1,6 @@
 import logo from './../../assets/logo.png'
 import background from './../../assets/backgroundMain.png'
+import backgroundDark from './../../assets/backgroundDark.jpg'
 import {useAppDispatch, useAppSelector} from '../../hooks'
 import {selectUser, fetchUserThunk, clearUser} from '../../store/slices/user'
 import {PageInitArgs} from '../../../routes'
@@ -7,6 +8,8 @@ import {usePage} from '../../hooks'
 import {useNavigate} from 'react-router-dom'
 import {Box, Button} from '@mui/material'
 import axios from 'axios'
+import {useContext} from 'react'
+import {ThemeContext} from '../../components/ThemeContext/ThemeContext'
 
 const buttonProps = {
 	color: 'white',
@@ -15,6 +18,7 @@ const buttonProps = {
 }
 
 const MainPage = () => {
+	const theme = useContext(ThemeContext)
 	const user = useAppSelector(selectUser)
 	const dispatch = useAppDispatch()
 	usePage({initPage: initMainPage})
@@ -37,7 +41,7 @@ const MainPage = () => {
 	return (
 		<Box
 			sx={{
-				backgroundImage: `url(${background})`,
+				backgroundImage: `url(${theme === 'light' ? background : backgroundDark})`,
 				backgroundSize: 'cover',
 				backgroundPosition: 'center',
 				height: '100vh',

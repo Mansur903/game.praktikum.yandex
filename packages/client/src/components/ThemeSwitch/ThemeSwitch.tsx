@@ -1,6 +1,64 @@
 import {styled} from '@mui/material/styles'
 import SwitchMui from '@mui/material/Switch'
-export const Switch = styled(SwitchMui)(({theme}) => ({
+import axios from 'axios'
+import {FC, ReactNode, useCallback, useEffect, useState} from 'react'
+import {ThemeContext} from '../ThemeContext/ThemeContext'
+import {ThemeVariant} from '../../types/enum/Theme.enum'
+type PropsType = {
+	children: ReactNode
+}
+export const ThemeSwitch: FC<PropsType> = ({children}) => {
+	const [theme, setTheme] = useState('light')
+
+	const getTheme = useCallback(async () => {
+		const deviceThemeId = localStorage.getItem('deviceThemeId')
+		if (!deviceThemeId) {
+			const result = await axios.put('/theme')
+			if (result.data.id) localStorage.setItem('deviceThemeId', result.data.id)
+		} else {
+			try {
+				const {data} = await axios.get(`/theme/${deviceThemeId}`)
+				setTheme(data.theme_id.theme)
+			} catch (e) {
+				console.error(e)
+			}
+		}
+	}, [])
+
+	const changeTheme = async () => {
+		const deviceThemeId = localStorage.getItem('deviceThemeId')
+		if (!deviceThemeId) {
+			console.error('Missing local theme id')
+			return
+		}
+		const code = theme === ThemeVariant.LIGHT ? ThemeVariant.DARK : ThemeVariant.LIGHT
+		try {
+			const {data} = await axios.post(`/theme`, {
+				id: deviceThemeId,
+				code
+			})
+			setTheme(data.theme_id.theme)
+		} catch (e) {
+			console.error(e)
+		}
+	}
+
+	useEffect(() => {
+		getTheme()
+	}, [getTheme])
+
+	return (
+		<>
+			<ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>
+			<SwitchStyled
+				checked={theme !== ThemeVariant.LIGHT}
+				onChange={changeTheme}
+			/>
+		</>
+	)
+}
+
+export const SwitchStyled = styled(SwitchMui)(({theme}) => ({
 	width: 62,
 	top: 10,
 	height: 34,

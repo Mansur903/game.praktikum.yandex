@@ -75,7 +75,7 @@ async function startServer() {
 		res.json({login: 'Степа', password: 'Степанов'})
 	})
 
-	app.post('/theme', setTheme).get('/theme/:device', getTheme)
+	app.put('/theme', createTheme).post('/theme', setTheme).get('/theme/:id', getTheme)
 
 	app.use('*', async (req, res, next) => {
 		const url = req.originalUrl

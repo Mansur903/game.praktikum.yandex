@@ -6,8 +6,7 @@ import {
 	Table,
 	AutoIncrement,
 	DataType,
-	BelongsTo,
-	Unique
+	BelongsTo
 } from 'sequelize-typescript'
 import {Theme} from './Theme'
 @Table({
@@ -35,6 +34,5 @@ export class UserTheme extends Model {
 	 * Уникальный ключ, генерируемый на фронте, чтобы запоминать, что выбрал не авторизированный пользователь.
 	 */
 	@Column(DataType.STRING)
-	@Unique
 	device!: string
 }

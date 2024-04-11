@@ -10,7 +10,6 @@ body {
   position: relative;
   @include flexbox(center, center, column, 80px);
 
-  background-image: url(./images/bg.png);
   height: 100vh;
   display: flex;
 
