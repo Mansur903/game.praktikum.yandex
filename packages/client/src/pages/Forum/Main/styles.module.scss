@@ -2,7 +2,7 @@
 
 .wrapper {
   margin: 0 auto;
-  background-color: $primary500;
+  background-color: var(--primary500);
   min-height: 100vh;
   overflow: auto;
   padding: 0;
@@ -39,12 +39,12 @@
 
     &__comments {
       font-size: 18px;
-      color: $primary500;
+      color: var(--primary500);
       font-weight: 200;
       width: 45px;
       height: 45px;
       line-height: 45px;
-      border: 2px dotted $primary500;
+      border: 2px dotted var(--primary500);
       border-radius: 50%;
       position:absolute;
       left: 45%;

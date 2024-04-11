@@ -1,31 +1,40 @@
 $black: rgb(0 0 0);
-$white: #FFFFFF;
-$whiteSoft: #F0F0F0;
+$white: #ffffff;
+$whiteSoft: #f0f0f0;
 
-$gray100: #F4F4F5;
-$gray200: #E4E4E7;
-$gray300: #D4D4D8;
-$gray400: #A1A1AA;
-$gray500: #71717A;
-$gray600: #52525B;
-$gray700: #3F3F46;
-$gray800: #27272A;
-$gray900: #18181B;
+$gray100: #f4f4f5;
+$gray200: #e4e4e7;
+$gray300: #d4d4d8;
+$gray400: #a1a1aa;
+$gray500: #71717a;
+$gray600: #52525b;
+$gray700: #3f3f46;
+$gray800: #27272a;
+$gray900: #18181b;
 
-$primary500: #6B88FE;
+$primary500: #6b88fe;
+$primary500-dark: #35447f;
 
-$red500: #FF6262;
+$red500: #ff6262;
 
-$background: #E4E4E7;
-$text: #27272A;
-$border: #A1A1AA;
-$transparent: rgba(0,0,0,0.0);
+$background: #e4e4e7;
+$text: #27272a;
+$border: #a1a1aa;
+$transparent: rgba(0, 0, 0, 0);
 
 $link: #666;
 $hoverLink: #161919;
 $shadow: rgba(0, 0, 0, 0.2);
 
 :root {
-  --background: #E4E4E7;
-  --white: #FFFFFF
+  --background: #e4e4e7;
+  --white: #ffffff;
+  & .light {
+    --primary500: #6b88fe;
+    --red: #36981D;
+  }
+  & .dark {
+    --primary500: #35447f;
+    --red: #256a14;
+  }
 }

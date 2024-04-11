@@ -1,11 +1,10 @@
 @import '../../styles/vars';
 
 .wrapper {
-  background-image: url('../../assets/background404.png');
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
   .page {
     display: flex;

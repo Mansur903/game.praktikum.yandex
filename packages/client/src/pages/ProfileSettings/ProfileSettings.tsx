@@ -1,13 +1,16 @@
 import styles from './styles.module.scss'
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios'
-import {useCallback, useEffect, useState} from 'react'
+import {useCallback, useContext, useEffect, useState} from 'react'
 import {User} from '../../store/slices/user'
 import Avatar from '../../components/Avatar/Avatar'
 import ChangeAvatarModal from '../../components/Avatar/modules/ChangeAvatarModal'
 import Input from '@mui/material/Input'
 import {StyledButton} from '../Forum/BasicComponents'
-
+import {ThemeContext} from '../../components/ThemeContext/ThemeContext'
+import {ThemeVariant} from '../../types/enum/Theme.enum'
+import backgroundDark from '../../assets/backgroundDark.jpg'
+import background from '../../assets/backgroundMain.png'
 interface IPassword {
 	oldPassword?: string
 	newPassword?: string
@@ -15,6 +18,7 @@ interface IPassword {
 
 const ProfileSettings = () => {
 	const navigate = useNavigate()
+	const theme = useContext(ThemeContext)
 	const [userData, setUserData] = useState<User | null>(null)
 	const [avatarImage, setAvatarImage] = useState<File | null>(null)
 	const [password, setPassword] = useState<IPassword | null>({
@@ -89,7 +93,13 @@ const ProfileSettings = () => {
 	}
 
 	return (
-		<div className={styles.profileSettings}>
+		<div
+			style={{
+				backgroundImage: `url(${
+					ThemeVariant.LIGHT === theme ? background : backgroundDark
+				})`
+			}}
+			className={styles.profileSettings}>
 			<div className={styles.profileSettings__backBtn}>
 				<img
 					src='src/pages/Profile/images/back-btn.svg'

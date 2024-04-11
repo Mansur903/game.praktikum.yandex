@@ -12,7 +12,7 @@ import {getCommentsForTopic, createComment, getComment} from './services/comment
 import {getCommentReplies, createCommentReply} from './services/commentReplies'
 import {createTopicReaction} from './services/createTopicReaction'
 import {getAllTopicReactions} from './services/getAllTopicReactions'
-import {setTheme, getTheme} from './services/userTheme'
+import {setTheme, getTheme, createTheme} from './services/userTheme'
 import xssShield from 'xss-shield/build/main/lib/xssShield'
 
 dotenv.config()
@@ -75,7 +75,7 @@ async function startServer() {
 		res.json({login: 'Степа', password: 'Степанов'})
 	})
 
-	app.post('/theme', setTheme).get('/theme/:device', getTheme)
+	app.put('/theme', createTheme).post('/theme', setTheme).get('/theme/:id', getTheme)
 
 	app.use('*', async (req, res, next) => {
 		const url = req.originalUrl

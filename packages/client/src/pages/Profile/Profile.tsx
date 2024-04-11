@@ -4,22 +4,30 @@ import {PageInitArgs} from '../../../routes'
 import {fetchUserThunk, selectUser} from '../../store/slices/user'
 import {useAppSelector, usePage} from '../../hooks'
 import axios from 'axios'
-import {useCallback, useEffect, useState} from 'react'
+import {useCallback, useContext, useEffect, useState} from 'react'
 import {User} from '../../store/slices/user'
 import Avatar from '../../components/Avatar/Avatar'
 import {styled} from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
 import {StyledButton} from '../Forum/BasicComponents'
+import {ThemeContext} from '../../components/ThemeContext/ThemeContext'
+import {ThemeVariant} from '../../types/enum/Theme.enum'
+import backgroundDark from '../../assets/backgroundDark.jpg'
+import background from '../../assets/backgroundMain.png'
 
-const StyledDataHolder = styled(TextField)(() => ({
-	color: 'var(--white)',
-	borderRadius: '10px',
-	borderColor: 'var(--white)',
-	pointerEvents: 'none',
-	'&:hover': {
-		borderColor: 'var(--white)'
+const StyledDataHolder = styled(TextField)(() => {
+	const theme = useContext(ThemeContext)
+	const color = ThemeVariant.LIGHT === theme ? 'var(--white)' : 'var(--black)'
+	return {
+		color: color,
+		borderRadius: '10px',
+		borderColor: color,
+		pointerEvents: 'none',
+		'&:hover': {
+			borderColor: color
+		}
 	}
-}))
+})
 
 interface ProfileProps {
 	avatarImage?: string | undefined
@@ -30,6 +38,7 @@ interface ProfileProps {
 
 const Profile = ({avatarImage, record, name, email}: ProfileProps) => {
 	const navigate = useNavigate()
+	const theme = useContext(ThemeContext)
 	const user = useAppSelector(selectUser)
 	usePage({initPage: initProfilePage})
 
@@ -54,7 +63,13 @@ const Profile = ({avatarImage, record, name, email}: ProfileProps) => {
 	}, [])
 
 	return (
-		<div className={styles.profile}>
+		<div
+			style={{
+				backgroundImage: `url(${
+					ThemeVariant.LIGHT === theme ? background : backgroundDark
+				})`
+			}}
+			className={styles.profile}>
 			<div className={styles.profile__backBtn}>
 				<img
 					src='src/pages/Profile/images/back-btn.svg'
