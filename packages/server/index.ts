@@ -6,7 +6,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 import {createClientAndConnect} from './db'
 import {dbConnect} from './initDatabase'
-import {setTheme, getTheme} from './services/userTheme'
+import {setTheme, getTheme, createTheme} from './services/userTheme'
 
 dotenv.config()
 
@@ -55,7 +55,7 @@ async function startServer() {
 		res.json({login: 'Степа', password: 'Степанов'})
 	})
 
-	app.post('/theme', setTheme).get('/theme/:device', getTheme)
+	app.put('/theme', createTheme).post('/theme', setTheme).get('/theme/:id', getTheme)
 
 	app.use('*', async (req, res, next) => {
 		const url = req.originalUrl
