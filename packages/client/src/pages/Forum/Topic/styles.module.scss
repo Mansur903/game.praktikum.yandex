@@ -2,7 +2,7 @@
 
 .wrapper {
   margin: 0 auto;
-  background-color: $primary500;
+  background-color: var(--primary500);
   min-height: 100vh;
   overflow: auto;
   padding: 0;
@@ -27,7 +27,7 @@
         .topicName {
           margin: 5px 0 0 5px;
           font-size: 14px;
-          color: $primary500;
+          color: var(--primary500);
         }
       }
 

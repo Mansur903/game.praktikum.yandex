@@ -1,10 +1,13 @@
-import React, {useCallback, useState} from 'react'
+import React, {useCallback, useContext, useState} from 'react'
 import {Button, Box, TextField, Typography, Link} from '@mui/material'
 import axios from 'axios'
 import {FormValues} from './model'
 import bg from '../../assets/backgroundMain.png'
+import bgDark from '../../assets/backgroundDark.jpg'
 import {fieldValidation} from '../../helpers/fieldValidation'
 import {useNavigate} from 'react-router-dom'
+import {ThemeContext} from '../../components/ThemeContext/ThemeContext'
+import {ThemeVariant} from '../../types/enum/Theme.enum'
 
 const textFieldSXProps = {
 	fieldset: {
@@ -22,14 +25,14 @@ const textFieldInputLabelProps = {
 	}
 }
 
-const boxRootSXProps = {
-	backgroundImage: `url(${bg})`,
+const boxRootSXProps = (theme: string) => ({
+	backgroundImage: `url(${theme === ThemeVariant.LIGHT ? bg : bgDark})`,
 	backgroundSize: 'cover',
 	backgroundRepeat: 'no-repeat',
 	backgroundPosition: 'center',
 	width: '100vw',
 	height: '100vh'
-}
+})
 
 const boxFormSXProps = {
 	display: 'flex',
@@ -71,6 +74,7 @@ const useAuthorizationValidation = (
 
 const SignUpPage: React.FC = () => {
 	const navigate = useNavigate()
+	const theme = useContext(ThemeContext)
 	const [formValues, setFormValues] = useState<FormValues>({
 		first_name: '',
 		second_name: '',
@@ -134,7 +138,7 @@ const SignUpPage: React.FC = () => {
 	const {isValid, validationErrors} = useAuthorizationValidation(formValues, errors)
 
 	return (
-		<Box sx={boxRootSXProps}>
+		<Box sx={boxRootSXProps(theme)}>
 			<Box
 				sx={{
 					minWidth: 400,
@@ -216,11 +220,11 @@ const SignUpPage: React.FC = () => {
 						<Button
 							type='submit'
 							sx={{
-								color: '#36981D',
+								color: 'var(--red)',
 								fontWeight: 'bold',
 								padding: 2,
 								width: '100%',
-								border: 'solid 1px #36981D'
+								border: 'solid 1px var(--red)'
 							}}
 							disabled={!isValid} // Disable button if form is not valid
 						>
