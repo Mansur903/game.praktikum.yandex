@@ -5,7 +5,6 @@ import {createServer as createViteServer} from 'vite'
 import type {ViteDevServer} from 'vite'
 import * as fs from 'fs'
 import * as path from 'path'
-import {createClientAndConnect} from './db'
 import {dbConnect} from './initDatabase'
 import {getTopics, getTopic, createTopic} from './services/topic'
 import {getCommentsForTopic, createComment, getComment} from './services/comment'
@@ -16,7 +15,7 @@ import {setTheme, getTheme, createTheme} from './services/userTheme'
 import xssShield from 'xss-shield/build/main/lib/xssShield'
 
 dotenv.config()
-
+const port = Number(process.env.SERVER_PORT) || 3001
 const isDev = () => process.env.NODE_ENV === 'development'
 
 async function startServer() {
@@ -26,10 +25,6 @@ async function startServer() {
 	app.use(express.json())
 	app.use(express.urlencoded({extended: true}))
 	app.use(xssShield())
-	const port = Number(process.env.SERVER_PORT) || 3001
-	app.use(express.json())
-	app.use(express.urlencoded({extended: true}))
-	createClientAndConnect()
 
 	let vite: ViteDevServer | undefined
 	let distPath = ''

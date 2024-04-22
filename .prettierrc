@@ -1,6 +1,5 @@
 {
   "bracketSameLine": true,
-  "width": 50,
   "arrowParens": "always",
   "bracketSpacing": false,
   "jsxSingleQuote": true,
