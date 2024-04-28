@@ -8,7 +8,7 @@ import {Theme} from './models/Theme'
 import {UserTheme} from './models/UserTheme'
 
 const sequelizeOptions: SequelizeOptions = {
-	host: 'localhost',
+	host: process.env.HOST || 'localhost',
 	port: +(process.env.POSTGRES_PORT || 5432),
 	username: process.env.POSTGRES_USER,
 	password: process.env.POSTGRES_PASSWORD,
