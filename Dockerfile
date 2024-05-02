@@ -9,7 +9,7 @@ FROM base as builder
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
-# COPY . .
+COPY . .
 
 # RUN yarn bootstrap
 RUN rm -rf /app/packages/client/dist/ && rm -rf /app/packages/client/ssr-dist/ && yarn build --scope=client
