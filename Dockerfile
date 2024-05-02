@@ -22,15 +22,15 @@ COPY --from=builder /app/packages/client/dist/ /app/client
 COPY --from=builder /app/packages/client/ssr-dist/ /app/ssr
 COPY --from=builder /app/packages/server/dist/ /app/server
 COPY --from=builder /app/packages/server/package.json /app/package.json
+COPY --from=builder /app/packages/client/nginx.conf /etc/nginx/nginx.conf
 RUN yarn install --production=true
 
 EXPOSE $VITE_SERVER_PORT
 CMD [ "node", "/app/server/index.js" ]
 
-FROM nginx:latest
-WORKDIR /app
+# FROM nginx:latest
+# WORKDIR /app
 
-COPY --from=builder /app/packages/client/nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE $CLIENT_PORT
+# EXPOSE $CLIENT_PORT
 #CMD [ "nginx", "-g", "daemon off;" ]
