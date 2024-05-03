@@ -1,15 +1,16 @@
-import logo from './../../assets/logo.png'
-import background from './../../assets/backgroundMain.png'
-import backgroundDark from './../../assets/backgroundDark.jpg'
-import {useAppDispatch, useAppSelector} from '../../hooks'
-import {selectUser, fetchUserThunk, clearUser} from '../../store/slices/user'
-import {PageInitArgs} from '../../../routes'
-import {usePage} from '../../hooks'
-import {useNavigate} from 'react-router-dom'
 import {Box, Button} from '@mui/material'
 import axios from 'axios'
 import {useContext} from 'react'
+import toast, {Toaster} from 'react-hot-toast'
+import {useNavigate} from 'react-router-dom'
+
+import {PageInitArgs} from '../../../routes'
 import {ThemeContext} from '../../components/ThemeContext/ThemeContext'
+import {useAppDispatch, useAppSelector, usePage} from '../../hooks'
+import {clearUser, fetchUserThunk, selectUser} from '../../store/slices/user'
+import backgroundDark from './../../assets/backgroundDark.jpg'
+import background from './../../assets/backgroundMain.png'
+import logo from './../../assets/logo.png'
 
 const buttonProps = {
 	color: 'white',
@@ -36,6 +37,7 @@ const MainPage = () => {
 				dispatch(clearUser())
 				navigate('/signin')
 			})
+			.catch((e) => toast.error(e.response?.data?.reason ?? 'Что-то пошло не так'))
 	}
 
 	return (
@@ -101,6 +103,7 @@ const MainPage = () => {
 					</Box>
 				</Box>
 			</Box>
+			<Toaster position={'bottom-left'} />
 		</Box>
 	)
 }
