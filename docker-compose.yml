@@ -38,7 +38,7 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
       HOST: ${HOST}
     expose:
-     - "3001"
+      - '3001'
     depends_on:
       postgres:
         condition: service_healthy
@@ -69,6 +69,14 @@ services:
       - ./packages/client/nginx.conf:/etc/nginx/nginx.conf:ro
     expose:
       - 80
+    depends_on:
+      server:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:82']
+      interval: 10s
+      timeout: 5s
+      retries: 3
     networks:
       prakrikum:
 
