@@ -51,6 +51,7 @@ const Game: FC = () => {
 
 	useEffect(() => {
 		if (ref.current) {
+			ref.current.focus()
 			const eventHandler = (event: Event) => {
 				if (!isCustomEvent(event)) throw Error('Not custom event')
 				const result = event.detail
