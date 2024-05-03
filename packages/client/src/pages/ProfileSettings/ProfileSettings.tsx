@@ -1,16 +1,18 @@
-import styles from './styles.module.scss'
-import {useNavigate} from 'react-router-dom'
+import Input from '@mui/material/Input'
 import axios from 'axios'
 import {useCallback, useContext, useEffect, useState} from 'react'
-import {User} from '../../store/slices/user'
-import Avatar from '../../components/Avatar/Avatar'
-import ChangeAvatarModal from '../../components/Avatar/modules/ChangeAvatarModal'
-import Input from '@mui/material/Input'
-import {StyledButton} from '../Forum/BasicComponents'
-import {ThemeContext} from '../../components/ThemeContext/ThemeContext'
-import {ThemeVariant} from '../../types/enum/Theme.enum'
+import toast, {Toaster} from 'react-hot-toast'
+import {useNavigate} from 'react-router-dom'
+
 import backgroundDark from '../../assets/backgroundDark.jpg'
 import background from '../../assets/backgroundMain.png'
+import Avatar from '../../components/Avatar/Avatar'
+import ChangeAvatarModal from '../../components/Avatar/modules/ChangeAvatarModal'
+import {ThemeContext} from '../../components/ThemeContext/ThemeContext'
+import {User} from '../../store/slices/user'
+import {ThemeVariant} from '../../types/enum/Theme.enum'
+import {StyledButton} from '../Forum/BasicComponents'
+import styles from './styles.module.scss'
 interface IPassword {
 	oldPassword?: string
 	newPassword?: string
@@ -36,6 +38,7 @@ const ProfileSettings = () => {
 			.then((res) => {
 				return res.data
 			})
+			.catch((e) => toast.error(e.response?.data?.reason ?? 'Что-то пошло не так'))
 	}, [])
 
 	const setAvatar = useCallback(async (file: File | null) => {
@@ -58,6 +61,7 @@ const ProfileSettings = () => {
 			})
 			.catch((error) => {
 				console.error(error)
+				throw error?.response?.data?.reason ?? 'Ошибка загрузки аватара'
 			})
 	}, [])
 
@@ -74,6 +78,10 @@ const ProfileSettings = () => {
 				)
 				.then((res) => {
 					console.log('Пароль изменён')
+				})
+				.catch((error) => {
+					console.error(error)
+					throw error?.response?.data?.reason ?? 'Ошибка при попытке смены пароля'
 				})
 		},
 		[]
@@ -124,7 +132,11 @@ const ProfileSettings = () => {
 							setIsVisible(!isVisible)
 						}}
 						onLoadButtonClick={() => {
-							setAvatar(avatarImage)
+							toast.promise(setAvatar(avatarImage), {
+								loading: 'Загрузка',
+								success: 'Аватар успешно изменен',
+								error: (e) => e ?? 'Ошибка'
+							})
 							setIsVisible(!isVisible)
 						}}
 					/>
@@ -137,7 +149,15 @@ const ProfileSettings = () => {
 						<form
 							onSubmit={(event) => {
 								event.preventDefault()
-								changePassword(password?.oldPassword, password?.newPassword)
+
+								toast.promise(
+									changePassword(password?.oldPassword, password?.newPassword),
+									{
+										loading: 'Загрузка',
+										success: 'Пароль успешно изменен',
+										error: (e) => e ?? 'Ошибка'
+									}
+								)
 							}}>
 							<Input
 								type='password'
@@ -174,6 +194,7 @@ const ProfileSettings = () => {
 					<p>Данные загружаются...</p>
 				)}
 			</div>
+			<Toaster position={'bottom-left'} />
 		</div>
 	)
 }

@@ -1,19 +1,20 @@
-import styles from './styles.module.scss'
-import {useNavigate} from 'react-router-dom'
-import {PageInitArgs} from '../../../routes'
-import {fetchUserThunk, selectUser} from '../../store/slices/user'
-import {useAppSelector, usePage} from '../../hooks'
+import TextField from '@mui/material/TextField'
+import {styled} from '@mui/material/styles'
 import axios from 'axios'
 import {useCallback, useContext, useEffect, useState} from 'react'
-import {User} from '../../store/slices/user'
-import Avatar from '../../components/Avatar/Avatar'
-import {styled} from '@mui/material/styles'
-import TextField from '@mui/material/TextField'
-import {StyledButton} from '../Forum/BasicComponents'
-import {ThemeContext} from '../../components/ThemeContext/ThemeContext'
-import {ThemeVariant} from '../../types/enum/Theme.enum'
+import toast, {Toaster} from 'react-hot-toast'
+import {useNavigate} from 'react-router-dom'
+
+import {PageInitArgs} from '../../../routes'
 import backgroundDark from '../../assets/backgroundDark.jpg'
 import background from '../../assets/backgroundMain.png'
+import Avatar from '../../components/Avatar/Avatar'
+import {ThemeContext} from '../../components/ThemeContext/ThemeContext'
+import {useAppSelector, usePage} from '../../hooks'
+import {User, fetchUserThunk, selectUser} from '../../store/slices/user'
+import {ThemeVariant} from '../../types/enum/Theme.enum'
+import {StyledButton} from '../Forum/BasicComponents'
+import styles from './styles.module.scss'
 
 const StyledDataHolder = styled(TextField)(() => {
 	const theme = useContext(ThemeContext)
@@ -52,6 +53,7 @@ const Profile = ({avatarImage, record, name, email}: ProfileProps) => {
 			.then((res) => {
 				return res.data
 			})
+			.catch((e) => toast.error(e.response?.data?.reason ?? 'Что-то пошло не так'))
 	}, [])
 
 	useEffect(() => {
@@ -112,6 +114,7 @@ const Profile = ({avatarImage, record, name, email}: ProfileProps) => {
 					Изменить данные
 				</StyledButton>
 			</div>
+			<Toaster position={'bottom-left'} />
 		</div>
 	)
 }

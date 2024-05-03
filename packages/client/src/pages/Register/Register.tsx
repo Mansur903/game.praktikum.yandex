@@ -1,13 +1,15 @@
-import React, {useCallback, useContext, useState} from 'react'
-import {Button, Box, TextField, Typography, Link} from '@mui/material'
+import {Box, Button, Link, TextField, Typography} from '@mui/material'
 import axios from 'axios'
-import {FormValues} from './model'
-import bg from '../../assets/backgroundMain.png'
-import bgDark from '../../assets/backgroundDark.jpg'
-import {fieldValidation} from '../../helpers/fieldValidation'
+import React, {useCallback, useContext, useState} from 'react'
+import toast, {Toaster} from 'react-hot-toast'
 import {useNavigate} from 'react-router-dom'
+
+import bgDark from '../../assets/backgroundDark.jpg'
+import bg from '../../assets/backgroundMain.png'
 import {ThemeContext} from '../../components/ThemeContext/ThemeContext'
+import {fieldValidation} from '../../helpers/fieldValidation'
 import {ThemeVariant} from '../../types/enum/Theme.enum'
+import {FormValues} from './model'
 
 const textFieldSXProps = {
 	fieldset: {
@@ -122,11 +124,21 @@ const SignUpPage: React.FC = () => {
 
 			if (isValid) {
 				try {
-					await axios
-						.post('https://ya-praktikum.tech/api/v2/auth/signup', formValues)
-						.then(() => {
-							navigate('/signin')
-						})
+					await toast.promise(
+						axios
+							.post('https://ya-praktikum.tech/api/v2/auth/signup', formValues)
+							.then(() => {
+								navigate('/signin')
+							})
+							.catch((error) => {
+								throw error?.response?.data?.reason ?? 'Ошибка регистрации'
+							}),
+						{
+							loading: 'Загрузка',
+							success: 'Вы успешно зарегистрированы',
+							error: (e) => e ?? 'Ошибка'
+						}
+					)
 				} catch (error) {
 					console.log(error)
 				}
@@ -243,6 +255,7 @@ const SignUpPage: React.FC = () => {
 					</Link>
 				</Typography>
 			</Box>
+			<Toaster position={'bottom-left'} />
 		</Box>
 	)
 }
