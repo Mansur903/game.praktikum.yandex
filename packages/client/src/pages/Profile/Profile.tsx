@@ -17,14 +17,20 @@ import background from '../../assets/backgroundMain.png'
 
 const StyledDataHolder = styled(TextField)(() => {
 	const theme = useContext(ThemeContext)
-	const color = ThemeVariant.LIGHT === theme ? 'var(--white)' : 'var(--black)'
+	const color = 'var(--white)'
+
 	return {
-		color: color,
-		borderRadius: '10px',
-		borderColor: color,
 		pointerEvents: 'none',
 		'&:hover': {
 			borderColor: color
+		},
+		fieldset: {
+			borderColor: color,
+			color: color,
+			borderRadius: '10px'
+		},
+		'fieldset::placeholder': {
+			color: color
 		}
 	}
 })

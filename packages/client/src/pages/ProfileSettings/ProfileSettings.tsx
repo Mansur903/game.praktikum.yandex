@@ -11,6 +11,7 @@ import {ThemeContext} from '../../components/ThemeContext/ThemeContext'
 import {ThemeVariant} from '../../types/enum/Theme.enum'
 import backgroundDark from '../../assets/backgroundDark.jpg'
 import background from '../../assets/backgroundMain.png'
+import {StyledTextField} from '../Forum/BasicComponents'
 interface IPassword {
 	oldPassword?: string
 	newPassword?: string
@@ -139,7 +140,7 @@ const ProfileSettings = () => {
 								event.preventDefault()
 								changePassword(password?.oldPassword, password?.newPassword)
 							}}>
-							<Input
+							<StyledTextField
 								type='password'
 								placeholder='Старый пароль'
 								onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -151,7 +152,7 @@ const ProfileSettings = () => {
 								}}
 							/>
 
-							<Input
+							<StyledTextField
 								type='password'
 								placeholder='Новый пароль'
 								onChange={(event: React.ChangeEvent<HTMLInputElement>) => {

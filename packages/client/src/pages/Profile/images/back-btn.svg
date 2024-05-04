@@ -4,7 +4,7 @@
 <desc>Created with Fabric.js 3.6.2</desc>
 <defs>
 </defs>
-<g transform="matrix(14.91 0 0 14.91 200 200)"  >
-<path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;"  transform=" translate(-11.29, -12)" d="M 12.707 17.293 L 8.414 13 H 18 v -2 H 8.414 l 4.293 -4.293 l -1.414 -1.414 L 4.586 12 l 6.707 6.707 z" stroke-linecap="round" />
+<g transform="matrix(1.04 0 0 1.04 200 200)" id="Layer_1"  >
+<polygon style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;"  points="96,-140.6 75.3,-160 -96,0 75.3,160 96,140.7 -54.5,0 " />
 </g>
 </svg>
