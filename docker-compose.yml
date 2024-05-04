@@ -67,6 +67,7 @@ services:
     container_name: praktikum-server_nginx
     volumes:
       - ./packages/client/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./d8B-5ygKaSq4r2jrw2mgRLUOZgn2e9HbK5JITKflzYo:/var/www/certbot/d8B-5ygKaSq4r2jrw2mgRLUOZgn2e9HbK5JITKflzYo:ro
     expose:
       - 80
     networks:
