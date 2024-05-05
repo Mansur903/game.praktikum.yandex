@@ -63,8 +63,8 @@ services:
     restart: always
     image: nginx:latest
     build:
-      context: ./nginx
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile-nginx
     ports:
       - '80:82'
     container_name: praktikum-server_nginx
