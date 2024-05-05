@@ -1,2 +1,4 @@
 FROM nginx:latest
 COPY nginx.conf /etc/nginx/nginx.conf
+COPY fullchain.pem /etc/cert.pem
+COPY pivkey.pem /etc/key.pem

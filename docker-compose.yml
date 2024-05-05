@@ -68,9 +68,6 @@ services:
     ports:
       - '80:82'
     container_name: praktikum-server_nginx
-    volumes:
-      - ./fullchain.pem:/etc/cert.pem:ro
-      - ./pivkey.pem:/etc/key.pem:ro
     expose:
       - 80
     networks:
