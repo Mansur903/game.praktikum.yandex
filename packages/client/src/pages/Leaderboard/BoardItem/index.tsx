@@ -1,4 +1,5 @@
 import styles from './styles.module.scss'
+import defaultPhoto from './../../../assets/default-avatar.png'
 
 type Props = {
 	position: number
@@ -9,8 +10,7 @@ type Props = {
 }
 
 const BoardItem = ({icon, position, photo, name, score}: Props) => {
-	const getPhoto = (path: string) =>
-		path ? path : '../../../src/assets/default-avatar.png'
+	const getPhoto = (path: string) => (path ? path : defaultPhoto)
 
 	return (
 		<li className={styles.leader}>
