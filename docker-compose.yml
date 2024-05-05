@@ -62,9 +62,6 @@ services:
   nginx:
     restart: always
     image: nginx:latest
-    build:
-      context: .
-      dockerfile: Dockerfile-nginx
     ports:
       - '80:82'
     container_name: praktikum-server_nginx
@@ -72,6 +69,19 @@ services:
       - 80
     networks:
       prakrikum:
+  certbot:
+    ports:
+      - "6000:80"
+    # и снова мониторуем директорию nginx
+    volumes:
+      - ./nginx/:/etc/nginx/
+    build:
+      context: ./certbot
+      dockerfile: Dockerfile
+      # задаем переменные среды
+      args:
+        DOMAIN_EMAIL: miden99@gmail.com
+        DOMAIN_URL: fantastic.ya-praktikum.tech
 
 networks:
   prakrikum:
