@@ -25,7 +25,7 @@ const Avatar = ({avatar, onButtonClick, currentPage}: IAvatarProps) => {
 					src={
 						avatar
 							? `https://ya-praktikum.tech/api/v2/resources${avatar}`
-							: 'src/components/Avatar/images/avatar.png'
+							: 'src/assets/default-avatar.png'
 					}
 					className={styles.avatar__image}
 					alt='avatar'

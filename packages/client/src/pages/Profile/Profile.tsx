@@ -72,7 +72,7 @@ const Profile = ({avatarImage, record, name, email}: ProfileProps) => {
 			className={styles.profile}>
 			<div className={styles.profile__backBtn}>
 				<img
-					src='src/pages/Profile/images/back-btn.svg'
+					src='src/assets/back-btn.svg'
 					alt='back'
 					onClick={() => navigate('/')}
 				/>
@@ -83,7 +83,7 @@ const Profile = ({avatarImage, record, name, email}: ProfileProps) => {
 
 				<div className={styles.profile__rating}>
 					<img
-						src='src/pages/Profile/images/rating.svg'
+						src='src/assets/rating.svg'
 						alt='rating'
 					/>
 					<p className={styles.avatar__ratingCount}>{record}</p>
