@@ -68,7 +68,7 @@ services:
     volumes:
       - ./fullchain.pem:/etc/cert.pem:ro
       - ./pivkey.pem:/etc/key.pem:ro
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx:/etc/nginx/nginx.conf:ro
     expose:
       - 80
     networks:
