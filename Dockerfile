@@ -7,6 +7,7 @@ WORKDIR /app
 FROM base as builder
 
 COPY package.json yarn.lock ./
+RUN yarn config set "strict-ssl" false -g
 RUN yarn install --frozen-lockfile
 
 COPY . .
@@ -22,6 +23,7 @@ COPY --from=builder /app/packages/client/dist/ /app/client
 COPY --from=builder /app/packages/client/ssr-dist/ /app/ssr
 COPY --from=builder /app/packages/server/dist/ /app/server
 COPY --from=builder /app/packages/server/package.json /app/package.json
+RUN yarn config set "strict-ssl" false -g
 RUN yarn install --production=true
 
 EXPOSE $VITE_SERVER_PORT

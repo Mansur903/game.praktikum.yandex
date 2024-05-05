@@ -70,6 +70,7 @@ services:
     networks:
       prakrikum:
   certbot:
+    container_name: certbot
     ports:
       - "6000:80"
     # и снова мониторуем директорию nginx
