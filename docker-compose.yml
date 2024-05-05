@@ -66,7 +66,8 @@ services:
       context: .
       dockerfile: Dockerfile-nginx
     ports:
-      - '80:82'
+      - '80:80'
+      - '443:443'
     container_name: praktikum-server_nginx
     expose:
       - 80
