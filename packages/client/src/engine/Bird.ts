@@ -26,15 +26,16 @@ export default class Bird extends GameElement {
 		scrn: HTMLCanvasElement,
 		sctx: CanvasRenderingContext2D,
 		registerKey = 'Space',
-		initY: number
+		initY: number,
+		sprite?: string[]
 	) {
 		super(scrn, sctx)
 		this.key = registerKey
 		this.inStart()
-		this.animations[0].sprite.src = Bird0
-		this.animations[1].sprite.src = Bird1
-		this.animations[2].sprite.src = Bird2
-		this.animations[3].sprite.src = Bird0
+		this.animations[0].sprite.src = sprite ? sprite[0] : Bird0
+		this.animations[1].sprite.src = sprite ? sprite[1] : Bird1
+		this.animations[2].sprite.src = sprite ? sprite[2] : Bird2
+		this.animations[3].sprite.src = sprite ? sprite[0] : Bird0
 		this.y = initY
 		this.initY = initY
 	}

@@ -1,6 +1,9 @@
 import {GameState} from '../types/enum/Game.enum'
 import Background from './Background'
 import Bird from './Bird'
+import BirdSprite0 from '../assets/game/bird2/b0.png'
+import BirdSprite1 from '../assets/game/bird2/b1.png'
+import BirdSprite2 from '../assets/game/bird2/b2.png'
 import constants from './constants'
 import Ground from './Ground'
 import {Pipes} from './Pipes'
@@ -41,7 +44,13 @@ export default class GameEngine extends EventTarget {
 		this.background = new Background(this.canvas, this.context)
 		this.birds = [new Bird(this.canvas, this.context, 'KeyD', 100)]
 		if (this.isMultiplayer)
-			this.birds.push(new Bird(this.canvas, this.context, 'KeyK', 250))
+			this.birds.push(
+				new Bird(this.canvas, this.context, 'KeyK', 250, [
+					BirdSprite0,
+					BirdSprite1,
+					BirdSprite2
+				])
+			)
 		this.canvas.onkeydown = ({code}) => {
 			this.birds.forEach((bird) => bird.handleClick(code))
 			switch (code) {
@@ -49,7 +58,13 @@ export default class GameEngine extends EventTarget {
 					if (this.state === GameState.PLAY) return
 					this.isMultiplayer = !this.isMultiplayer
 					if (this.isMultiplayer)
-						this.birds.push(new Bird(this.canvas, this.context, 'KeyK', 250))
+						this.birds.push(
+							new Bird(this.canvas, this.context, 'KeyK', 250, [
+								BirdSprite0,
+								BirdSprite1,
+								BirdSprite2
+							])
+						)
 					else this.birds.pop()
 					break
 				case 'Space':
