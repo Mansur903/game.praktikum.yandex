@@ -11,6 +11,7 @@ import {ThemeContext} from '../../components/ThemeContext/ThemeContext'
 import {ThemeVariant} from '../../types/enum/Theme.enum'
 import backgroundDark from '../../assets/backgroundDark.jpg'
 import background from '../../assets/backgroundMain.png'
+import backButton from './../../assets/back-btn.svg'
 interface IPassword {
 	oldPassword?: string
 	newPassword?: string
@@ -102,7 +103,7 @@ const ProfileSettings = () => {
 			className={styles.profileSettings}>
 			<div className={styles.profileSettings__backBtn}>
 				<img
-					src='src/pages/Profile/images/back-btn.svg'
+					src={backButton}
 					alt='back'
 					onClick={() => navigate('/profile')}
 				/>
