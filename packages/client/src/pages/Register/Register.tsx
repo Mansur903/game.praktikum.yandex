@@ -1,14 +1,16 @@
-import React, {useCallback, useContext, useState} from 'react'
-import {Button, Box, TextField, Typography, Link} from '@mui/material'
+import { Box, Button, Link, TextField, Typography } from '@mui/material'
 import axios from 'axios'
-import {FormValues} from './model'
-import bg from '../../assets/backgroundMain.png'
+import React, { useCallback, useContext, useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
+
 import bgDark from '../../assets/backgroundDark.jpg'
-import {fieldValidation} from '../../helpers/fieldValidation'
-import {useNavigate} from 'react-router-dom'
-import {ThemeContext} from '../../components/ThemeContext/ThemeContext'
-import {ThemeVariant} from '../../types/enum/Theme.enum'
-import {NoSsr} from '@mui/base/NoSsr'
+import bg from '../../assets/backgroundMain.png'
+import { ThemeContext } from '../../components/ThemeContext/ThemeContext'
+import { fieldValidation } from '../../helpers/fieldValidation'
+import { ThemeVariant } from '../../types/enum/Theme.enum'
+import { NoSsr } from '@mui/base/NoSsr'
+import { FormValues } from './model'
 
 const textFieldSXProps = {
 	fieldset: {
@@ -51,23 +53,23 @@ export type FormErrors = Partial<Record<keyof FormValues, string>>
 const useAuthorizationValidation = (
 	formValues: FormValues,
 	errors: FormErrors
-): {isValid: boolean; validationErrors: FormErrors} => {
+): { isValid: boolean; validationErrors: FormErrors } => {
 	const validateForm = useCallback(() => {
 		let isValid = true
-		let validationErrors = {...errors}
+		let validationErrors = { ...errors }
 
 		for (const [name, value] of Object.entries(formValues)) {
-			const {isValid: isFieldValid, newErrors} = fieldValidation({
+			const { isValid: isFieldValid, newErrors } = fieldValidation({
 				fieldName: name as keyof FormValues,
 				value,
 				errors
 			})
 
 			isValid = isValid && isFieldValid
-			validationErrors = {...validationErrors, ...newErrors}
+			validationErrors = { ...validationErrors, ...newErrors }
 		}
 
-		return {isValid, validationErrors}
+		return { isValid, validationErrors }
 	}, [formValues, errors])
 
 	return validateForm()
@@ -89,12 +91,12 @@ const SignUpPage: React.FC = () => {
 
 	const handleChange = useCallback(
 		(e: React.ChangeEvent<HTMLInputElement>) => {
-			const {name, value} = e.target
+			const { name, value } = e.target
 			setFormValues((prevValues) => ({
 				...prevValues,
 				[name]: value
 			}))
-			const {newErrors} = fieldValidation({
+			const { newErrors } = fieldValidation({
 				fieldName: name as keyof FormValues,
 				value,
 				errors
@@ -109,25 +111,35 @@ const SignUpPage: React.FC = () => {
 			e.preventDefault()
 
 			let isValid = true
-			let validationErrors = {...errors}
+			let validationErrors = { ...errors }
 			for (const [name, value] of Object.entries(formValues)) {
-				const {isValid: isFieldValid, newErrors} = fieldValidation({
+				const { isValid: isFieldValid, newErrors } = fieldValidation({
 					fieldName: name as keyof FormValues,
 					value,
 					errors
 				})
 				isValid = isFieldValid
-				validationErrors = {...validationErrors, ...newErrors}
+				validationErrors = { ...validationErrors, ...newErrors }
 			}
 			setErrors(validationErrors)
 
 			if (isValid) {
 				try {
-					await axios
-						.post('https://ya-praktikum.tech/api/v2/auth/signup', formValues)
-						.then(() => {
-							navigate('/signin')
-						})
+					await toast.promise(
+						axios
+							.post('https://ya-praktikum.tech/api/v2/auth/signup', formValues)
+							.then(() => {
+								navigate('/signin')
+							})
+							.catch((error) => {
+								throw error?.response?.data?.reason ?? 'Ошибка регистрации'
+							}),
+						{
+							loading: 'Загрузка',
+							success: 'Вы успешно зарегистрированы',
+							error: (e) => e ?? 'Ошибка'
+						}
+					)
 				} catch (error) {
 					console.log(error)
 				}
@@ -136,7 +148,7 @@ const SignUpPage: React.FC = () => {
 		[formValues, errors]
 	)
 
-	const {isValid, validationErrors} = useAuthorizationValidation(formValues, errors)
+	const { isValid, validationErrors } = useAuthorizationValidation(formValues, errors)
 
 	return (
 		<NoSsr>
@@ -148,14 +160,14 @@ const SignUpPage: React.FC = () => {
 					}}>
 					<Typography
 						variant='h4'
-						sx={{textAlign: 'center', marginBottom: 2, color: '#E8BDD9'}}>
+						sx={{ textAlign: 'center', marginBottom: 2, color: '#E8BDD9' }}>
 						Flappy Progger
 					</Typography>
 					<form onSubmit={handleSubmit}>
 						<Box sx={boxFormSXProps}>
 							<Typography
 								variant='h6'
-								sx={{textAlign: 'center', color: 'white'}}>
+								sx={{ textAlign: 'center', color: 'white' }}>
 								Регистрация
 							</Typography>
 							<TextField
@@ -236,7 +248,7 @@ const SignUpPage: React.FC = () => {
 					</form>
 					<Typography
 						variant='body2'
-						sx={{textAlign: 'center', marginTop: 2, color: 'white'}}>
+						sx={{ textAlign: 'center', marginTop: 2, color: 'white' }}>
 						Уже зарегистрированы?{' '}
 						<Link
 							href='/signin'
@@ -245,6 +257,7 @@ const SignUpPage: React.FC = () => {
 						</Link>
 					</Typography>
 				</Box>
+				<Toaster position={'bottom-left'} />
 			</Box>
 		</NoSsr>
 	)

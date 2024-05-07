@@ -1,17 +1,19 @@
-import React, {useCallback, useContext, useState} from 'react'
-import {Button, Box, TextField, Typography, Link, Icon} from '@mui/material'
-import {useNavigate} from 'react-router-dom'
+import { Box, Button, Link, TextField, Typography } from '@mui/material'
 import axios from 'axios'
-import {LoginValues} from './model'
-import bg from '../../assets/backgroundMain.png'
+import React, { useCallback, useContext, useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
+
 import bgDark from '../../assets/backgroundDark.jpg'
+import bg from '../../assets/backgroundMain.png'
 import icon from '../../assets/yandexLogo.svg'
-import {AppError, AppErrorCode} from '../../lib/error'
-import {jsApiIdentify, redirectToOauthAuthorize} from '../../lib/auth'
-import {BASE_URL, OAUTH_REDIRECT_URI, OAUTH_YANDEX_SERVICE_ID} from '../../config/api'
-import {ThemeVariant} from '../../types/enum/Theme.enum'
-import {ThemeContext} from '../../components/ThemeContext/ThemeContext'
-import {NoSsr} from '@mui/base/NoSsr'
+import { ThemeContext } from '../../components/ThemeContext/ThemeContext'
+import { NoSsr } from '@mui/base/NoSsr'
+import { BASE_URL, OAUTH_REDIRECT_URI, OAUTH_YANDEX_SERVICE_ID } from '../../config/api'
+import { jsApiIdentify, redirectToOauthAuthorize } from '../../lib/auth'
+import { AppError, AppErrorCode } from '../../lib/error'
+import { ThemeVariant } from '../../types/enum/Theme.enum'
+import { LoginValues } from './model'
 
 const textFieldSXProps = {
 	fieldset: {
@@ -58,7 +60,7 @@ export const Login: React.FC = () => {
 	const theme = useContext(ThemeContext)
 
 	const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-		const {name, value} = e.target
+		const { name, value } = e.target
 		setFormValues((prevValues) => ({
 			...prevValues,
 			[name]: value
@@ -66,7 +68,7 @@ export const Login: React.FC = () => {
 	}, [])
 
 	const onLoginClick = async () => {
-		const {data: clientID} = await axios.get(`${BASE_URL}${OAUTH_YANDEX_SERVICE_ID}`, {
+		const { data: clientID } = await axios.get(`${BASE_URL}${OAUTH_YANDEX_SERVICE_ID}`, {
 			params: {
 				OAUTH_REDIRECT_URI
 			}
@@ -76,7 +78,7 @@ export const Login: React.FC = () => {
 			await jsApiIdentify(clientID.service_id)
 		} catch (err) {
 			if (err instanceof AppError) {
-				const {code} = err
+				const { code } = err
 
 				switch (code) {
 					case AppErrorCode.JsApiCancelled:
@@ -98,21 +100,30 @@ export const Login: React.FC = () => {
 	const handleSubmit = useCallback(
 		async (e: React.FormEvent<HTMLFormElement>) => {
 			e.preventDefault()
-			await axios
-				.post(`${BASE_URL}auth/signin`, formValues, {
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					withCredentials: true
-				})
-				.then((response) => {
-					const userData = JSON.parse(response.config.data)
-					console.log(userData)
-				})
-				.then(() => {
-					navigate('/')
-				})
-				.catch((error) => console.log(error))
+			await toast.promise(
+				axios
+					.post(`${BASE_URL}auth/signin`, formValues, {
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						withCredentials: true
+					})
+					.then((response) => {
+						const userData = JSON.parse(response.config.data)
+						console.log(userData)
+					})
+					.then(() => {
+						navigate('/')
+					})
+					.catch((error) => {
+						throw error?.response?.data?.reason ?? 'Ошибка авторизации'
+					}),
+				{
+					loading: 'Загрузка',
+					success: 'Вы успешно авторизованы',
+					error: (e) => e ?? 'Ошибка'
+				}
+			)
 		},
 		[formValues]
 	)
@@ -130,14 +141,14 @@ export const Login: React.FC = () => {
 					}}>
 					<Typography
 						variant='h4'
-						sx={{textAlign: 'center', marginBottom: 2, color: '#E8BDD9'}}>
+						sx={{ textAlign: 'center', marginBottom: 2, color: '#E8BDD9' }}>
 						Flappy Progger
 					</Typography>
 					<form onSubmit={handleSubmit}>
 						<Box sx={boxFormSXProps}>
 							<Typography
 								variant='h6'
-								sx={{textAlign: 'center', color: 'white'}}>
+								sx={{ textAlign: 'center', color: 'white' }}>
 								Вход
 							</Typography>
 							<TextField
@@ -187,13 +198,13 @@ export const Login: React.FC = () => {
 						/>
 						<Box
 							component='span'
-							sx={{ml: 2}}>
+							sx={{ ml: 2 }}>
 							Войти с помощью Яндекс
 						</Box>
 					</Button>
 					<Typography
 						variant='body2'
-						sx={{textAlign: 'center', marginTop: 2, color: 'white'}}>
+						sx={{ textAlign: 'center', marginTop: 2, color: 'white' }}>
 						Нет аккаунта?{' '}
 						<Link
 							href='/signup'
@@ -202,6 +213,7 @@ export const Login: React.FC = () => {
 						</Link>
 					</Typography>
 				</Box>
+				<Toaster position={'bottom-left'} />
 			</Box>
 		</NoSsr>
 	)
