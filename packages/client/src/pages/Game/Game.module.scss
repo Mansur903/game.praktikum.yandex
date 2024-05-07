@@ -1,6 +1,27 @@
+@import '../../styles/mixins/_query';
+
 .wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    &__backBtn {
+        position: absolute;
+        top: 20vh;
+        left: 10vw;
+    
+        @include query(max, tablet) {
+          position: static;
+        }
+    
+        img {
+          width: 40px;
+    
+          &:hover {
+            opacity: 0.6;
+            cursor: pointer;
+          }
+        }
+      }
 }

@@ -7,6 +7,8 @@ import {useAppSelector, usePage} from '../../hooks'
 import api from '../../api'
 import {fetchUserThunk, selectUser} from '../../store/slices/user'
 import {PageInitArgs} from '../../../routes'
+import {useNavigate} from 'react-router-dom'
+import backBtn from './../../assets/back-btn.svg'
 
 const isCustomEvent = (event: Event): event is CustomEvent => {
 	return 'detail' in event
@@ -15,6 +17,7 @@ const isCustomEvent = (event: Event): event is CustomEvent => {
 const Game: FC = () => {
 	const ref = useRef<HTMLCanvasElement>(null)
 	const user = useAppSelector(selectUser)
+	const navigate = useNavigate()
 
 	const toggleFullScreen = useCallback((e: React.KeyboardEvent) => {
 		if (e.key === 'f' && !document.fullscreenElement) {
@@ -24,7 +27,10 @@ const Game: FC = () => {
 		}
 	}, [])
 	usePage({initPage: initGamePage})
-	const getWindowSize = (): {innerWidth: number; innerHeight: number} | null =>
+	const getWindowSize = (): {
+		innerWidth: number
+		innerHeight: number
+	} | null =>
 		window
 			? {
 					innerWidth: window.innerWidth,
@@ -110,6 +116,14 @@ const Game: FC = () => {
 		<div
 			className={styles.wrapper}
 			onKeyDown={toggleFullScreen}>
+			<div className={styles.wrapper__backBtn}>
+				<img
+					src={backBtn}
+					alt='back'
+					onClick={() => navigate('/')}
+				/>
+			</div>
+
 			<canvas
 				ref={ref}
 				width={windowSize?.innerWidth}
