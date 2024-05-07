@@ -8,6 +8,7 @@ import api from '../../api'
 import {fetchUserThunk, selectUser} from '../../store/slices/user'
 import {PageInitArgs} from '../../../routes'
 import {useNavigate} from 'react-router-dom'
+import backBtn from './../../assets/back-btn.svg'
 
 const isCustomEvent = (event: Event): event is CustomEvent => {
 	return 'detail' in event
@@ -116,7 +117,7 @@ const Game: FC = () => {
 			onKeyDown={toggleFullScreen}>
 			<div className={styles.wrapper__backBtn}>
 				<img
-					src='src/pages/Profile/images/back-btn.svg'
+					src={backBtn}
 					alt='back'
 					onClick={() => navigate('/')}
 				/>

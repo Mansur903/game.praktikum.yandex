@@ -1,6 +1,6 @@
 module.exports = {
   development: {
-    host: 'localhost',
+    host: 'postgres',
     port: 5432,
     username: 'postgres',
     password: 'postgres',
@@ -8,7 +8,7 @@ module.exports = {
     dialect: 'postgres',
   },
   test: {
-    host: 'localhost',
+    host: 'postgres',
     port: 5432,
     username: 'postgres',
     password: 'postgres',
@@ -16,7 +16,7 @@ module.exports = {
     dialect: 'postgres',
   },
   production: {
-    host: 'localhost',
+    host: 'postgres',
     port: 5432,
     username: 'postgres',
     password: 'postgres',

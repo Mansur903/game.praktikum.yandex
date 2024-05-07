@@ -14,6 +14,7 @@ import {ThemeContext} from '../../components/ThemeContext/ThemeContext'
 import {ThemeVariant} from '../../types/enum/Theme.enum'
 import backgroundDark from '../../assets/backgroundDark.jpg'
 import background from '../../assets/backgroundMain.png'
+import backBtn from './../../assets/back-btn.svg'
 
 const StyledDataHolder = styled(TextField)(() => {
 	const theme = useContext(ThemeContext)
@@ -78,7 +79,7 @@ const Profile = ({avatarImage, record, name, email}: ProfileProps) => {
 			className={styles.profile}>
 			<div className={styles.profile__backBtn}>
 				<img
-					src='src/pages/Profile/images/back-btn.svg'
+					src={backBtn}
 					alt='back'
 					onClick={() => navigate('/')}
 				/>
@@ -92,6 +93,7 @@ const Profile = ({avatarImage, record, name, email}: ProfileProps) => {
 						src='src/pages/Profile/images/rating.svg'
 						alt='rating'
 					/>
+
 					<p className={styles.avatar__ratingCount}>{record}</p>
 				</div>
 			</div>
