@@ -43,21 +43,6 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    healthcheck:
-      test:
-        [
-          'CMD',
-          'pg_isready',
-          '-h',
-          'localost',
-          '-p',
-          '${POSTGRES_PORT}',
-          '-U',
-          '${POSTGRES_USER}'
-        ]
-      interval: 10s
-      timeout: 5s
-      retries: 3
     networks:
       prakrikum:
   nginx:
