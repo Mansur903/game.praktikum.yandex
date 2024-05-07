@@ -11,6 +11,7 @@ import {jsApiIdentify, redirectToOauthAuthorize} from '../../lib/auth'
 import {BASE_URL, OAUTH_REDIRECT_URI, OAUTH_YANDEX_SERVICE_ID} from '../../config/api'
 import {ThemeVariant} from '../../types/enum/Theme.enum'
 import {ThemeContext} from '../../components/ThemeContext/ThemeContext'
+import {NoSsr} from '@mui/base/NoSsr'
 
 const textFieldSXProps = {
 	fieldset: {
@@ -116,90 +117,92 @@ export const Login: React.FC = () => {
 		[formValues]
 	)
 	return (
-		<Box sx={boxRootSXProps(theme)}>
-			<Box
-				sx={{
-					minWidth: 400,
-					padding: 4,
-					position: 'absolute',
-					top: '50%',
-					left: '50%',
-					transform: 'translate(-50%, -50%)'
-				}}>
-				<Typography
-					variant='h4'
-					sx={{textAlign: 'center', marginBottom: 2, color: '#E8BDD9'}}>
-					Flappy Progger
-				</Typography>
-				<form onSubmit={handleSubmit}>
-					<Box sx={boxFormSXProps}>
-						<Typography
-							variant='h6'
-							sx={{textAlign: 'center', color: 'white'}}>
-							Вход
-						</Typography>
-						<TextField
-							label='Логин'
-							name='login'
-							value={formValues.login}
-							onChange={handleChange}
-							sx={textFieldSXProps}
-							InputLabelProps={textFieldInputLabelProps}
-						/>
-						<TextField
-							label='Пароль'
-							name='password'
-							type='password'
-							value={formValues.password}
-							onChange={handleChange}
-							sx={textFieldSXProps}
-							InputLabelProps={textFieldInputLabelProps}
-						/>
-						<Button
-							type='submit'
-							sx={{
-								color: 'var(--red)',
-								fontWeight: 'bold',
-								padding: 2,
-								width: '100%',
-								border: 'solid 1px var(--red)'
-							}}>
-							Войти
-						</Button>
-					</Box>
-				</form>
-				<Button
-					type='button'
-					onClick={onLoginClick}
+		<NoSsr>
+			<Box sx={boxRootSXProps(theme)}>
+				<Box
 					sx={{
-						color: '#fff',
-						fontWeight: 'bold',
-						padding: 2,
-						margin: 2,
-						width: '100%',
-						backgroundColor: '#000'
+						minWidth: 400,
+						padding: 4,
+						position: 'absolute',
+						top: '50%',
+						left: '50%',
+						transform: 'translate(-50%, -50%)'
 					}}>
-					<img
-						alt='иконка'
-						src={icon}
-					/>
-					<Box
-						component='span'
-						sx={{ml: 2}}>
-						Войти с помощью Яндекс
-					</Box>
-				</Button>
-				<Typography
-					variant='body2'
-					sx={{textAlign: 'center', marginTop: 2, color: 'white'}}>
-					Нет аккаунта?{' '}
-					<Link
-						href='/signup'
-						underline='none'>
-						Зарегистрироваться
-					</Link>
-				</Typography>
+					<Typography
+						variant='h4'
+						sx={{textAlign: 'center', marginBottom: 2, color: '#E8BDD9'}}>
+						Flappy Progger
+					</Typography>
+					<form onSubmit={handleSubmit}>
+						<Box sx={boxFormSXProps}>
+							<Typography
+								variant='h6'
+								sx={{textAlign: 'center', color: 'white'}}>
+								Вход
+							</Typography>
+							<TextField
+								label='Логин'
+								name='login'
+								value={formValues.login}
+								onChange={handleChange}
+								sx={textFieldSXProps}
+								InputLabelProps={textFieldInputLabelProps}
+							/>
+							<TextField
+								label='Пароль'
+								name='password'
+								type='password'
+								value={formValues.password}
+								onChange={handleChange}
+								sx={textFieldSXProps}
+								InputLabelProps={textFieldInputLabelProps}
+							/>
+							<Button
+								type='submit'
+								sx={{
+									color: 'var(--red)',
+									fontWeight: 'bold',
+									padding: 2,
+									width: '100%',
+									border: 'solid 1px var(--red)'
+								}}>
+								Войти
+							</Button>
+						</Box>
+					</form>
+					<Button
+						type='button'
+						onClick={onLoginClick}
+						sx={{
+							color: '#fff',
+							fontWeight: 'bold',
+							padding: 2,
+							margin: 2,
+							width: '100%',
+							backgroundColor: '#000'
+						}}>
+						<img
+							alt='иконка'
+							src={icon}
+						/>
+						<Box
+							component='span'
+							sx={{ml: 2}}>
+							Войти с помощью Яндекс
+						</Box>
+					</Button>
+					<Typography
+						variant='body2'
+						sx={{textAlign: 'center', marginTop: 2, color: 'white'}}>
+						Нет аккаунта?{' '}
+						<Link
+							href='/signup'
+							underline='none'>
+							Зарегистрироваться
+						</Link>
+					</Typography>
+				</Box>
 			</Box>
-		</Box>
+		</NoSsr>
 	)
 }

@@ -5,6 +5,10 @@ import {useNavigate} from 'react-router-dom'
 import {PageInitArgs} from '../../../routes'
 import {fetchUserThunk, selectUser} from '../../store/slices/user'
 import axios from 'axios'
+import trophyOne from './../../assets/trophy1.png'
+import trophyTwo from './../../assets/trophy2.png'
+import trophyThree from './../../assets/trophy2.png'
+import round from './../../assets/round.png'
 
 import api from '../../api'
 import {ILeaderboardResponseItem, ILeader} from '../../types/types'
@@ -41,13 +45,13 @@ const Leaderboard = () => {
 	const setIconPath = (position: number) => {
 		switch (position) {
 			case 1:
-				return 'trophy1.png'
+				return trophyOne
 			case 2:
-				return 'trophy2.png'
+				return trophyTwo
 			case 3:
-				return 'trophy3.png'
+				return trophyThree
 			default:
-				return 'round.png'
+				return round
 		}
 	}
 
@@ -69,7 +73,7 @@ const Leaderboard = () => {
 								position={item.position}
 								name={item.login ? item.login : 'Unknown user'}
 								photo={item.avatar ? item.avatar : ''}
-								icon={`../../src/assets/${setIconPath(item.position)}`}
+								icon={setIconPath(item.position)}
 								score={item.score}
 							/>
 						) : null

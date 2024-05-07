@@ -12,7 +12,7 @@ import {ThemeVariant} from '../../types/enum/Theme.enum'
 import backgroundDark from '../../assets/backgroundDark.jpg'
 import background from '../../assets/backgroundMain.png'
 import {StyledTextField} from '../Forum/BasicComponents'
-import backBtn from './../../assets/back-btn.svg'
+import backButton from './../../assets/back-btn.svg'
 
 interface IPassword {
 	oldPassword?: string
@@ -105,7 +105,7 @@ const ProfileSettings = () => {
 			className={styles.profileSettings}>
 			<div className={styles.profileSettings__backBtn}>
 				<img
-					src={backBtn}
+					src={backButton}
 					alt='back'
 					onClick={() => navigate('/profile')}
 				/>

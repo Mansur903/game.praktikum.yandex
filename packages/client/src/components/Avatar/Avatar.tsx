@@ -2,6 +2,7 @@ import styles from './styles.module.scss'
 import {useState} from 'react'
 import {StyledButton} from '../../pages/Forum/BasicComponents'
 import {User} from '../../store/slices/user'
+import defaultPhoto from './../../assets/default-avatar.png'
 
 interface IAvatarProps extends User {
 	onButtonClick?: () => void
@@ -23,9 +24,7 @@ const Avatar = ({avatar, onButtonClick, currentPage}: IAvatarProps) => {
 				}}>
 				<img
 					src={
-						avatar
-							? `https://ya-praktikum.tech/api/v2/resources${avatar}`
-							: 'src/components/Avatar/images/avatar.png'
+						avatar ? `https://ya-praktikum.tech/api/v2/resources${avatar}` : defaultPhoto
 					}
 					className={styles.avatar__image}
 					alt='avatar'
