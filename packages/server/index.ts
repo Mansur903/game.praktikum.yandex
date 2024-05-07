@@ -106,7 +106,7 @@ async function startServer() {
 			const headers = {
 				'Content-Type': 'text/html',
 				'Content-Security-Policy':
-					"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' ws://localhost:24678/ https://ya-praktikum.tech/api/v2/ https://oauth.yandex.ru/authorize;"
+					"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://ya-praktikum.tech/api/v2/; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' ws://localhost:24678/ https://ya-praktikum.tech/api/v2/ https://oauth.yandex.ru/authorize;"
 			}
 			res.status(200).set(headers).end(html)
 		} catch (e) {
