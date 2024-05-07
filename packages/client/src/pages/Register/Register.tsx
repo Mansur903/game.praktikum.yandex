@@ -8,6 +8,7 @@ import {fieldValidation} from '../../helpers/fieldValidation'
 import {useNavigate} from 'react-router-dom'
 import {ThemeContext} from '../../components/ThemeContext/ThemeContext'
 import {ThemeVariant} from '../../types/enum/Theme.enum'
+import {NoSsr} from '@mui/base/NoSsr'
 
 const textFieldSXProps = {
 	fieldset: {
@@ -138,112 +139,114 @@ const SignUpPage: React.FC = () => {
 	const {isValid, validationErrors} = useAuthorizationValidation(formValues, errors)
 
 	return (
-		<Box sx={boxRootSXProps(theme)}>
-			<Box
-				sx={{
-					minWidth: 400,
-					padding: 4
-				}}>
-				<Typography
-					variant='h4'
-					sx={{textAlign: 'center', marginBottom: 2, color: '#E8BDD9'}}>
-					Flappy Progger
-				</Typography>
-				<form onSubmit={handleSubmit}>
-					<Box sx={boxFormSXProps}>
-						<Typography
-							variant='h6'
-							sx={{textAlign: 'center', color: 'white'}}>
-							Регистрация
-						</Typography>
-						<TextField
-							label='Имя'
-							name='first_name'
-							value={formValues.first_name}
-							onChange={handleChange}
-							error={!!errors.first_name}
-							helperText={errors.first_name}
-							sx={textFieldSXProps}
-							InputLabelProps={textFieldInputLabelProps}
-						/>
-						<TextField
-							label='Фамилия'
-							name='second_name'
-							value={formValues.second_name}
-							onChange={handleChange}
-							error={!!errors.second_name}
-							helperText={errors.second_name}
-							sx={textFieldSXProps}
-							InputLabelProps={textFieldInputLabelProps}
-						/>
-						<TextField
-							label='Логин'
-							name='login'
-							value={formValues.login}
-							onChange={handleChange}
-							error={!!errors.login}
-							helperText={errors.login}
-							sx={textFieldSXProps}
-							InputLabelProps={textFieldInputLabelProps}
-						/>
-						<TextField
-							label='Email'
-							name='email'
-							value={formValues.email}
-							onChange={handleChange}
-							error={!!errors.email}
-							helperText={errors.email}
-							sx={textFieldSXProps}
-							InputLabelProps={textFieldInputLabelProps}
-						/>
-						<TextField
-							label='Пароль'
-							name='password'
-							type='password'
-							value={formValues.password}
-							onChange={handleChange}
-							error={!!errors.password}
-							helperText={errors.password}
-							sx={textFieldSXProps}
-							InputLabelProps={textFieldInputLabelProps}
-						/>
-						<TextField
-							label='Телефон'
-							name='phone'
-							value={formValues.phone}
-							onChange={handleChange}
-							error={!!errors.phone}
-							helperText={errors.phone}
-							sx={textFieldSXProps}
-							InputLabelProps={textFieldInputLabelProps}
-						/>
-						<Button
-							type='submit'
-							sx={{
-								color: 'var(--red)',
-								fontWeight: 'bold',
-								padding: 2,
-								width: '100%',
-								border: 'solid 1px var(--red)'
-							}}
-							disabled={!isValid} // Disable button if form is not valid
-						>
-							Зарегистрироваться
-						</Button>
-					</Box>
-				</form>
-				<Typography
-					variant='body2'
-					sx={{textAlign: 'center', marginTop: 2, color: 'white'}}>
-					Уже зарегистрированы?{' '}
-					<Link
-						href='/signin'
-						underline='none'>
-						Войти
-					</Link>
-				</Typography>
+		<NoSsr>
+			<Box sx={boxRootSXProps(theme)}>
+				<Box
+					sx={{
+						minWidth: 400,
+						padding: 4
+					}}>
+					<Typography
+						variant='h4'
+						sx={{textAlign: 'center', marginBottom: 2, color: '#E8BDD9'}}>
+						Flappy Progger
+					</Typography>
+					<form onSubmit={handleSubmit}>
+						<Box sx={boxFormSXProps}>
+							<Typography
+								variant='h6'
+								sx={{textAlign: 'center', color: 'white'}}>
+								Регистрация
+							</Typography>
+							<TextField
+								label='Имя'
+								name='first_name'
+								value={formValues.first_name}
+								onChange={handleChange}
+								error={!!errors.first_name}
+								helperText={errors.first_name}
+								sx={textFieldSXProps}
+								InputLabelProps={textFieldInputLabelProps}
+							/>
+							<TextField
+								label='Фамилия'
+								name='second_name'
+								value={formValues.second_name}
+								onChange={handleChange}
+								error={!!errors.second_name}
+								helperText={errors.second_name}
+								sx={textFieldSXProps}
+								InputLabelProps={textFieldInputLabelProps}
+							/>
+							<TextField
+								label='Логин'
+								name='login'
+								value={formValues.login}
+								onChange={handleChange}
+								error={!!errors.login}
+								helperText={errors.login}
+								sx={textFieldSXProps}
+								InputLabelProps={textFieldInputLabelProps}
+							/>
+							<TextField
+								label='Email'
+								name='email'
+								value={formValues.email}
+								onChange={handleChange}
+								error={!!errors.email}
+								helperText={errors.email}
+								sx={textFieldSXProps}
+								InputLabelProps={textFieldInputLabelProps}
+							/>
+							<TextField
+								label='Пароль'
+								name='password'
+								type='password'
+								value={formValues.password}
+								onChange={handleChange}
+								error={!!errors.password}
+								helperText={errors.password}
+								sx={textFieldSXProps}
+								InputLabelProps={textFieldInputLabelProps}
+							/>
+							<TextField
+								label='Телефон'
+								name='phone'
+								value={formValues.phone}
+								onChange={handleChange}
+								error={!!errors.phone}
+								helperText={errors.phone}
+								sx={textFieldSXProps}
+								InputLabelProps={textFieldInputLabelProps}
+							/>
+							<Button
+								type='submit'
+								sx={{
+									color: 'var(--red)',
+									fontWeight: 'bold',
+									padding: 2,
+									width: '100%',
+									border: 'solid 1px var(--red)'
+								}}
+								disabled={!isValid} // Disable button if form is not valid
+							>
+								Зарегистрироваться
+							</Button>
+						</Box>
+					</form>
+					<Typography
+						variant='body2'
+						sx={{textAlign: 'center', marginTop: 2, color: 'white'}}>
+						Уже зарегистрированы?{' '}
+						<Link
+							href='/signin'
+							underline='none'>
+							Войти
+						</Link>
+					</Typography>
+				</Box>
 			</Box>
-		</Box>
+		</NoSsr>
 	)
 }
 
