@@ -1,18 +1,19 @@
 import cors from 'cors'
 import dotenv from 'dotenv'
-import express, {Request as ExpressRequest} from 'express'
-import {createServer as createViteServer} from 'vite'
-import type {ViteDevServer} from 'vite'
+import express, {NextFunction, Request, Response} from 'express'
 import * as fs from 'fs'
 import * as path from 'path'
+import type {ViteDevServer} from 'vite'
+import {createServer as createViteServer} from 'vite'
+import xssShield from 'xss-shield/build/main/lib/xssShield'
+
 import {dbConnect} from './initDatabase'
-import {getTopics, getTopic, createTopic} from './services/topic'
-import {getCommentsForTopic, createComment, getComment} from './services/comment'
-import {getCommentReplies, createCommentReply} from './services/commentReplies'
+import {createComment, getComment, getCommentsForTopic} from './services/comment'
+import {createCommentReply, getCommentReplies} from './services/commentReplies'
 import {createTopicReaction} from './services/createTopicReaction'
 import {getAllTopicReactions} from './services/getAllTopicReactions'
-import {setTheme, getTheme, createTheme} from './services/userTheme'
-import xssShield from 'xss-shield/build/main/lib/xssShield'
+import {createTopic, getTopic, getTopics} from './services/topic'
+import {createTheme, getTheme, setTheme} from './services/userTheme'
 
 dotenv.config()
 const port = Number(process.env.SERVER_PORT) || 3001
@@ -72,7 +73,7 @@ async function startServer() {
 
 	app.put('/theme', createTheme).post('/theme', setTheme).get('/theme/:id', getTheme)
 
-	app.use('*', async (req, res, next) => {
+	app.use('*', async (req: Request, res: Response, next: NextFunction) => {
 		const url = req.originalUrl
 
 		try {
@@ -86,7 +87,7 @@ async function startServer() {
 				template = await vite!.transformIndexHtml(url, template)
 			}
 
-			let render: (req: ExpressRequest) => Promise<{html: string; initialState: unknown}>
+			let render: (req: Request) => Promise<{html: string; initialState: unknown}>
 
 			if (!isDev()) {
 				render = (await import(ssrClientPath)).render
@@ -102,8 +103,12 @@ async function startServer() {
 					`<!--ssr-initial-state-->`,
 					`<script>window.APP_INITIAL_STATE = ${JSON.stringify(initialState)}</script>`
 				)
-
-			res.status(200).set({'Content-Type': 'text/html'}).end(html)
+			const headers = {
+				'Content-Type': 'text/html',
+				'Content-Security-Policy':
+					"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' ws://localhost:24678/ https://ya-praktikum.tech/api/v2/ https://oauth.yandex.ru/authorize;"
+			}
+			res.status(200).set(headers).end(html)
 		} catch (e) {
 			if (isDev()) {
 				vite!.ssrFixStacktrace(e as Error)
